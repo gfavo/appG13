@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar color="primary">
+      <ion-thumbnail slot="start">
+          <img src="../assets/images/logobola.png">
+        </ion-thumbnail>
+    <ion-title>Scan do codigo QR</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+
+
+<ion-grid class="centro">
+
+  <ion-button color="dark" class="botao" size="large" expand="block" (click)="scanCode()"><ion-icon slot="end" name="qr-scanner"></ion-icon>Escanear Codigo</ion-button>
+  <ion-button color="dark" class="botao" size="large" expand="block" (click)="encerra()"><ion-icon  slot="end" name="checkmark"></ion-icon>Encerrar aula</ion-button>
+
+</ion-grid>
+
+
+<ion-card *ngIf="scannedCode">
+  <ion-card-content>
+  Result From Scan: {{ aluno_cobaia.nome }} Presente: {{ aluno_cobaia.presenca }}
+  </ion-card-content>
+</ion-card>
+
+<ng-container *ngIf="instrutor.getIdPrograma()">
+
+  <ion-label>
+    <h2> Descrição da aula:</h2>
+    <h3><b>{{instrutor.getDescricao()}}</b></h3>
+  </ion-label>
+  <br>
+  <h2><b>
+      <ion-label>{{instrutor.getAulaSelecionada().titulo}}</ion-label>
+    </b></h2>
+
+  <ul *ngFor="let _tecnica of instrutor.getAulaSelecionada().tecnicas">
+    <li>{{_tecnica.nome}}</li>
+  </ul>
+
+</ng-container>
+
+</ion-content>
+

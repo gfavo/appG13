@@ -1,0 +1,83 @@
+import { Component, Input } from '@angular/core';
+import { ClientService } from '../client.service';
+import { Observable } from 'rxjs';
+import { testUserAgent } from '@ionic/core';
+import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { Md5 } from "md5-typescript";
+import { HttpHeaders } from '@angular/common/http';
+import { map, tap } from 'rxjs/internal/operators';
+import { catchError } from 'rxjs/operators';
+import { Router } from '@angular/router';
+
+import { AlertController } from '@ionic/angular';
+
+import { NomeInstrutorService } from "../nome-instrutor.service";
+import { Response } from 'selenium-webdriver/http';
+
+const  headers = new  HttpHeaders({'teste': '123'});
+
+
+export class Customer {
+  user: string;
+  pass: string;
+}
+
+@Component({
+  selector: 'app-home',
+  templateUrl: 'home.page.html',
+  styleUrls: ['home.page.scss'],
+})
+export class HomePage {
+
+  public  pessoa = new Customer;
+
+status: number;
+
+token: string;
+
+  constructor(private httpClient: HttpClient, private router: Router, private instrutor: NomeInstrutorService, private alertController:AlertController) { }
+
+  async alertaDeErro() {
+    const alert = await this.alertController.create({
+      header: 'Erro',
+      message: 'Sua senha ou usuario está errado.Favor tentar novamente.',
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
+  ngOnInit() {
+           this.status = 0; 
+  }
+  //https://www.g13bjj.com.br/ct/mobile/login.php
+
+  onSubmit() {
+    this.httpClient.post("https://www.g13bjj.com.br/ct/mobile/login.php",JSON.stringify(this.pessoa),{ responseType: 'text', observe: "response", withCredentials: true})
+
+  .subscribe(
+    response  =>{ 
+   
+      
+
+      this.status = response.status;
+      this.router.navigate(["/aula"]);
+      this.instrutor.setNome(this.pessoa.user);
+
+     
+      this.instrutor.setToken(response.headers.get("x-auth"));  
+      
+     },
+    error  => { 
+     // alert("Login ou senha errados, por favor , tente novamente");
+     this.alertaDeErro();
+      this.status = error.status; },
+    );
+
+  
+  }
+  
+
+
+}
+

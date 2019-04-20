@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar color="primary">
+      <ion-thumbnail slot="start">
+          <img src="../assets/images/logobola.png">
+        </ion-thumbnail>
+    <ion-title>
+    Faça seu login 
+    </ion-title>
+  </ion-toolbar>
+
+  
+</ion-header>
+
+
+<ion-content>
+
+
+<form #Form="ngForm" (ngSubmit)="onSubmit()" class="form">
+ <!-- {{pessoa.user}} . {{pessoa.pass}} -->
+ 
+    <ion-item  class="form-item">
+    <ion-label class="form-label" position="stacked" >Usuário</ion-label>
+    <ion-input type="text" class="form-control" id="user"  required [(ngModel)]="pessoa.user" name="user"></ion-input>
+    </ion-item>
+  
+
+  
+<ion-item class="form-item">
+    <ion-label class="form-label"  position="stacked" for="pass">Senha</ion-label>
+    <ion-input type="text" class="form-control" id="pass" required [(ngModel)]="pessoa.pass" name="pass"></ion-input>
+    </ion-item>
+  
+
+  <ion-button color="dark" id="login-button" expand="full" type="submit" class="btn btn-success"><ion-icon slot="start" name="log-in"></ion-icon>Login</ion-button>
+ 
+
+</form>
+</ion-content>

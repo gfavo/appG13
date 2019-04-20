@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar color="dark">
+      <ion-thumbnail slot="start">
+          <img src="../assets/images/logobola.png">
+        </ion-thumbnail>
+    <ion-title>Metodos de Presenca</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content   padding>
+
+<ion-grid class="centro">
+
+<ion-button class="botao" size="large" expand="block" [routerLink]="[ '/manutencao-aula']"><ion-icon slot="start" name="list"></ion-icon>Lista</ion-button>
+
+
+<ion-button class="botao" size="large" expand="block" [routerLink]="['/pin']"><ion-icon slot="start" name="keypad"></ion-icon>PIN</ion-button>
+
+
+<ion-button class="botao" size="large" expand="block" [routerLink]="['/qr']"><ion-icon slot="start" name="qr-scanner"></ion-icon>Qr Code</ion-button>
+
+</ion-grid>
+
+</ion-content>

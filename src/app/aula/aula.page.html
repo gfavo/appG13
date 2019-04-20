@@ -1,0 +1,36 @@
+<ion-header class="fonte">
+  <ion-toolbar color="primary">
+      <ion-thumbnail slot="start">
+          <img src="../assets/images/logobola.png">
+        </ion-thumbnail>
+    <ion-title>Pagina do instrutor</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content onload="evento()" padding class="fonte">
+
+
+<ion-item>
+<ion-col text-center>
+<h1>
+Bem vindo , {{nome_instrutor}} 
+</h1>
+</ion-col>
+</ion-item>
+
+<ion-card padding>
+<div  *ngIf="instrutor.getAulaAberta() == true">
+<ion-button size="large" color="dark" expand="block" (click)="completarAula()">Completar aula!</ion-button>
+<ion-label style="margin-top: 20px;">Data da aula: {{data_aula}}</ion-label>
+</div>
+<div  *ngIf="instrutor.getAulaAberta() == false">
+  
+  <ion-card-header  text-center><ion-card-title  style="font-size:20px" text-wrap>Nenhuma aula indentificada.</ion-card-title><ion-card-subtitle>Crie uma aula!</ion-card-subtitle></ion-card-header>
+<ion-button style="--background: black;" expand="block" (click)="novaAula()">Adicionar nova aula</ion-button>
+</div>
+</ion-card>
+
+
+
+</ion-content>
+

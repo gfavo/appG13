@@ -1,0 +1,7 @@
+{
+  "name": "tozi_mobile",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

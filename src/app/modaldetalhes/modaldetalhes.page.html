@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title align="center">Detalhes da aula</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+<ion-card vertical="center">
+
+  <ng-container *ngIf="instrutor.getIdPrograma()">
+
+    <ion-label>
+      <h2> Descrição da aula:</h2>
+      <h3><b>{{instrutor.getDescricao()}}</b></h3>
+    </ion-label>
+    <br>
+    <h2><b>
+        <ion-label>{{instrutor.getAulaSelecionada().titulo}}</ion-label>
+      </b></h2>
+
+    <ul *ngFor="let _tecnica of instrutor.getAulaSelecionada().tecnicas">
+      <li>{{_tecnica.nome}}</li>
+    </ul>
+
+
+
+
+
+    <ion-chip><ion-label>Data da aula: {{data}}</ion-label></ion-chip>
+
+  </ng-container>
+
+  <ng-container *ngIf="!instrutor.getIdPrograma()">
+    <ion-label>
+      <h2> Tecnicas da aula:</h2>
+    </ion-label>
+<br>
+
+<ul *ngFor="let _tecnica of tecnicas">
+  <li>{{_tecnica.nome}}</li>
+</ul>
+<ion-chip><ion-label>Data da aula: {{data}}</ion-label></ion-chip>
+
+  </ng-container>
+
+  
+</ion-card>
+
+
+
+</ion-content>
+
+<ion-footer no-shadow>
+	<ion-toolbar position="bottom">
+    <ion-button expand="full" (click)="dismiss()">
+      Fechar detalhes
+    </ion-button>
+	</ion-toolbar>
+</ion-footer>

@@ -1,0 +1,82 @@
+<ion-header>
+  <ion-toolbar color="primary">
+      <ion-thumbnail slot="start">
+          <img src="../assets/images/logobola.png">
+        </ion-thumbnail>
+    <ion-title>Registre uma nova aula!</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+ <ion-chip><ion-label>Data da Aula: {{aula.datetime}}</ion-label> </ion-chip>
+
+ <ion-item>
+    <ion-label position="stacked">
+      <h2>Descrição da aula</h2>
+    </ion-label>
+    <ion-textarea row="2" id="descricao" required></ion-textarea>
+  </ion-item>
+
+  <br>
+  <b>Tecnicas do dia: </b>
+
+  <ion-item>
+    <ion-select class="my-select" width = "100%" placeholder="Selecione uma aula" id="_aulaProgramada">
+      <ul *ngFor="let aula of aula.aulasProgramadas">
+        <li>
+          <ion-select-option  value="{{aula.titulo}}">{{aula.titulo}}</ion-select-option>
+        </li>
+      </ul>
+    </ion-select>
+  </ion-item>
+  <ion-button float-right size="medium" (click)="actionProgramadas()"><ion-icon slot="end" name="add"></ion-icon>Adicionar</ion-button>
+
+  <br>
+
+ 
+  <b>Tecnicas Avulsas </b>
+
+  <ion-item>
+    <ion-select class="my-select" placeholder="Selecione uma aula" id="_aulaAvulsa">
+      <ul *ngFor="let aula of aula.aulasAvulsas">
+        <li>
+          <ion-select-option  value="{{aula.titulo}}">{{aula.titulo}}</ion-select-option>
+        </li>
+
+      </ul>
+    </ion-select>
+  </ion-item>
+  <ion-button float-right size="medium" (click)="actionAvulsas()"><ion-icon slot="end" name="add"></ion-icon>Adicionar</ion-button>
+
+
+  <ion-footer vertical="bottom">
+    <ion-toolbar>
+      <ion-button color="dark" (click)="voltar()"><ion-icon slot="start" name="arrow-back"></ion-icon>
+        Voltar
+      </ion-button>
+      <ion-button color="dark" (click)="continuar()"><ion-icon slot="start" name="arrow-forward"></ion-icon>
+        Continuar
+      </ion-button>
+    </ion-toolbar>
+
+
+
+    
+
+
+  <ion-card *ngIf="instrutor.getIdPrograma() != null" padding>
+        <ion-label position="stacked">
+          <h2><b>Detalhes da Aula</b></h2>
+        </ion-label>
+      <h2 id="tituloaula"><b> {{aula_mostrada.titulo}} -></b></h2>
+        <ul id="tecnicaslista" *ngFor="let _tecnica of aula_mostrada.tecnicas">
+          <li>{{_tecnica.nome}}</li>
+        </ul>
+      </ion-card>
+
+
+  </ion-footer>
+
+
+
+</ion-content>

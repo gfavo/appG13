@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar color="dark">
+      <ion-thumbnail slot="start">
+          <img src="../assets/images/logobola.png">
+        </ion-thumbnail>
+    <ion-title style="font-size: 15px;">Complete sua Aula, {{nomeinstrutor}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+    <ion-fab-button (click)="backPage()">
+      <ion-icon name="arrow-back"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ng-container *ngIf="instrutor.getIdPrograma()">
+
+    <ion-label>
+      <h2> Descrição da aula:</h2>
+      <h3><b>{{instrutor.getDescricao()}}</b></h3>
+    </ion-label>
+    <br>
+    <h2><b>
+        <ion-label>{{instrutor.getAulaSelecionada().titulo}}</ion-label>
+      </b></h2>
+
+    <ul *ngFor="let _tecnica of instrutor.getAulaSelecionada().tecnicas">
+      <li>{{_tecnica.nome}}</li>
+    </ul>
+
+
+
+
+
+    <ion-label>Data da aula: {{aula.datetime}}</ion-label>
+
+  </ng-container>
+  <ion-searchbar id="search_aluno"></ion-searchbar>
+
+  <ion-list *ngFor="let aluno of aula.alunos">
+    <ion-item *ngIf="aluno.nome.toUpperCase().includes(search_aluno.value.toUpperCase())">
+      <ion-checkbox slot="end" (click)="onCheck()" [(ngModel)]="aluno.presenca"></ion-checkbox>
+      <ion-label>
+        <h2>{{aluno.nome}} está presente na aula? </h2>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+
+  <div id="center">
+    <ion-button class="botao" id="botao_registrar" size="large" disabled="true" (click)="registrar()"><ion-icon slot="end" name="clipboard"></ion-icon>Registrar</ion-button>
+    <ion-button class="botao" size="large" (click)="concluir()"><ion-icon slot="end" name="checkmark"></ion-icon>Concluir</ion-button>
+  </div>
+
+
+
+
+
+
+
+</ion-content>
