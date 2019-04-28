@@ -26,7 +26,7 @@ export class NovaAulaPage implements OnInit {
 
   aula_mostrada: aula_exemplo;
 
-  constructor(private instrutor: NomeInstrutorService, private router: Router,private alertController: AlertController) { }
+  constructor(public instrutor: NomeInstrutorService, private router: Router,private alertController: AlertController) { }
 
   async alertaDeErro() {
     const alert = await this.alertController.create({

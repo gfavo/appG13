@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 
 
 import { AlertController } from '@ionic/angular';
+import { tecnicas } from '../aula/aula.page';
 
 export class Alunos {
   id: string;
@@ -39,10 +40,11 @@ export class aula {
 
 
 export class ManutencaoAulaPage implements OnInit {
+  data: string;
 
 
 
-  constructor(private http: HttpClient, private instrutor: NomeInstrutorService, private router: Router, private alertController: AlertController) {
+  constructor(private http: HttpClient, public instrutor: NomeInstrutorService, private router: Router, private alertController: AlertController) {
     this.router.events.subscribe((ev) => {
       
     this.search_aluno = document.getElementById("search_aluno");
@@ -71,6 +73,8 @@ export class ManutencaoAulaPage implements OnInit {
   nomeinstrutor: string;
 
   aula: aula;
+
+  tecnicas: tecnicas[];
 
   alunos_original: Alunos[];
 
@@ -131,6 +135,8 @@ export class ManutencaoAulaPage implements OnInit {
 
 
   ngOnInit() {
+    this.tecnicas = JSON.parse(this.instrutor.getDescricao());
+    this.data  = this.aula.datetime;
   }
 
 

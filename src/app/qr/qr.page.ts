@@ -37,7 +37,7 @@ buttons: [{text: 'OK',handler: () => {if(act) { this.router.navigate(['/aula']);
 await presente.present();
   }
 
-  constructor(private alertController: AlertController,private instrutor: NomeInstrutorService, private barCode: BarcodeScanner, private http: HttpClient, private router: Router) {
+  constructor(private alertController: AlertController,public instrutor: NomeInstrutorService, private barCode: BarcodeScanner, private http: HttpClient, private router: Router) {
     this.router.events.subscribe((ev) => {
       this.http.get("https://www.g13bjj.com.br/ct/mobile/alunos.php", { headers: this.headers })
         .subscribe(

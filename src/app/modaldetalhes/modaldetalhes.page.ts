@@ -15,7 +15,7 @@ tecnicas: tecnicas[];
 
 
   data: string;
-  constructor(private modalCtrl: ModalController,private instrutor: NomeInstrutorService) { }
+  constructor(private modalCtrl: ModalController,public instrutor: NomeInstrutorService) { }
 
 dismiss()
 {

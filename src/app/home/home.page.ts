@@ -15,6 +15,8 @@ import { AlertController } from '@ionic/angular';
 import { NomeInstrutorService } from "../nome-instrutor.service";
 import { Response } from 'selenium-webdriver/http';
 
+import { Network } from '@ionic-native/network/ngx';
+
 const  headers = new  HttpHeaders({'teste': '123'});
 
 
@@ -36,7 +38,7 @@ status: number;
 
 token: string;
 
-  constructor(private httpClient: HttpClient, private router: Router, private instrutor: NomeInstrutorService, private alertController:AlertController) { }
+  constructor(private network: Network,private httpClient: HttpClient, private router: Router, public instrutor: NomeInstrutorService, private alertController:AlertController) { }
 
   async alertaDeErro() {
     const alert = await this.alertController.create({
@@ -47,7 +49,11 @@ token: string;
     await alert.present();
   }
 
+ 
+
   ngOnInit() {
+   
+
            this.status = 0; 
   }
   //https://www.g13bjj.com.br/ct/mobile/login.php

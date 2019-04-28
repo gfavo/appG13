@@ -33,11 +33,33 @@
 
 
 
-
-    <ion-label>Data da aula: {{aula.datetime}}</ion-label>
+    <ion-label *ngIf="aula">Data da aula: {{aula.datetime}}</ion-label>
 
   </ng-container>
+
+  <ng-container *ngIf="!instrutor.getIdPrograma()">
+
+      <ion-label>
+          <h2> Tecnicas da aula:</h2>
+        </ion-label>
+    <br>
+    
+    <ul *ngFor="let _tecnica of tecnicas">
+      <li>{{_tecnica.nome}}</li>
+    </ul>
+    <ion-chip><ion-label>Data da aula: {{aula.datetime}}</ion-label></ion-chip>
+
+</ng-container>
+
+
+
+
+
+
   <ion-searchbar id="search_aluno"></ion-searchbar>
+
+<ng-container *ngIf="aula">
+
 
   <ion-list *ngFor="let aluno of aula.alunos">
     <ion-item *ngIf="aluno.nome.toUpperCase().includes(search_aluno.value.toUpperCase())">
@@ -48,6 +70,7 @@
     </ion-item>
   </ion-list>
 
+</ng-container>
 
   <div id="center">
     <ion-button class="botao" id="botao_registrar" size="large" disabled="true" (click)="registrar()"><ion-icon slot="end" name="clipboard"></ion-icon>Registrar</ion-button>

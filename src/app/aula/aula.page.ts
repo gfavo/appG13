@@ -66,7 +66,7 @@ export class AulaPage implements OnInit {
 
 
 
-  constructor(private httpClient: HttpClient, private instrutor: NomeInstrutorService, private router: Router, private _activatedRoute: ActivatedRoute) {
+  constructor(private httpClient: HttpClient, public instrutor: NomeInstrutorService, private router: Router, private _activatedRoute: ActivatedRoute) {
     this.router.events.subscribe((ev) => {
       if (ev instanceof NavigationEnd) { 
         this.nome_instrutor = this.instrutor.getNome();
@@ -89,7 +89,7 @@ export class AulaPage implements OnInit {
               else
               {
                 this.instrutor.setDatatime(this.data_aula);
-                this.instrutor.setDescricao(JSON.stringify((<Aula_aberta>data).tecnicas));
+               if (this.instrutor.getDescricao() == undefined) this.instrutor.setDescricao(JSON.stringify((<Aula_aberta>data).tecnicas));
               }
     
             });}

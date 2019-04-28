@@ -13,8 +13,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { QRScanner } from '@ionic-native/qr-scanner/ngx';
 
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
-import { NgxQRCodeModule} from 'ngx-qrcode3';
+
 import { ModaldetalhesPageModule } from './modaldetalhes/modaldetalhes.module';
+import { NgxQRCodeModule } from 'ngx-qrcode3';
+import { Network } from '@ionic-native/network/ngx';
+
+
 
 
 @NgModule({
@@ -22,6 +26,7 @@ import { ModaldetalhesPageModule } from './modaldetalhes/modaldetalhes.module';
   entryComponents: [],
   imports: [NgxQRCodeModule,FormsModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, ModaldetalhesPageModule],
   providers: [
+    Network,
     QRScanner,
     StatusBar,
     SplashScreen,
