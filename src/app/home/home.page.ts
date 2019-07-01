@@ -1,13 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { ClientService } from '../client.service';
 import { Observable } from 'rxjs';
-import { testUserAgent } from '@ionic/core';
+
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Md5 } from "md5-typescript";
 import { HttpHeaders } from '@angular/common/http';
-import { map, tap } from 'rxjs/internal/operators';
-import { catchError } from 'rxjs/operators';
+
 import { Router } from '@angular/router';
 
 import { AlertController } from '@ionic/angular';
@@ -16,6 +15,8 @@ import { NomeInstrutorService } from "../nome-instrutor.service";
 import { Response } from 'selenium-webdriver/http';
 
 import { Network } from '@ionic-native/network/ngx';
+
+
 
 const  headers = new  HttpHeaders({'teste': '123'});
 
@@ -38,6 +39,9 @@ status: number;
 
 token: string;
 
+testeUrl: string;
+
+
   constructor(private network: Network,private httpClient: HttpClient, private router: Router, public instrutor: NomeInstrutorService, private alertController:AlertController) { }
 
   async alertaDeErro() {
@@ -52,14 +56,34 @@ token: string;
  
 
   ngOnInit() {
-   
 
+    if (this.instrutor.getUrl() == null)
+    {
+      this.instrutor.setUrl("https://www.g13bjj.com.br/ct/mobile");  
+    }
+    
            this.status = 0; 
+
   }
   //https://www.g13bjj.com.br/ct/mobile/login.php
 
+
+mostrarUrl(){
+  this.testeUrl = this.instrutor.getUrl();
+}
+
+
   onSubmit() {
-    this.httpClient.post("https://www.g13bjj.com.br/ct/mobile/login.php",JSON.stringify(this.pessoa),{ responseType: 'text', observe: "response", withCredentials: true})
+
+if (this.pessoa.user == "painel" && this.pessoa.pass == "painelmaster123")
+{
+this.router.navigate(["/painel"]);
+}
+
+else{
+
+
+    this.httpClient.post(this.instrutor.getUrl()+"/login.php",JSON.stringify(this.pessoa),{ responseType: 'text', observe: "response", withCredentials: true})
 
   .subscribe(
     response  =>{ 
@@ -72,6 +96,7 @@ token: string;
 
      
       this.instrutor.setToken(response.headers.get("x-auth"));  
+
       
      },
     error  => { 
@@ -83,6 +108,7 @@ token: string;
   
   }
   
+}
 
 
 }

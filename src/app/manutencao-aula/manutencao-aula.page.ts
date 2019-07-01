@@ -3,8 +3,6 @@ import { Component, OnInit } from '@angular/core';
 
 import { toSegments } from '@ionic/angular/dist/directives/navigation/stack-utils';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { tap } from "rxjs/operators";
-import { of, fromEventPattern } from "rxjs";
 import { Observable } from "rxjs";
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
@@ -13,7 +11,7 @@ import { async } from '@angular/core/testing';
 import { Router } from '@angular/router';
 
 
-import { AlertController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 import { tecnicas } from '../aula/aula.page';
 
 export class Alunos {
@@ -25,7 +23,7 @@ export class Alunos {
 
 
 export class aula {
-  
+
   datetime: string;
   id: string;
   alunos: Alunos[];
@@ -44,31 +42,15 @@ export class ManutencaoAulaPage implements OnInit {
 
 
 
-  constructor(private http: HttpClient, public instrutor: NomeInstrutorService, private router: Router, private alertController: AlertController) {
+  constructor(private http: HttpClient, public instrutor: NomeInstrutorService, private router: Router, private alertController: AlertController, private navCtrl: NavController) {
     this.router.events.subscribe((ev) => {
-      
-    this.search_aluno = document.getElementById("search_aluno");
-
-
-    this.nomeinstrutor = this.instrutor.getNome();
-
-    this.http.get("https://www.g13bjj.com.br/ct/mobile/alunos.php", { headers: this.headers })
-      .subscribe(
-        data => {
-
-          console.log(data);
-          this.aula = <aula>data;
-
-        }
-      );
-
-    this.alunos_original = this.aula.alunos;
 
 
 
-     });
+    });
   }
-  headers = new HttpHeaders({ "x-auth": this.instrutor.getToken() });
+  headers = new HttpHeaders({ "x-auth": this.instrutor.getToken(), 'Cache-Control': 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0', 'Pragma': 'no-cache', 'Expires': '0' });
+
 
   nomeinstrutor: string;
 
@@ -80,6 +62,9 @@ export class ManutencaoAulaPage implements OnInit {
 
   search_aluno: any;
 
+  mostraLista: boolean = true;
+
+
   async registrado() {
     const registra = await this.alertController.create({
 
@@ -89,6 +74,28 @@ export class ManutencaoAulaPage implements OnInit {
     })
     await registra.present();
   }
+
+  async sucessoReload() {
+    const registra = await this.alertController.create({
+
+      header: '',
+      message: 'Página recarregada com sucesso',
+      buttons: [{ text: "OK"}]
+    })
+    await registra.present();
+  }
+
+  async reload() {
+    const registra = await this.alertController.create({
+
+      header: 'Cuidado',
+      message: 'Tem certeza que deseja recarregar a página? Perderá tudo não registrado.',
+      buttons: [{ text: "OK", handler: () => { this._ionview(); } }, { text: "CANCELAR"}]
+    })
+    await registra.present();
+  }
+
+
 
   async msgconcluir() {
     const conclui = await this.alertController.create({
@@ -117,7 +124,7 @@ export class ManutencaoAulaPage implements OnInit {
       buttons: [{
         text: 'SIM',
         handler: () => {
-          this.http.post("https://www.g13bjj.com.br/ct/mobile/registrar.php", this.aula, { headers: this.headers })
+          this.http.post(this.instrutor.getUrl() + "/registrar.php", this.aula, { headers: this.headers })
             .subscribe(data => {
               console.log(data)
               this.registrado();
@@ -136,20 +143,39 @@ export class ManutencaoAulaPage implements OnInit {
 
   ngOnInit() {
     this.tecnicas = JSON.parse(this.instrutor.getDescricao());
-    this.data  = this.aula.datetime;
+    this.data = this.aula.datetime;
   }
 
+  ionViewWillEnter() {
+    this.search_aluno = document.getElementById("search_aluno");
+
+
+    this.nomeinstrutor = this.instrutor.getNome();
+
+    this.http.get(this.instrutor.getUrl() + "/alunos.php", { headers: this.headers })
+      .subscribe(
+        data => {
+
+          console.log(data);
+          this.aula = <aula>data;
+          this.mostraLista = true;
+        }
+      );
+
+    this.alunos_original = this.aula.alunos;
+    
+  }
 
   onCheck() {
     if (this.aula.alunos != this.alunos_original) {
-       (<HTMLIonButtonElement>document.getElementById("botao_registrar")).disabled = false;
+      (<HTMLIonButtonElement>document.getElementById("botao_registrar")).disabled = false;
     }
   }
   registrar() {
-    this.instrutor.setAulaAberta(true);
-    
+
+
     if (this.aula.id != null) {
-      this.http.post("https://www.g13bjj.com.br/ct/mobile/registrar.php", this.aula, { headers: this.headers })
+      this.http.post(this.instrutor.getUrl() + "/registrar.php", this.aula, { headers: this.headers })
         .subscribe(data => {
           console.log(data)
           this.registrado();
@@ -157,27 +183,27 @@ export class ManutencaoAulaPage implements OnInit {
 
         });
     }
-    else
-    {
-      this.http.post("https://www.g13bjj.com.br/ct/mobile/registrar.php", {"id": "", "descricao": this.instrutor.getDescricao(),"datetime": this.instrutor.getAula().datetime,"idaulaprogramada": this.instrutor.getIdPrograma(),"alunos": this.aula.alunos}, { headers: this.headers })
-      .subscribe(data => {
-        console.log(data)
-       
-this.aula.id = (<aula>data).id;
-        this.registrado();
-      });
+    else {
+      this.instrutor.setAulaAberta(true);
+      this.http.post(this.instrutor.getUrl() + "/registrar.php", { "id": "", "descricao": this.instrutor.getDescricao(), "datetime": this.instrutor.getAula().datetime, "idaulaprogramada": this.instrutor.getIdPrograma(), "alunos": this.aula.alunos }, { headers: this.headers })
+        .subscribe(data => {
+          console.log(data)
+
+          this.aula.id = (<aula>data).id;
+          this.registrado();
+        });
     }
   }
   concluir() {
     if (this.aula.id != null) {
-      this.http.post("https://www.g13bjj.com.br/ct/mobile/concluir.php", { "id": this.aula.id }, { observe: "response", headers: this.headers })
+      this.http.post(this.instrutor.getUrl() + "/concluir.php", { "id": this.aula.id }, { observe: "response", headers: this.headers })
         .subscribe(data => console.log(data.status));
-        this.instrutor.setAulaAberta(false);
-    this.msgconcluir();
-    
+      this.instrutor.setAulaAberta(false);
+
+      this.msgconcluir();
+
     }
-   else
-    {
+    else {
       this.msgerroconcluir();
     }
   }
@@ -189,4 +215,18 @@ this.aula.id = (<aula>data).id;
       this.router.navigateByUrl("/aula");
     }
   }
+
+ 
+
+  refresh() {
+    this.reload();
+  }
+
+_ionview(){
+this.mostraLista = false;
+  this.ionViewWillEnter();
+  this.sucessoReload();
+
+
+}
 }

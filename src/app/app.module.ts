@@ -17,6 +17,8 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { ModaldetalhesPageModule } from './modaldetalhes/modaldetalhes.module';
 import { NgxQRCodeModule } from 'ngx-qrcode3';
 import { Network } from '@ionic-native/network/ngx';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
+
 
 
 
@@ -26,6 +28,7 @@ import { Network } from '@ionic-native/network/ngx';
   entryComponents: [],
   imports: [NgxQRCodeModule,FormsModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, ModaldetalhesPageModule],
   providers: [
+   NativeStorage,
     Network,
     QRScanner,
     StatusBar,

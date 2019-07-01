@@ -22,7 +22,11 @@ descricaoaula: string;
 
 aula_exemplo: aula_exemplo;
 
+url: string;
+
 aberto: boolean;
+
+
   constructor() { }
 
 setNome(nome: string)
@@ -104,4 +108,17 @@ return this.data;
 }
 
 
+setUrl(url: string)
+{
+this.url = url;
 }
+getUrl(): string
+{
+return this.url;
+}
+
+
+
+}
+
+

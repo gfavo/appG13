@@ -10,6 +10,7 @@ const routes: Routes = [
   { path: 'metodo', loadChildren: './metodo/metodo.module#MetodoPageModule' },
   { path: 'pin', loadChildren: './pin/pin.module#PinPageModule' },  { path: 'qr', loadChildren: './qr/qr.module#QrPageModule' },
   { path: 'modaldetalhes', loadChildren: './modaldetalhes/modaldetalhes.module#ModaldetalhesPageModule' },
+  { path: 'painel', loadChildren: './painel/painel.module#PainelPageModule' },
 
 ];
 

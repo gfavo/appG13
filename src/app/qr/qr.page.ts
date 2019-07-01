@@ -21,11 +21,13 @@ export class QrPage implements OnInit {
 
   teste_nome: string = "";
 
-  headers = new HttpHeaders({ "x-auth": this.instrutor.getToken() });
+  headers = new HttpHeaders({ "x-auth": this.instrutor.getToken() , 'Cache-Control':  'no-cache, no-store, must-revalidate, post-check=0, pre-check=0','Pragma': 'no-cache','Expires': '0'});
 
   aula: aula;
 
   situacao: string = "";
+
+
 
   async simple_alert(message: string,act: boolean)
   {
@@ -39,7 +41,7 @@ await presente.present();
 
   constructor(private alertController: AlertController,public instrutor: NomeInstrutorService, private barCode: BarcodeScanner, private http: HttpClient, private router: Router) {
     this.router.events.subscribe((ev) => {
-      this.http.get("https://www.g13bjj.com.br/ct/mobile/alunos.php", { headers: this.headers })
+      this.http.get(this.instrutor.getUrl()+"/alunos.php", { headers: this.headers })
         .subscribe(
           data => {
             console.log(data);
@@ -56,7 +58,7 @@ await presente.present();
   scanCode() {
     this.instrutor.setAulaAberta(true);
     if (this.aula.id == null) {
-      this.http.post("https://www.g13bjj.com.br/ct/mobile/registrar.php", { "id": "", "descricao": this.instrutor.getDescricao(), "datetime": this.instrutor.getAula().datetime, "idaulaprogramada": this.instrutor.getIdPrograma(), "alunos": this.aula.alunos }, { headers: this.headers })
+      this.http.post(this.instrutor.getUrl()+"/registrar.php", { "id": "", "descricao": this.instrutor.getDescricao(), "datetime": this.instrutor.getAula().datetime, "idaulaprogramada": this.instrutor.getIdPrograma(), "alunos": this.aula.alunos }, { headers: this.headers })
         .subscribe(res => {
           console.log(res)
           this.aula.id = (<aula>res).id;
@@ -65,12 +67,12 @@ await presente.present();
 
     this.barCode.scan().then(data => {
       this.scannedCode = data.text;
-this.aluno_cobaia = this.aula.alunos.find(x => x.codigo === this.scannedCode);
+this.aluno_cobaia =  this.achaAluno(this.scannedCode,this.aula.alunos);                     
 
 
 
 
-if (this.aluno_cobaia == undefined)
+if (this.procurarAluno(this.scannedCode,this.aula.alunos) == false)
 {
   this.simple_alert("O aluno não existe na sua grade!",false);
 }
@@ -78,9 +80,9 @@ else
 {
   if(this.aluno_cobaia.presenca == false)
   {
-    this.aula.alunos.find(x => x.codigo === this.scannedCode).presenca = true;
+    this.achaAluno(this.scannedCode,this.aula.alunos).presenca = true;
     
-    this.http.post("https://www.g13bjj.com.br/ct/mobile/registrar.php", this.aula, { headers: this.headers })
+    this.http.post(this.instrutor.getUrl()+"/registrar.php", this.aula, { headers: this.headers })
     .subscribe(res => {
       console.log(res)
       this.aula.id = (<aula>res).id;
@@ -105,7 +107,7 @@ else
 
   encerra() {
     if (this.aula.id != null) {
-      this.http.post("https://www.g13bjj.com.br/ct/mobile/concluir.php", { "id": this.aula.id }, { observe: "response", headers: this.headers })
+      this.http.post(this.instrutor.getUrl()+"/concluir.php", { "id": this.aula.id }, { observe: "response", headers: this.headers })
         .subscribe(data => console.log(data.status));
       this.instrutor.setAulaAberta(false);
       this.simple_alert("Foi concluída com sucesso!",true);
@@ -114,6 +116,49 @@ else
     {
       this.simple_alert("Primeiro escaneie um aluno!",false);
     }
+  }
+
+  procurarAluno(codigo: string,alunos: Alunos[]) : boolean
+  {
+   var achou = false;
+   var i = 0;
+  for(i=0;i<alunos.length;i++)
+  {
+  if (codigo == alunos[i].codigo)
+  {
+    achou = true;
+  }
+  }
+  
+  if (achou == true)
+  {
+    return true;
+  }
+  
+  else
+  {
+    return false;
+  }
+  }
+  
+  achaAluno(codigo: string,alunos: Alunos[]) : Alunos
+  {
+    var i = 0;
+    for(i=0;i<alunos.length;i++)
+    {
+    if (codigo == alunos[i].codigo)
+    {
+      return alunos[i];
+    }
+    }
+    
+   
+  }
+
+  backPage() {
+
+      this.router.navigateByUrl("/aula");
+    
   }
 
 }

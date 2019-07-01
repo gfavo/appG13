@@ -20,7 +20,7 @@ export class PinPage implements OnInit {
 
   codigo: string = "";
 
-  headers = new HttpHeaders({ "x-auth": this.instrutor.getToken() });
+  headers = new HttpHeaders({ "x-auth": this.instrutor.getToken() , 'Cache-Control':  'no-cache, no-store, must-revalidate, post-check=0, pre-check=0','Pragma': 'no-cache','Expires': '0'});
 
   aula: aula;
 
@@ -52,9 +52,9 @@ mostraDetalhes()
 
         {
           text: "Sim", handler: () => {
-            (this.aula.alunos.find(x => x.codigo === this.codigo)).presenca = true;
+            this.achaAluno(this.codigo,this.aula.alunos).presenca = true;
 
-            this.http.post("https://www.g13bjj.com.br/ct/mobile/registrar.php", this.aula, { headers: this.headers })
+            this.http.post(this.instrutor.getUrl()+"/registrar.php", this.aula, { headers: this.headers })
               .subscribe(res => {
                 console.log(res)
                 this.aula.id = (<aula>res).id;
@@ -120,7 +120,7 @@ buttons: [{text: "Não"},{text: "Sim",handler: () => {
   
 if (this.aula.id != null)
 {
-  this.http.post("https://www.g13bjj.com.br/ct/mobile/concluir.php", { "id": this.aula.id }, { observe: "response", headers: this.headers })
+  this.http.post(this.instrutor.getUrl()+"/concluir.php", { "id": this.aula.id }, { observe: "response", headers: this.headers })
 .subscribe(data => console.log(data.status));
 this.instrutor.setAulaAberta(false);
 this.sucessoconcluir();
@@ -143,12 +143,12 @@ await presente.present();
 
 
 
-      this.http.get("https://www.g13bjj.com.br/ct/mobile/alunos.php", { headers: this.headers })
+      this.http.get(this.instrutor.getUrl()+"/alunos.php", { headers: this.headers })
         .subscribe(
           data => {
             console.log(data);
             this.aula = <aula>data;
-
+           
           });
 
 
@@ -162,7 +162,8 @@ await presente.present();
   }
 
   ngOnInit() {
-alert(this.instrutor.getDatatime());
+
+
   }
 
 
@@ -197,7 +198,7 @@ alert(this.instrutor.getDatatime());
   okAluno() {
     this.instrutor.setAulaAberta(true);
     if (this.aula.id == null) {
-      this.http.post("https://www.g13bjj.com.br/ct/mobile/registrar.php", { "id": "", "descricao": this.instrutor.getDescricao(), "datetime": this.instrutor.getAula().datetime, "idaulaprogramada": this.instrutor.getIdPrograma(), "alunos": this.aula.alunos }, { headers: this.headers })
+      this.http.post(this.instrutor.getUrl()+"/registrar.php", { "id": "", "descricao": this.instrutor.getDescricao(), "datetime": this.instrutor.getAula().datetime, "idaulaprogramada": this.instrutor.getIdPrograma(), "alunos": this.aula.alunos }, { headers: this.headers })
         .subscribe(res => {
           console.log(res)
           this.aula.id = (<aula>res).id;
@@ -205,15 +206,19 @@ alert(this.instrutor.getDatatime());
     }
 
     if (this.codigo.length == 5) {
-      if (this.aula.alunos.find(x => x.codigo === this.codigo) != undefined) {
-        if (this.aula.alunos.find(x => x.codigo === this.codigo).presenca == false) {
-          this.confirma_aluno(this.aula.alunos.find(x => x.codigo === this.codigo).nome);
+      if (this.procurarAluno(this.codigo,this.aula.alunos) == true) {
+    
+        if (this.achaAluno(this.codigo,this.aula.alunos).presenca == false) {
+          this.confirma_aluno(this.achaAluno(this.codigo,this.aula.alunos).nome);
         }
+       
         else {
-          this.aluno_ja_presente(this.aula.alunos.find(x => x.codigo === this.codigo).nome);
+          this.aluno_ja_presente(this.achaAluno(this.codigo,this.aula.alunos).nome);
         }
+
       }
       else{
+        console.log('indefinido' + this.codigo + this.aula.alunos[0].nome);
         this.simple_alert("Esse aluno não existe na sua grade!",true);
       }
     }
@@ -226,6 +231,47 @@ encerra()
 {
   this.instrutor.setAulaAberta(false);
 this.encerrrar();
+}
+
+procurarAluno(codigo: string,alunos: Alunos[]) : boolean
+{
+ var achou = false;
+ var i = 0;
+for(i=0;i<alunos.length;i++)
+{
+if (codigo == alunos[i].codigo)
+{
+  achou = true;
+}
+}
+
+if (achou == true)
+{
+  return true;
+}
+
+else
+{
+  return false;
+}
+}
+
+achaAluno(codigo: string,alunos: Alunos[]) : Alunos
+{
+  var i = 0;
+  for(i=0;i<alunos.length;i++)
+  {
+  if (codigo == alunos[i].codigo)
+  {
+    return alunos[i];
+  }
+  }
+  
+ 
+}
+
+backPage() {
+    this.router.navigateByUrl("/aula");
 }
 
 }

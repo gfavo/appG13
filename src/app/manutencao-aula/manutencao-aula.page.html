@@ -15,6 +15,12 @@
     </ion-fab-button>
   </ion-fab>
 
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="refresh()">
+      <ion-icon name="refresh"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
   <ng-container *ngIf="instrutor.getIdPrograma()">
 
     <ion-label>
@@ -35,6 +41,8 @@
 
     <ion-label *ngIf="aula">Data da aula: {{aula.datetime}}</ion-label>
 
+
+
   </ng-container>
 
   <ng-container *ngIf="!instrutor.getIdPrograma()">
@@ -49,6 +57,11 @@
     </ul>
     <ion-chip><ion-label>Data da aula: {{aula.datetime}}</ion-label></ion-chip>
 
+
+
+
+    
+
 </ng-container>
 
 
@@ -59,7 +72,7 @@
   <ion-searchbar id="search_aluno"></ion-searchbar>
 
 <ng-container *ngIf="aula">
-
+<ng-container *ngIf="mostraLista">
 
   <ion-list *ngFor="let aluno of aula.alunos">
     <ion-item *ngIf="aluno.nome.toUpperCase().includes(search_aluno.value.toUpperCase())">
@@ -69,7 +82,7 @@
       </ion-label>
     </ion-item>
   </ion-list>
-
+</ng-container>
 </ng-container>
 
   <div id="center">

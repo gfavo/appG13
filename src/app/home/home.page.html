@@ -27,12 +27,15 @@
   
 <ion-item class="form-item">
     <ion-label class="form-label"  position="stacked" for="pass">Senha</ion-label>
-    <ion-input type="text" class="form-control" id="pass" required [(ngModel)]="pessoa.pass" name="pass"></ion-input>
+    <ion-input type="text" class="form-control" id="pass" required [(ngModel)]="pessoa.pass" [ngModelOptions]="{standalone: true}" name="pass"></ion-input>
     </ion-item>
   
 
+
   <ion-button color="dark" id="login-button" expand="full" type="submit" class="btn btn-success"><ion-icon slot="start" name="log-in"></ion-icon>Login</ion-button>
  
-
+ 
 </form>
+
+
 </ion-content>

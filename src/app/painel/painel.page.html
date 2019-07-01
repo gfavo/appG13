@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>painel</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+
+
+
+
+  <ion-input type="text" class="form-control" id="enderecoNovo" required [(ngModel)]="enderecoNovo"></ion-input>
+
+
+<ion-button (click)="mudarUrl()">
+Mudar endereço
+</ion-button>
+
+
+<ion-button [routerLink]="['/home']">Voltar para a home</ion-button>
+
+</ion-content>

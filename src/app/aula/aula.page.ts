@@ -1,8 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { toSegments } from '@ionic/angular/dist/directives/navigation/stack-utils';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { tap } from "rxjs/operators";
-import { of, fromEventPattern } from "rxjs";
 import { Observable } from "rxjs";
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
@@ -63,14 +61,14 @@ export class AulaPage implements OnInit {
   id: number;
 
 
-
+subscription: any;
 
 
   constructor(private httpClient: HttpClient, public instrutor: NomeInstrutorService, private router: Router, private _activatedRoute: ActivatedRoute) {
     this.router.events.subscribe((ev) => {
       if (ev instanceof NavigationEnd) { 
         this.nome_instrutor = this.instrutor.getNome();
-        this.httpClient.post("https://www.g13bjj.com.br/ct/mobile/aula.php", { '': '' }, { responseType: "json", headers: this.headers })
+     this.subscription =   this.httpClient.post(this.instrutor.getUrl()+"/aula.php", { '': '' }, { responseType: "json", headers: this.headers })
           .subscribe(
             data => {
               console.log(data);
@@ -99,7 +97,7 @@ export class AulaPage implements OnInit {
 
   data: Date;
 
-  headers = new HttpHeaders({ "x-auth": this.instrutor.getToken() });
+  headers = new HttpHeaders({ "x-auth": this.instrutor.getToken() , 'Cache-Control':  'no-cache, no-store, must-revalidate, post-check=0, pre-check=0','Pragma': 'no-cache','Expires': '0'});
 
   aula_nova: conjunto_aula_exemplo;
 
@@ -111,12 +109,9 @@ export class AulaPage implements OnInit {
 
 
 
-  ngOnInit() {
+ngOnInit(){}
 
-    
-    
 
-  }
 
   onClick() {
     console.log('CLICKOU');
