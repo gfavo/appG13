@@ -18,6 +18,8 @@ import { Network } from '@ionic-native/network/ngx';
 
 import { Storage } from '@ionic/storage';
 
+import { LoadingController } from '@ionic/angular';
+
 const headers = new HttpHeaders({ 'teste': '123' });
 
 
@@ -46,8 +48,9 @@ export class HomePage {
 
   lembrar: boolean = false;
 
+  isloading:boolean = false;
 
-  constructor(private storage: Storage, private network: Network, private httpClient: HttpClient, private router: Router, public instrutor: NomeInstrutorService, private alertController: AlertController) { }
+  constructor(private load: LoadingController,private storage: Storage, private network: Network, private httpClient: HttpClient, private router: Router, public instrutor: NomeInstrutorService, private alertController: AlertController) { }
 
   async alertaDeErro() {
     const alert = await this.alertController.create({
@@ -58,6 +61,25 @@ export class HomePage {
     await alert.present();
   }
 
+  async presentLoading() {
+    this.isloading = true;
+    const loading = await this.load.create({
+      message: 'Please wait',
+      duration: 3000
+    });
+    await loading.present();
+
+   
+
+    const { role, data } = await loading.onDidDismiss();
+
+  
+  }
+
+  async dismiss() {
+    this.isloading = false;
+    return await this.load.dismiss().then(() => console.log('dismissed'));
+  }
 
   ngOnInit() {
 
@@ -112,14 +134,14 @@ export class HomePage {
     else {
 
 
-
+      this.presentLoading();
 
       this.httpClient.post(this.instrutor.getUrl() + "/login.php", JSON.stringify(this.pessoa), { responseType: 'text', observe: "response", withCredentials: true })
 
         .subscribe(
           response => {
 
-
+          this.dismiss();
 
             this.status = response.status;
 
@@ -134,11 +156,12 @@ export class HomePage {
 
             this.instrutor.setToken(response.headers.get("x-auth"));
 
-
+        
 
 
           },
           error => {
+            this.dismiss();
             // alert("Login ou senha errados, por favor , tente novamente");
             this.alertaDeErro();
             this.status = error.status;
