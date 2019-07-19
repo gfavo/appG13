@@ -29,12 +29,14 @@
     <ion-label class="form-label"  position="stacked" for="pass">Senha</ion-label>
     <ion-input type="text" class="form-control" id="pass" required [(ngModel)]="pessoa.pass" [ngModelOptions]="{standalone: true}" name="pass"></ion-input>
     </ion-item>
-  
-
-
+  <br>
+  <br>
+    Lembrar login? <ion-checkbox name="lembrar" id="lembrar" [(ngModel)]="lembrar"></ion-checkbox>
+    
   <ion-button color="dark" id="login-button" expand="full" type="submit" class="btn btn-success"><ion-icon slot="start" name="log-in"></ion-icon>Login</ion-button>
  
- 
+
+
 </form>
 
 

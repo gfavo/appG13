@@ -10,6 +10,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { aula } from '../manutencao-aula/manutencao-aula.page';
 
 import { ActivatedRoute } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 
 export class aluno {
   id: number;
@@ -64,7 +65,7 @@ export class AulaPage implements OnInit {
 subscription: any;
 
 
-  constructor(private httpClient: HttpClient, public instrutor: NomeInstrutorService, private router: Router, private _activatedRoute: ActivatedRoute) {
+  constructor(private menu: MenuController,private httpClient: HttpClient, public instrutor: NomeInstrutorService, private router: Router, private _activatedRoute: ActivatedRoute) {
     this.router.events.subscribe((ev) => {
       if (ev instanceof NavigationEnd) { 
         this.nome_instrutor = this.instrutor.getNome();
@@ -154,6 +155,12 @@ ngOnInit(){}
     this.router.navigate(["/nova-aula"]);
 
 
+  }
+
+  openMenu(){
+    alert('aa');
+this.menu.enable(true, 'first');
+this.menu.open('first');
   }
 }
 

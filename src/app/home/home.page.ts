@@ -16,9 +16,9 @@ import { Response } from 'selenium-webdriver/http';
 
 import { Network } from '@ionic-native/network/ngx';
 
+import { Storage } from '@ionic/storage';
 
-
-const  headers = new  HttpHeaders({'teste': '123'});
+const headers = new HttpHeaders({ 'teste': '123' });
 
 
 export class Customer {
@@ -33,16 +33,21 @@ export class Customer {
 })
 export class HomePage {
 
-  public  pessoa = new Customer;
-
-status: number;
-
-token: string;
-
-testeUrl: string;
+  public pessoa = new Customer;
 
 
-  constructor(private network: Network,private httpClient: HttpClient, private router: Router, public instrutor: NomeInstrutorService, private alertController:AlertController) { }
+
+
+  status: number;
+
+  token: string;
+
+  testeUrl: string;
+
+  lembrar: boolean = false;
+
+
+  constructor(private storage: Storage, private network: Network, private httpClient: HttpClient, private router: Router, public instrutor: NomeInstrutorService, private alertController: AlertController) { }
 
   async alertaDeErro() {
     const alert = await this.alertController.create({
@@ -53,63 +58,105 @@ testeUrl: string;
     await alert.present();
   }
 
- 
 
   ngOnInit() {
 
-    if (this.instrutor.getUrl() == null)
-    {
-      this.instrutor.setUrl("https://www.g13bjj.com.br/ct/mobile");  
+
+  }
+  ionViewWillEnter() {
+    this.pessoa.pass = "";
+    this.pessoa.user = "";
+    this.lembrar = false;
+  }
+
+  ionViewDidEnter() {
+    this.status = 0;
+
+
+    if (this.instrutor.getUrl() == null) {
+      this.instrutor.setUrl("https://www.g13bjj.com.br/ct/mobile");
     }
-    
-           this.status = 0; 
+
+
+
+
+    this.storage.get('login').then((val) => {
+
+      if (val != "") {
+        this.storage.get('login').then((val) => {
+          this.pessoa.user = val;
+        });
+        this.storage.get('senha').then((val) => {
+          this.pessoa.pass = val;
+          this.onSubmit();
+        });
+
+      }
+    });
 
   }
   //https://www.g13bjj.com.br/ct/mobile/login.php
 
 
-mostrarUrl(){
-  this.testeUrl = this.instrutor.getUrl();
-}
+  mostrarUrl() {
+    this.testeUrl = this.instrutor.getUrl();
+  }
 
 
   onSubmit() {
 
-if (this.pessoa.user == "painel" && this.pessoa.pass == "painelmaster123")
-{
-this.router.navigate(["/painel"]);
-}
+    if (this.pessoa.user == "painel" && this.pessoa.pass == "painelmaster123") {
+      this.router.navigate(["/painel"]);
+    }
 
-else{
+    else {
 
 
-    this.httpClient.post(this.instrutor.getUrl()+"/login.php",JSON.stringify(this.pessoa),{ responseType: 'text', observe: "response", withCredentials: true})
 
-  .subscribe(
-    response  =>{ 
-   
-      
 
-      this.status = response.status;
-      this.router.navigate(["/aula"]);
-      this.instrutor.setNome(this.pessoa.user);
+      this.httpClient.post(this.instrutor.getUrl() + "/login.php", JSON.stringify(this.pessoa), { responseType: 'text', observe: "response", withCredentials: true })
 
-     
-      this.instrutor.setToken(response.headers.get("x-auth"));  
+        .subscribe(
+          response => {
 
-      
-     },
-    error  => { 
-     // alert("Login ou senha errados, por favor , tente novamente");
-     this.alertaDeErro();
-      this.status = error.status; },
-    );
 
-  
+
+            this.status = response.status;
+
+            if (this.lembrar == true) {
+              this.storage.set('login', this.pessoa.user);
+              this.storage.set('senha', this.pessoa.pass);
+            }
+
+            this.router.navigate(["/aula"]);
+            this.instrutor.setNome(this.pessoa.user);
+
+
+            this.instrutor.setToken(response.headers.get("x-auth"));
+
+
+
+
+          },
+          error => {
+            // alert("Login ou senha errados, por favor , tente novamente");
+            this.alertaDeErro();
+            this.status = error.status;
+          },
+        );
+    }
+
+
+
+
+
+
   }
-  
-}
 
+  esquece() {
+    this.storage.set('login', '');
+    this.storage.set('senha', '');
+  }
 
 }
 

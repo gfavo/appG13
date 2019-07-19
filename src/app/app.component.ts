@@ -1,8 +1,12 @@
 import { Component } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform, MenuController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { RouterOutlet, Router } from '@angular/router';
+import { NomeInstrutorService } from './nome-instrutor.service';
+
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +14,10 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 })
 export class AppComponent {
   constructor(
+    private storage: Storage,
+    private intrutor: NomeInstrutorService,
+    private menu: MenuController,
+    private router: Router,
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar
@@ -22,5 +30,26 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+  }
+
+  logoff(){
+    this.intrutor.setAula(undefined);
+    this.intrutor.setAulaAberta(undefined);
+    this.intrutor.setAulaSelecionada(undefined);
+    this.intrutor.setDatatime(undefined);
+    this.intrutor.setDescricao(undefined);
+    this.intrutor.setIdPrograma(undefined);
+    this.intrutor.setNome(undefined);
+    this.intrutor.setToken(undefined);
+    this.intrutor.setUrl(undefined);
+    this.storage.set('login','');
+    this.storage.set('senha','');
+
+
+    this.menu.toggle();
+    
+    
+    this.router.navigate(["/home"]);
+   
   }
 }
