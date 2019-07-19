@@ -11,7 +11,7 @@ import { async } from '@angular/core/testing';
 import { Router } from '@angular/router';
 
 
-import { AlertController, NavController } from '@ionic/angular';
+import { AlertController, NavController, LoadingController } from '@ionic/angular';
 import { tecnicas } from '../aula/aula.page';
 
 export class Alunos {
@@ -42,7 +42,7 @@ export class ManutencaoAulaPage implements OnInit {
 
 
 
-  constructor(private http: HttpClient, public instrutor: NomeInstrutorService, private router: Router, private alertController: AlertController, private navCtrl: NavController) {
+  constructor(private load: LoadingController,private http: HttpClient, public instrutor: NomeInstrutorService, private router: Router, private alertController: AlertController, private navCtrl: NavController) {
     this.router.events.subscribe((ev) => {
 
 
@@ -63,7 +63,8 @@ export class ManutencaoAulaPage implements OnInit {
   search_aluno: any;
 
   mostraLista: boolean = true;
-
+ 
+  isloading:boolean = false;
 
   async registrado() {
     const registra = await this.alertController.create({
@@ -117,6 +118,26 @@ export class ManutencaoAulaPage implements OnInit {
     await concluierro.present();
   }
 
+  async presentLoading() {
+    this.isloading = true;
+    const loading = await this.load.create({
+      message: 'Aguarde por favor',
+      duration: 5000
+    });
+    await loading.present();
+
+   
+
+    const { role, data } = await loading.onDidDismiss();
+
+  
+  }
+
+  async dismiss() {
+    this.isloading = false;
+    return await this.load.dismiss().then(() => console.log('dismissed'));
+  }
+
   async alerta() {
     const alert = await this.alertController.create({
       header: 'Cuidado',
@@ -151,19 +172,21 @@ export class ManutencaoAulaPage implements OnInit {
 
 
     this.nomeinstrutor = this.instrutor.getNome();
-
+    this.presentLoading();
     this.http.get(this.instrutor.getUrl() + "/alunos.php", { headers: this.headers })
       .subscribe(
         data => {
-
+          this.dismiss();
           console.log(data);
           this.aula = <aula>data;
           this.mostraLista = true;
+
+          
         }
       );
-
+      
     this.alunos_original = this.aula.alunos;
-    
+    this.dismiss();
   }
 
   onCheck() {
@@ -172,14 +195,14 @@ export class ManutencaoAulaPage implements OnInit {
     }
   }
   registrar() {
-
+this.presentLoading();
 
     if (this.aula.id != null) {
       this.http.post(this.instrutor.getUrl() + "/registrar.php", this.aula, { headers: this.headers })
         .subscribe(data => {
           console.log(data)
           this.registrado();
-
+          this.dismiss();
 
         });
     }

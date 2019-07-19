@@ -64,8 +64,8 @@ export class HomePage {
   async presentLoading() {
     this.isloading = true;
     const loading = await this.load.create({
-      message: 'Please wait',
-      duration: 3000
+      message: 'Aguarde por favor',
+      duration: 5000
     });
     await loading.present();
 
