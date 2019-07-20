@@ -1,35 +1,12 @@
-
-<ion-menu side="start" menuId="first">
-    <ion-header>
-      <ion-toolbar color="primary">
-        <ion-title>Start Menu</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content>
-      <ion-list>
-        <ion-item>Menu Item</ion-item>
-        <ion-item>Menu Item</ion-item>
-        <ion-item>Menu Item</ion-item>
-        <ion-item>Menu Item</ion-item>
-        <ion-item>Menu Item</ion-item>
-      </ion-list>
-    </ion-content>
-  </ion-menu>
-
-
-
-
-
-
 <ion-header class="fonte">
 
   <ion-toolbar color="primary">
-      <ion-buttons slot="start">
-          <ion-menu-button autoHide="false"></ion-menu-button>
-        </ion-buttons>
-      <ion-thumbnail slot="end">
-          <img src="../assets/images/logobola.png">
-        </ion-thumbnail>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-thumbnail slot="end">
+      <img src="../assets/images/logobola.png">
+    </ion-thumbnail>
     <ion-title text-center>Pagina do instrutor</ion-title>
   </ion-toolbar>
 
@@ -43,30 +20,45 @@
 
 
 <ion-content onload="evento()" padding class="fonte">
-  
-    
 
-<ion-item>
-<ion-col text-center>
-<h1>
-Bem vindo , {{nome_instrutor}} 
-</h1>
-</ion-col>
-</ion-item>
 
-<ion-card padding>
-<div  *ngIf="instrutor.getAulaAberta() == true">
-<ion-button size="large" color="dark" expand="block" (click)="completarAula()">Completar aula!</ion-button>
-<ion-label style="margin-top: 20px;">Data da aula: {{data_aula}}</ion-label>
-</div>
-<div  *ngIf="instrutor.getAulaAberta() == false">
-  
-  <ion-card-header  text-center><ion-card-title  style="font-size:20px" text-wrap>Nenhuma aula indentificada.</ion-card-title><ion-card-subtitle>Crie uma aula!</ion-card-subtitle></ion-card-header>
-<ion-button style="--background: black;" expand="block" (click)="novaAula()">Adicionar nova aula</ion-button>
-</div>
-</ion-card>
+  <ion-item>
+    <ion-col text-center>
+      <h1>
+        Bem vindo , {{nome_instrutor}}
+      </h1>
+    </ion-col>
+  </ion-item>
 
+  <ion-card padding>
+    <div *ngIf="instrutor.getAulaAberta() == true">
+      <ion-button size="large" color="dark" expand="block" (click)="completarAula()">Completar aula!</ion-button>
+      <ion-label style="margin-top: 20px;">Data da aula: {{data_aula}}</ion-label>
+    </div>
+    <div *ngIf="instrutor.getAulaAberta() == false">
+
+      <ion-card-header text-center>
+        <ion-card-title style="font-size:20px" text-wrap>Nenhuma aula indentificada.</ion-card-title>
+        <ion-card-subtitle>Crie uma aula!</ion-card-subtitle>
+      </ion-card-header>
+      <ion-button style="--background: black;" expand="block" (click)="novaAula()">Adicionar nova aula</ion-button>
+    </div>
+  </ion-card>
+
+  <ion-button size="medium" style="--background: #287a9d" expand="block" class="options">
+
+    Biblioteca de vídeos
+    <ion-icon name="bookmarks" slot="end"></ion-icon>
+  </ion-button>
+  <ion-button size="medium" style="--background: #287a9d" expand="block" class="options">
+    Evolução dos Alunos
+    <ion-icon name="arrow-up" slot="end"></ion-icon>
+  </ion-button>
+
+  <ion-button size="medium" style="--background: #287a9d" expand="block" class="options">
+    Solicitações
+    <ion-icon name="mail-open" slot="end"></ion-icon>
+  </ion-button>
 
 
 </ion-content>
-

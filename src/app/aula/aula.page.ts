@@ -10,7 +10,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { aula } from '../manutencao-aula/manutencao-aula.page';
 
 import { ActivatedRoute } from '@angular/router';
-import { MenuController } from '@ionic/angular';
+import { MenuController, LoadingController } from '@ionic/angular';
 
 export class aluno {
   id: number;
@@ -65,9 +65,10 @@ export class AulaPage implements OnInit {
 subscription: any;
 
 
-  constructor(private menu: MenuController,private httpClient: HttpClient, public instrutor: NomeInstrutorService, private router: Router, private _activatedRoute: ActivatedRoute) {
+  constructor(private load: LoadingController,private menu: MenuController,private httpClient: HttpClient, public instrutor: NomeInstrutorService, private router: Router, private _activatedRoute: ActivatedRoute) {
     this.router.events.subscribe((ev) => {
       if (ev instanceof NavigationEnd) { 
+        this.presentLoading();
         this.nome_instrutor = this.instrutor.getNome();
      this.subscription =   this.httpClient.post(this.instrutor.getUrl()+"/aula.php", { '': '' }, { responseType: "json", headers: this.headers })
           .subscribe(
@@ -80,7 +81,7 @@ subscription: any;
     
               this.instrutor.setAulaAberta(this.aula_aberta);
     
-             
+             this.dismiss();
 
               if ((<Aula_aberta>data).aberto == false) {
                 this.aula_nova = <conjunto_aula_exemplo>data;
@@ -108,6 +109,27 @@ subscription: any;
 
   nome_instrutor: string;
 
+  isloading: boolean = false;
+
+  async presentLoading() {
+    this.isloading = true;
+    const loading = await this.load.create({
+      message: 'Aguarde por favor',
+      duration: 5000
+    });
+    await loading.present();
+
+   
+
+    const { role, data } = await loading.onDidDismiss();
+
+  
+  }
+
+  async dismiss() {
+    this.isloading = false;
+    return await this.load.dismiss().then(() => console.log('dismissed'));
+  }
 
 
 ngOnInit(){}
@@ -162,6 +184,10 @@ ngOnInit(){}
 this.menu.enable(true, 'first');
 this.menu.open('first');
   }
+
+  backPage() {
+    this.router.navigateByUrl("/aula");
+}
 }
 
 

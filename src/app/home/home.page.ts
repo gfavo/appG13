@@ -9,7 +9,7 @@ import { HttpHeaders } from '@angular/common/http';
 
 import { Router } from '@angular/router';
 
-import { AlertController } from '@ionic/angular';
+import { AlertController, IonItem } from '@ionic/angular';
 
 import { NomeInstrutorService } from "../nome-instrutor.service";
 import { Response } from 'selenium-webdriver/http';
@@ -181,5 +181,15 @@ export class HomePage {
     this.storage.set('senha', '');
   }
 
+  lembrarTrue(){
+    if(this.lembrar == false)
+    {
+this.lembrar = true;
+    }
+    else
+    {
+      this.lembrar = false;
+    }
+  }
 }
 

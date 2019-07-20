@@ -26,11 +26,13 @@ export class AppComponent {
   }
 
   initializeApp() {
+
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
   }
+
 
   logoff(){
     this.intrutor.setAula(undefined);

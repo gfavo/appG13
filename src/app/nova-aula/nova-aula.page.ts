@@ -74,4 +74,8 @@ export class NovaAulaPage implements OnInit {
     this.instrutor.setIdPrograma(null);
     this.router.navigate(['/aula']);
   }
+
+  backPage() {
+    this.router.navigateByUrl("/aula");
+}
 }
