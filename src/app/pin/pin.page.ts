@@ -137,35 +137,23 @@ this.erroconcluir();
 await presente.present();
   }
 
-  constructor(public modalController: ModalController,private alertController: AlertController, private router: Router, private instrutor: NomeInstrutorService, private http: HttpClient) {
-    this.router.events.subscribe((ev) => {
-
-
-
-
-      this.http.get(this.instrutor.getUrl()+"/alunos.php", { headers: this.headers })
-        .subscribe(
-          data => {
-            console.log(data);
-            this.aula = <aula>data;
-           
-          });
-
-
-
-
-
-
-
-
-    });
-  }
+  constructor(public modalController: ModalController,private alertController: AlertController, private router: Router, private instrutor: NomeInstrutorService, private http: HttpClient) {}
 
   ngOnInit() {
 
 
   }
 
+  ionViewWillEnter() {
+    
+    this.http.get(this.instrutor.getUrl()+"/alunos.php", { headers: this.headers })
+    .subscribe(
+      data => {
+        console.log(data);
+        this.aula = <aula>data;
+       
+      });
+  }
 
   handleInput(number) {
 

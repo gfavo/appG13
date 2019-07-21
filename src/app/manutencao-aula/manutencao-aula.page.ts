@@ -42,13 +42,7 @@ export class ManutencaoAulaPage implements OnInit {
 
 
 
-  constructor(private load: LoadingController,private http: HttpClient, public instrutor: NomeInstrutorService, private router: Router, private alertController: AlertController, private navCtrl: NavController) {
-    this.router.events.subscribe((ev) => {
-
-
-
-    });
-  }
+  constructor(private load: LoadingController,private http: HttpClient, public instrutor: NomeInstrutorService, private router: Router, private alertController: AlertController, private navCtrl: NavController) {}
   headers = new HttpHeaders({ "x-auth": this.instrutor.getToken(), 'Cache-Control': 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0', 'Pragma': 'no-cache', 'Expires': '0' });
 
 

@@ -39,21 +39,20 @@ buttons: [{text: 'OK',handler: () => {if(act) { this.router.navigate(['/aula']);
 await presente.present();
   }
 
-  constructor(private alertController: AlertController,public instrutor: NomeInstrutorService, private barCode: BarcodeScanner, private http: HttpClient, private router: Router) {
-    this.router.events.subscribe((ev) => {
-      this.http.get(this.instrutor.getUrl()+"/alunos.php", { headers: this.headers })
+  constructor(private alertController: AlertController,public instrutor: NomeInstrutorService, private barCode: BarcodeScanner, private http: HttpClient, private router: Router) {}
+
+  ngOnInit() {
+  }
+
+  ionViewWillEnter() {
+    this.http.get(this.instrutor.getUrl()+"/alunos.php", { headers: this.headers })
         .subscribe(
           data => {
             console.log(data);
             this.aula = <aula>data;
 
           });
-    });
   }
-
-  ngOnInit() {
-  }
-
 
   scanCode() {
     this.instrutor.setAulaAberta(true);

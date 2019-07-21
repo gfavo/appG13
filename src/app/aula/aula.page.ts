@@ -65,36 +65,34 @@ export class AulaPage implements OnInit {
 subscription: any;
 
 
-  constructor(private load: LoadingController,private menu: MenuController,private httpClient: HttpClient, public instrutor: NomeInstrutorService, private router: Router, private _activatedRoute: ActivatedRoute) {
-    this.router.events.subscribe((ev) => {
-      if (ev instanceof NavigationEnd) { 
-        this.presentLoading();
-        this.nome_instrutor = this.instrutor.getNome();
-     this.subscription =   this.httpClient.post(this.instrutor.getUrl()+"/aula.php", { '': '' }, { responseType: "json", headers: this.headers })
-          .subscribe(
-            data => {
-              console.log(data);
-    
-    
-              this.data_aula = (<Aula_aberta>data).datetime;
-              this.aula_aberta = (<Aula_aberta>data).aberto;
-    
-              this.instrutor.setAulaAberta(this.aula_aberta);
-    
-             this.dismiss();
+  constructor(private load: LoadingController,private menu: MenuController,private httpClient: HttpClient, public instrutor: NomeInstrutorService, private router: Router, private _activatedRoute: ActivatedRoute) {}
 
-              if ((<Aula_aberta>data).aberto == false) {
-                this.aula_nova = <conjunto_aula_exemplo>data;
-              }
-              else
-              {
-                this.instrutor.setDatatime(this.data_aula);
-               if (this.instrutor.getDescricao() == undefined) this.instrutor.setDescricao(JSON.stringify((<Aula_aberta>data).tecnicas));
-              }
-    
-            });}
-    });
+   ionViewWillEnter() {
+    this.presentLoading();
+    this.nome_instrutor = this.instrutor.getNome();
+    this.subscription =  this.httpClient.post(this.instrutor.getUrl()+"/aula.php", { '': '' }, { responseType: "json", headers: this.headers })
+      .subscribe(
+        data => {
+          console.log(data);
 
+
+          this.data_aula = (<Aula_aberta>data).datetime;
+          this.aula_aberta = (<Aula_aberta>data).aberto;
+
+          this.instrutor.setAulaAberta(this.aula_aberta);
+
+         this.dismiss();
+
+          if ((<Aula_aberta>data).aberto == false) {
+            this.aula_nova = <conjunto_aula_exemplo>data;
+          }
+          else
+          {
+            this.instrutor.setDatatime(this.data_aula);
+           if (this.instrutor.getDescricao() == undefined) this.instrutor.setDescricao(JSON.stringify((<Aula_aberta>data).tecnicas));
+          }
+
+        });
    }
 
   data: Date;

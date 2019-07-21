@@ -89,9 +89,7 @@ export class HomePage {
     this.pessoa.pass = "";
     this.pessoa.user = "";
     this.lembrar = false;
-  }
 
-  ionViewDidEnter() {
     this.status = 0;
 
 
@@ -115,6 +113,39 @@ export class HomePage {
 
       }
     });
+
+
+
+
+  }
+
+  ionViewDidEnter() {
+    /*this.status = 0;
+
+
+    if (this.instrutor.getUrl() == null) {
+      this.instrutor.setUrl("https://www.g13bjj.com.br/ct/mobile");
+    }
+
+
+
+
+    this.storage.get('login').then((val) => {
+
+      if (val != "") {
+        this.storage.get('login').then((val) => {
+          this.pessoa.user = val;
+        });
+        this.storage.get('senha').then((val) => {
+          this.pessoa.pass = val;
+          this.onSubmit();
+        });
+
+      }
+    });*/
+
+
+
 
   }
   //https://www.g13bjj.com.br/ct/mobile/login.php
