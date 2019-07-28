@@ -19,6 +19,8 @@ import { NgxQRCodeModule } from 'ngx-qrcode3';
 import { Network } from '@ionic-native/network/ngx';
 
 import { IonicStorageModule } from '@ionic/storage';
+import { ModaltecnicasPageModule } from './modaltecnicas/modaltecnicas.module';
+
 
 
 
@@ -26,7 +28,7 @@ import { IonicStorageModule } from '@ionic/storage';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [NgxQRCodeModule,FormsModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, ModaldetalhesPageModule,IonicStorageModule.forRoot()],
+  imports: [NgxQRCodeModule,FormsModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, ModaltecnicasPageModule,ModaldetalhesPageModule,IonicStorageModule.forRoot()],
   providers: [
     Network,
     QRScanner,

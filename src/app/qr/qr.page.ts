@@ -57,7 +57,7 @@ await presente.present();
   scanCode() {
     this.instrutor.setAulaAberta(true);
     if (this.aula.id == null) {
-      this.http.post(this.instrutor.getUrl()+"/registrar.php", { "id": "", "descricao": this.instrutor.getDescricao(), "datetime": this.instrutor.getAula().datetime, "idaulaprogramada": this.instrutor.getIdPrograma(), "alunos": this.aula.alunos }, { headers: this.headers })
+      this.http.post(this.instrutor.getUrl()+"/registrar.php", { "id": "", "descricao": this.instrutor.getDescricao(), "datetime": this.instrutor.getAula().datetime, "idaulaprogramada": this.instrutor.getIdPrograma(), "alunos": this.aula.alunos}, { headers: this.headers })
         .subscribe(res => {
           console.log(res)
           this.aula.id = (<aula>res).id;
@@ -106,7 +106,7 @@ else
 
   encerra() {
     if (this.aula.id != null) {
-      this.http.post(this.instrutor.getUrl()+"/concluir.php", { "id": this.aula.id }, { observe: "response", headers: this.headers })
+      this.http.post(this.instrutor.getUrl()+"/concluir.php", { "id": this.aula.id , "tecnicasavulsas": this.instrutor.getIdTecnicas()}, { observe: "response", headers: this.headers })
         .subscribe(data => console.log(data.status));
       this.instrutor.setAulaAberta(false);
       this.simple_alert("Foi concluída com sucesso!",true);

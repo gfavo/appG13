@@ -26,8 +26,11 @@ url: string;
 
 aberto: boolean;
 
+tecnicas: number[];
 
-  constructor() { }
+
+
+  constructor() { this.tecnicas = []; }
 
 setNome(nome: string)
 {
@@ -117,8 +120,15 @@ getUrl(): string
 return this.url;
 }
 
+setIdTecnicas(tecnica: number)
+{
+  this.tecnicas.push(tecnica);
+}
 
-
+getIdTecnicas(): number[]
+{
+  return this.tecnicas;
+}
 }
 
 

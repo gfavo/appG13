@@ -27,7 +27,7 @@
   </ion-item>
 
   <br>
-  <b>Tecnicas do dia: </b>
+  <b>Aulas Semanais: </b>
 
   <ion-item>
     <ion-select class="my-select" width = "100%" placeholder="Selecione uma aula" id="_aulaProgramada">
@@ -43,19 +43,15 @@
   <br>
 
  
-  <b>Tecnicas Avulsas </b>
+  
 
   <ion-item>
-    <ion-select class="my-select" placeholder="Selecione uma aula" id="_aulaAvulsa">
-      <ul *ngFor="let aula of aula.aulasAvulsas">
-        <li>
-          <ion-select-option  value="{{aula.titulo}}">{{aula.titulo}}</ion-select-option>
-        </li>
-      </ul>
-    </ion-select>
+   <ion-button float-center size="medium"(click)="mostraModal()">
+    Tecnicas Extra
+   </ion-button>
   </ion-item>
  
-  <ion-button float-right size="medium" (click)="actionAvulsas()"><ion-icon slot="end" name="add"></ion-icon>Adicionar</ion-button>
+
 
   <br><br><br>
 

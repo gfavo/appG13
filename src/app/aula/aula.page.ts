@@ -17,6 +17,7 @@ export class aluno {
   nome: string;
 }
 
+
 export class aula_exemplo {
   id: string;
   titulo: string;
@@ -27,7 +28,7 @@ export class conjunto_aula_exemplo {
   aberto: boolean;
   datetime: string;
   aulasProgramadas: aula_exemplo[];
-  aulasAvulsas: aula_exemplo[];
+  tecnicasAvulsas: tecnicas[];
 }
 
 export class Aula_aberta {
@@ -38,7 +39,7 @@ export class Aula_aberta {
 }
 
 export class tecnicas {
-  descricao: string;
+  id: number;
   nome: string;
 }
 

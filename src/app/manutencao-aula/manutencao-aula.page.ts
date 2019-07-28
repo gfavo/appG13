@@ -213,7 +213,7 @@ this.presentLoading();
   }
   concluir() {
     if (this.aula.id != null) {
-      this.http.post(this.instrutor.getUrl() + "/concluir.php", { "id": this.aula.id }, { observe: "response", headers: this.headers })
+      this.http.post(this.instrutor.getUrl() + "/concluir.php", { "id": this.aula.id, "tecnicasavulsas": this.instrutor.getIdTecnicas() }, { observe: "response", headers: this.headers })
         .subscribe(data => console.log(data.status));
       this.instrutor.setAulaAberta(false);
 
