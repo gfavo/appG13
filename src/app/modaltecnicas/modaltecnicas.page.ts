@@ -48,7 +48,7 @@ ngOnInit(){}
    this.search_tecnica = document.getElementById('search_tecnica');
    this.aula =  this.instrutor.getAula();
    (<tecnicas[]>this.tecnicasBool) = this.aula.tecnicasAvulsas;
-   alert(this.aula.tecnicasAvulsas[0].nome);
+   
    
    this.tecnicasBool.forEach(element => {
      element.incluir = false;

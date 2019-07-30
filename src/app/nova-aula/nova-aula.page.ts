@@ -64,7 +64,7 @@ export class NovaAulaPage implements OnInit {
 
   
   continuar() {
-
+    
 
     this.descricao_aula = (<HTMLIonTextareaElement>document.getElementById("descricao")).value;
     this.instrutor.setDescricao(this.descricao_aula);

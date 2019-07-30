@@ -192,6 +192,15 @@ await presente.present();
           this.aula.id = (<aula>res).id;
         });
     }
+    else {
+      this.instrutor.setAulaAberta(true);
+      this.http.post(this.instrutor.getUrl() + "/registrar.php", { "id": "", "descricao": this.instrutor.getDescricao(), "datetime": this.instrutor.getAula().datetime, "idaulaprogramada": this.instrutor.getIdPrograma(), "alunos": this.aula.alunos }, { headers: this.headers })
+        .subscribe(data => {
+          console.log(data)
+          this.aula.id = (<aula>data).id;
+         
+        });
+    }
 
     if (this.codigo.length == 5) {
       if (this.procurarAluno(this.codigo,this.aula.alunos) == true) {

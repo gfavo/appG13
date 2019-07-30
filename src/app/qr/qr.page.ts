@@ -63,7 +63,16 @@ await presente.present();
           this.aula.id = (<aula>res).id;
         });
     }
-
+    else {
+      this.instrutor.setAulaAberta(true);
+      this.http.post(this.instrutor.getUrl() + "/registrar.php", { "id": "", "descricao": this.instrutor.getDescricao(), "datetime": this.instrutor.getAula().datetime, "idaulaprogramada": this.instrutor.getIdPrograma(), "alunos": this.aula.alunos }, { headers: this.headers })
+        .subscribe(data => {
+          console.log(data)
+         
+          this.aula.id = (<aula>data).id;
+     
+        });
+    }
     this.barCode.scan().then(data => {
       this.scannedCode = data.text;
 this.aluno_cobaia =  this.achaAluno(this.scannedCode,this.aula.alunos);                     
