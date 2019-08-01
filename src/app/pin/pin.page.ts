@@ -194,7 +194,7 @@ await presente.present();
     }
     else {
       this.instrutor.setAulaAberta(true);
-      this.http.post(this.instrutor.getUrl() + "/registrar.php", { "id": "", "descricao": this.instrutor.getDescricao(), "datetime": this.instrutor.getAula().datetime, "idaulaprogramada": this.instrutor.getIdPrograma(), "alunos": this.aula.alunos }, { headers: this.headers })
+      this.http.post(this.instrutor.getUrl() + "/registrar.php", { "id": "", "descricao": this.instrutor.getDescricao(), "datetime": this.instrutor.getAula().datetime, "idaulaprogramada": this.instrutor.getIdPrograma(),"idtecnicasavulsas": this.instrutor.getIdTecnicas(), "alunos": this.aula.alunos }, { headers: this.headers })
         .subscribe(data => {
           console.log(data)
           this.aula.id = (<aula>data).id;

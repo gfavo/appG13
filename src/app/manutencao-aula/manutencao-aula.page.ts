@@ -140,11 +140,25 @@ export class ManutencaoAulaPage implements OnInit {
       buttons: [{
         text: 'SIM',
         handler: () => {
-          this.http.post(this.instrutor.getUrl() + "/registrar.php", this.aula, { headers: this.headers })
-            .subscribe(data => {
-              console.log(data)
-              this.registrado();
-            });
+          if (this.aula.id != null) {
+            this.http.post(this.instrutor.getUrl() + "/registrar.php", this.aula, { headers: this.headers })
+              .subscribe(data => {
+                console.log(data)
+                this.registrado();
+                this.dismiss();
+      
+              });
+          }
+          else {
+            this.instrutor.setAulaAberta(true);
+            this.http.post(this.instrutor.getUrl() + "/registrar.php", { "id": "", "descricao": this.instrutor.getDescricao(), "datetime": this.instrutor.getAula().datetime, "idaulaprogramada": this.instrutor.getIdPrograma(), "alunos": this.aula.alunos , "idtecnicasavulsas": this.instrutor.getIdTecnicas()}, { headers: this.headers })
+              .subscribe(data => {
+                console.log(data)
+                this.dismiss();
+                this.aula.id = (<aula>data).id;
+                this.registrado();
+              });
+          }
         }
       }, {
         text: 'NAO',
@@ -215,7 +229,7 @@ this.presentLoading();
   }
   concluir() {
     if (this.aula.id != null) {
-      this.http.post(this.instrutor.getUrl() + "/concluir.php", { "id": this.aula.id, "tecnicasavulsas": JSON.stringify(this.instrutor.getIdTecnicas()) }, { observe: "response", headers: this.headers })
+      this.http.post(this.instrutor.getUrl() + "/concluir.php", { "id": this.aula.id }, { observe: "response", headers: this.headers })
         .subscribe(data => console.log(data.status));
       this.instrutor.setAulaAberta(false);
 
