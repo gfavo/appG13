@@ -84,6 +84,8 @@ subscription: any;
 
          this.dismiss();
 
+         this.tecnicas = (<Aula_aberta>data).tecnicas;
+
           if ((<Aula_aberta>data).aberto == false) {
             this.aula_nova = <conjunto_aula_exemplo>data;
           }
@@ -109,6 +111,8 @@ subscription: any;
   nome_instrutor: string;
 
   isloading: boolean = false;
+
+  tecnicas: tecnicas[];
 
   async presentLoading() {
     this.isloading = true;

@@ -54,4 +54,9 @@ export class AppComponent {
     this.router.navigate(["/home"]);
    
   }
+
+  homepage(){
+    this.menu.toggle();
+    this.router.navigate(["/aula"]);
+  }
 }

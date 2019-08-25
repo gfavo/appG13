@@ -12,6 +12,7 @@ const routes: Routes = [
   { path: 'modaldetalhes', loadChildren: './modaldetalhes/modaldetalhes.module#ModaldetalhesPageModule' },
   { path: 'painel', loadChildren: './painel/painel.module#PainelPageModule' },
   { path: 'modaltecnicas', loadChildren: './modaltecnicas/modaltecnicas.module#ModaltecnicasPageModule' },
+  { path: 'diretorio', loadChildren: './diretorio/diretorio.module#DiretorioPageModule' },
 
 ];
 

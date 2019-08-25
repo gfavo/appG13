@@ -34,6 +34,16 @@
     <div *ngIf="instrutor.getAulaAberta() == true">
       <ion-button size="large" color="dark" expand="block" (click)="completarAula()">Completar aula!</ion-button>
       <ion-label style="margin-top: 20px;">Data da aula: {{data_aula}}</ion-label>
+
+      <ion-label>
+        <h2> Tecnicas da aula:</h2>
+      </ion-label>
+  <br>
+  
+  <ul *ngFor="let _tecnica of tecnicas">
+    <li>{{_tecnica.nome}}</li>
+  </ul>
+  
     </div>
     <div *ngIf="instrutor.getAulaAberta() == false">
 
@@ -54,11 +64,11 @@
     Evolução dos Alunos
     <ion-icon name="arrow-up" slot="end"></ion-icon>
   </ion-button>
-
-  <ion-button size="medium" style="--background: #287a9d" expand="block" class="options">
-    Solicitações
-    <ion-icon name="mail-open" slot="end"></ion-icon>
-  </ion-button>
 -->
+  <ion-button size="medium" style="--background: #287a9d" expand="block" class="options" [routerLink]="['/diretorio']">
+    Diretorio
+    <ion-icon name="bookmarks" slot="end"></ion-icon>
+  </ion-button>
+
 
 </ion-content>

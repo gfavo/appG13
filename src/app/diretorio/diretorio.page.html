@@ -1,0 +1,36 @@
+<ion-header class="fonte">
+
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-thumbnail slot="end">
+      <img src="../assets/images/logobola.png">
+    </ion-thumbnail>
+    <ion-title text-center>Diretorio</ion-title>
+  </ion-toolbar>
+
+
+
+</ion-header>
+
+
+<ion-content padding>
+
+<ion-list *ngFor="let tecnicas of ConteudoDiretorio">
+  <ion-button expand="full" (click)="openCategoria(tecnicas.categoria)" color="light"><ion-item>
+  <ion-label><ion-icon *ngIf="tecnicas.expandida == false" name="arrow-forward"></ion-icon><ion-icon *ngIf="tecnicas.expandida" name="arrow-down"></ion-icon>{{tecnicas.categoria}}</ion-label>
+  </ion-item></ion-button>
+  <ng-container *ngIf="tecnicas.expandida">  
+      <ion-list *ngFor="let tecnica of tecnicaExpandida.tecnicas">
+          <ion-label>{{tecnica.nome}}</ion-label>
+      </ion-list>
+    </ng-container>
+  
+
+
+</ion-list>
+
+
+
+</ion-content>
