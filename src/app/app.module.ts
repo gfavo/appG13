@@ -20,6 +20,7 @@ import { Network } from '@ionic-native/network/ngx';
 
 import { IonicStorageModule } from '@ionic/storage';
 import { ModaltecnicasPageModule } from './modaltecnicas/modaltecnicas.module';
+import { ModalvideoPageModule } from './modalvideo/modalvideo.module';
 
 
 
@@ -28,7 +29,7 @@ import { ModaltecnicasPageModule } from './modaltecnicas/modaltecnicas.module';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [NgxQRCodeModule,FormsModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, ModaltecnicasPageModule,ModaldetalhesPageModule,IonicStorageModule.forRoot()],
+  imports: [NgxQRCodeModule,FormsModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, ModaltecnicasPageModule,ModaldetalhesPageModule,ModalvideoPageModule,IonicStorageModule.forRoot()],
   providers: [
     Network,
     QRScanner,

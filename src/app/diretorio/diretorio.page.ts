@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NomeInstrutorService } from '../nome-instrutor.service';
+import { ModalvideoPage } from '../modalvideo/modalvideo.page';
+import { ModalController } from '@ionic/angular';
 
 class tecnicasDir{
   idvimeo: number;
@@ -38,7 +40,16 @@ export class DiretorioPage implements OnInit {
 
   tecnicaExpandida: conteudoGetDiretorio;
 
-  constructor(private httpClient: HttpClient,private instrutor: NomeInstrutorService) { }
+  constructor(private modalController: ModalController,private httpClient: HttpClient,private instrutor: NomeInstrutorService) { }
+
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: ModalvideoPage,
+    });
+    return await modal.present();
+  }
+
+
   ionViewWillEnter() {
 this.subscription = this.httpClient.get(this.instrutor.getUrl()+"/diretorio.php",{ responseType: "json", headers: this.headers })
 .subscribe(data=>{
@@ -88,4 +99,12 @@ else
   }
 }
   }
+  abreVideo(numeroTecnica: number,senhavimeo: string){
+    this.instrutor.setIdVimeo(numeroTecnica);
+    this.instrutor.setSenhaVimeo(senhavimeo);
+    
+    this.presentModal();
+  }
+
+
 }

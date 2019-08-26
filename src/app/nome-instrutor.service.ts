@@ -28,7 +28,9 @@ aberto: boolean;
 
 tecnicas: number[];
 
+idvimeo: number;
 
+senhavimeo: string;
 
   constructor() { this.tecnicas = []; }
 
@@ -129,6 +131,24 @@ getIdTecnicas(): number[]
 {
   return this.tecnicas;
 }
+
+setIdVimeo(idvimeo: number)
+{
+  this.idvimeo = idvimeo;
+}
+getIdVimeo(): number
+{
+  return this.idvimeo;
+}
+setSenhaVimeo(senhavimeo: string)
+{
+  this.senhavimeo = senhavimeo;
+}
+getSenhaVimeo(): string
+{
+  return this.senhavimeo;
+}
+
 }
 
 
