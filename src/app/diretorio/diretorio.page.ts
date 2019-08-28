@@ -4,13 +4,13 @@ import { NomeInstrutorService } from '../nome-instrutor.service';
 import { ModalvideoPage } from '../modalvideo/modalvideo.page';
 import { ModalController } from '@ionic/angular';
 
-class tecnicasDir{
+export class tecnicasDir{
   idvimeo: number;
   nome: string;
   senhavimeo: string;
 }
 
-class conteudoGetDiretorio{
+export class conteudoGetDiretorio{
   categoria: string;
   tecnicas: tecnicasDir[];
   expandida: boolean;

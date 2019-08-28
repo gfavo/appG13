@@ -40,9 +40,11 @@
       </ion-label>
   <br>
   
-  <ul *ngFor="let _tecnica of tecnicas">
-    <li>{{_tecnica.nome}}</li>
-  </ul>
+  <ion-list *ngFor="let _tecnica of tecnicasVimeo">
+    <ion-segment-button (click)="abreVideo(_tecnica.idvimeo,_tecnica.senhavimeo)" class="item item-text-wrap">
+    <ion-item class="ion-text-wrap">{{_tecnica.nome}}</ion-item>
+  </ion-segment-button>
+  </ion-list>
   
     </div>
     <div *ngIf="instrutor.getAulaAberta() == false">

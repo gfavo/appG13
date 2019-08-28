@@ -10,7 +10,10 @@ import { Router, NavigationEnd } from '@angular/router';
 import { aula } from '../manutencao-aula/manutencao-aula.page';
 
 import { ActivatedRoute } from '@angular/router';
-import { MenuController, LoadingController } from '@ionic/angular';
+import { MenuController, LoadingController, ModalController } from '@ionic/angular';
+
+import { tecnicasDir, conteudoGetDiretorio } from '../diretorio/diretorio.page';
+import { ModalvideoPage } from '../modalvideo/modalvideo.page';
 
 export class aluno {
   id: number;
@@ -65,8 +68,11 @@ export class AulaPage implements OnInit {
 
 subscription: any;
 
+tecnicasVimeo: tecnicasDir[];
 
-  constructor(private load: LoadingController,private menu: MenuController,private httpClient: HttpClient, public instrutor: NomeInstrutorService, private router: Router, private _activatedRoute: ActivatedRoute) {}
+aulaVimeo: conteudoGetDiretorio;
+
+  constructor(private modalController: ModalController,private load: LoadingController,private menu: MenuController,private httpClient: HttpClient, public instrutor: NomeInstrutorService, private router: Router, private _activatedRoute: ActivatedRoute) {}
 
    ionViewWillEnter() {
     this.presentLoading();
@@ -79,6 +85,9 @@ subscription: any;
 
           this.data_aula = (<Aula_aberta>data).datetime;
           this.aula_aberta = (<Aula_aberta>data).aberto;
+          this.aulaVimeo = (<conteudoGetDiretorio>data);
+          this.tecnicasVimeo = this.aulaVimeo.tecnicas;
+
 
           this.instrutor.setAulaAberta(this.aula_aberta);
 
@@ -113,6 +122,13 @@ subscription: any;
   isloading: boolean = false;
 
   tecnicas: tecnicas[];
+
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: ModalvideoPage,
+    });
+    return await modal.present();
+  }
 
   async presentLoading() {
     this.isloading = true;
@@ -191,6 +207,14 @@ this.menu.open('first');
   backPage() {
     this.router.navigateByUrl("/aula");
 }
+
+abreVideo(numeroTecnica: number,senhavimeo: string){
+  this.instrutor.setIdVimeo(numeroTecnica);
+  this.instrutor.setSenhaVimeo(senhavimeo);
+  
+  this.presentModal();
+}
+
 }
 
 
