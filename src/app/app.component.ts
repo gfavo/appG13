@@ -57,6 +57,13 @@ export class AppComponent {
 
   homepage(){
     this.menu.toggle();
+    if(this.intrutor.getRole() == "INSTRUTOR")
+    {
     this.router.navigate(["/aula"]);
+    }
+    else
+    {
+      this.router.navigate(["/principalaluno"]);
+    }
   }
 }

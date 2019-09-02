@@ -7,7 +7,7 @@
     <ion-thumbnail slot="end">
       <img src="../assets/images/logobola.png">
     </ion-thumbnail>
-    <ion-title text-center>Pagina do instrutor</ion-title>
+    <ion-title text-center>Pagina do aluno</ion-title>
   </ion-toolbar>
 
 
@@ -15,5 +15,13 @@
 </ion-header>
 
 <ion-content padding>
+ 
+  
+  <ion-button  size="medium" style="--background: #287a9d" expand="block" class="options" (click)="abreDiretorio()">
+      <ion-icon *ngIf="!exibe_diretorio" name="lock" slot="start"></ion-icon>
+        Diretorio
+    <ion-icon name="bookmarks" slot="end"></ion-icon>
+  </ion-button>
+
 
 </ion-content>
