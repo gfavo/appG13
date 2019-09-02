@@ -181,15 +181,22 @@ export class HomePage {
               this.storage.set('senha', this.pessoa.pass);
             }
 
+            this.instrutor.setRole(response.headers.get("x-role"));
+            if(response.headers.get("x-role") == "INSTRUTOR")
+            {
             this.router.navigate(["/aula"]);
+            }
+            else
+            {
+              this.router.navigate(["/principalaluno"]);
+            }
             this.instrutor.setNome(this.pessoa.user);
 
 
             this.instrutor.setToken(response.headers.get("x-auth"));
-
-        
-
-
+          
+           
+           
           },
           error => {
             this.dismiss();

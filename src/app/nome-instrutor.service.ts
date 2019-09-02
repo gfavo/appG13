@@ -32,6 +32,8 @@ idvimeo: number;
 
 senhavimeo: string;
 
+role: string;
+
   constructor() { this.tecnicas = []; }
 
 setNome(nome: string)
@@ -148,6 +150,16 @@ getSenhaVimeo(): string
 {
   return this.senhavimeo;
 }
+setRole(role: string)
+{
+  this.role = role;
+}
+getRole(): string
+{
+  return this.role;
+}
+
+
 
 }
 

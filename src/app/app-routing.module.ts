@@ -14,6 +14,7 @@ const routes: Routes = [
   { path: 'modaltecnicas', loadChildren: './modaltecnicas/modaltecnicas.module#ModaltecnicasPageModule' },
   { path: 'diretorio', loadChildren: './diretorio/diretorio.module#DiretorioPageModule' },
   { path: 'modalvideo', loadChildren: './modalvideo/modalvideo.module#ModalvideoPageModule' },
+  { path: 'principalaluno', loadChildren: './principalaluno/principalaluno.module#PrincipalalunoPageModule' },
 
 ];
 
