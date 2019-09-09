@@ -7,14 +7,54 @@
       <ion-thumbnail slot="end">
         <img src="../assets/images/logobola.png">
       </ion-thumbnail>
-      <ion-title text-center>Calendario</ion-title>
+      <ion-title text-center>Início</ion-title>
     </ion-toolbar>
   
-  
+ 
   
   </ion-header>
   
 
 <ion-content padding>
+   
+    <ng-template #template let-showEventDetail="showEventDetail" let-selectedDate="selectedDate" let-noEventsLabel="noEventsLabel">
+      <br>
+      <ng-container  *ngIf="tecnicasExistem == true">
+        <div class="ion-text-center">
+         <ion-button (click)="abreTecnicas()">
+          Ver tecnicas do dia {{dia}}
+        </ion-button>
+        </div>
+      </ng-container>
+      
+     
+     
+      </ng-template>
+<div class="center">
+<ion-img src="{{url}}" class="center"></ion-img>
+<br>
 
+<h2 class="centertext">{{ nomealuno }}</h2>    
+
+</div>
+    <div class="calendario ion-justify-content-end">
+    <div class="ion-text-center"><h1> <ion-button class="ion-text-left ion-margin-end ion-margin-bottom" size="small" (click)="voltaMes()"><ion-icon name="arrow-dropleft"></ion-icon></ion-button> {{ viewTitle }}  <ion-button  size="small" class="ion-text-left ion-margin-start ion-margin-bottom" (click)="avancaMes()"><ion-icon name="arrow-dropright"></ion-icon></ion-button></h1></div>
+      <calendar 
+      [eventSource]="eventSource" 
+      [calendarMode]="calendar.mode" 
+      [currentDate]="calendar.currentDate"
+      [monthviewEventDetailTemplate]="template"
+      (onEventSelected)="onEventSelected($event)"
+      (onTitleChanged)="onViewTitleChanged($event)"
+      (onTimeSelected)="onTimeSelected($event)" 
+      startHour="6"
+      endHour="20"
+      step="30"
+      startingDayWeek="1"
+          >
+      </calendar>
+
+      </div>
+  
 </ion-content>
+

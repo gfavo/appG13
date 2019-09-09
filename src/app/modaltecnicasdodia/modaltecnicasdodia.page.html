@@ -1,0 +1,26 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-thumbnail slot="start">
+            <img src="../assets/images/logobola.png">
+          </ion-thumbnail>
+      <ion-title>
+      Tecnicas feitas no dia {{diames}}
+      </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-list *ngFor="let _tecnica of tecnicasDia">
+        <ion-segment-button  class="item item-text-wrap" (click)="abreVideo(_tecnica.idvimeo,_tecnica.senhavimeo)">
+        <ion-item class="ion-text-wrap">{{_tecnica.title}}</ion-item>
+      </ion-segment-button>
+      </ion-list>
+</ion-content>
+
+<ion-footer no-shadow>
+    <ion-toolbar position="bottom">  
+      <ion-button expand="full" (click)="dismiss()">
+        Fechar detalhes
+      </ion-button>
+    </ion-toolbar>
+  </ion-footer>

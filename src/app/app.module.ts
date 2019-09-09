@@ -21,7 +21,8 @@ import { Network } from '@ionic-native/network/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 import { ModaltecnicasPageModule } from './modaltecnicas/modaltecnicas.module';
 import { ModalvideoPageModule } from './modalvideo/modalvideo.module';
-
+import { NgCalendarModule  } from 'ionic2-calendar';
+import { ModaltecnicasdodiaPageModule } from './modaltecnicasdodia/modaltecnicasdodia.module';
 
 
 
@@ -29,7 +30,7 @@ import { ModalvideoPageModule } from './modalvideo/modalvideo.module';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [NgxQRCodeModule,FormsModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, ModaltecnicasPageModule,ModaldetalhesPageModule,ModalvideoPageModule,IonicStorageModule.forRoot()],
+  imports: [NgxQRCodeModule,NgCalendarModule,FormsModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, ModaltecnicasPageModule,ModaldetalhesPageModule,ModalvideoPageModule,ModaltecnicasdodiaPageModule,IonicStorageModule.forRoot()],
   providers: [
     Network,
     QRScanner,

@@ -84,4 +84,11 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: white;
   --ion-color-light-tint: white;
+
+  $split-pane-ios-side-min-width: 70px;
+$split-pane-ios-side-max-width: 70px;
+$split-pane-md-side-min-width: 70px;
+$split-pane-md-side-max-width: 70px;
+$split-pane-wp-side-min-width: 70px;
+$split-pane-wp-side-max-width: 70px;
 }

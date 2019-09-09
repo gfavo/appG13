@@ -26,3 +26,11 @@
     --ion-color-shade: var(--ion-color-vermelhosite-shade) !important;
     --ion-color-tint: var(--ion-color-vermelhosite-tint) !important;
     }
+
+    .monthview-selected{
+        background-color: rgb(71, 71, 223) !important;
+    }
+    
+    .monthview-primary-with-event {
+        background-color: rgb(31, 182, 31) !important;
+      }

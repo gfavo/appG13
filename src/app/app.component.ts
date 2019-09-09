@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 
-import { Platform, MenuController } from '@ionic/angular';
+import { Platform, MenuController, AlertController, IonButton } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { RouterOutlet, Router } from '@angular/router';
 import { NomeInstrutorService } from './nome-instrutor.service';
 
 import { Storage } from '@ionic/storage';
+import { $ } from 'protractor';
+import { BrowserTransferStateModule } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -15,22 +17,49 @@ import { Storage } from '@ionic/storage';
 export class AppComponent {
   constructor(
     private storage: Storage,
-    private intrutor: NomeInstrutorService,
+    public intrutor: NomeInstrutorService,
     private menu: MenuController,
     private router: Router,
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private alertController: AlertController
   ) {
     this.initializeApp();
   }
 
+  exibe_diretorio: boolean = true;
+
+
+  async alertaNaoPago() {
+    const alert = await this.alertController.create({
+      header: '',
+      message: 'Você deve ser um usuario premium para acessar esse conteúdo!',
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
   initializeApp() {
 
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+  }
+
+
+  
+  ionViewWillEnter() {
+if (this.intrutor.getRole() == "ALUNOPAGO")
+{
+  this.exibe_diretorio = true;
+}
+else{
+  this.exibe_diretorio = false;
+}
+
+
+
   }
 
 
@@ -56,6 +85,7 @@ export class AppComponent {
   }
 
   homepage(){
+
     this.menu.toggle();
     if(this.intrutor.getRole() == "INSTRUTOR")
     {
@@ -63,7 +93,22 @@ export class AppComponent {
     }
     else
     {
-      this.router.navigate(["/principalaluno"]);
+      this.router.navigate(["/calendario"]);
     }
   }
+
+  abreDiretorio()
+  {
+    if (this.intrutor.getRole() == "ALUNOPAGO")
+    {
+      this.menu.toggle();
+      this.router.navigate(["/diretorio"]);
+    }
+    else
+    {
+this.alertaNaoPago();
+    }
+
+  }
+  
 }

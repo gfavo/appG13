@@ -72,7 +72,15 @@ tecnicasVimeo: tecnicasDir[];
 
 aulaVimeo: conteudoGetDiretorio;
 
-  constructor(private modalController: ModalController,private load: LoadingController,private menu: MenuController,private httpClient: HttpClient, public instrutor: NomeInstrutorService, private router: Router, private _activatedRoute: ActivatedRoute) {}
+  constructor(private modalController: ModalController,
+              private load: LoadingController,
+              private menu: MenuController,
+              private httpClient: HttpClient,
+              public instrutor: NomeInstrutorService,
+              private router: Router, 
+              private _activatedRoute: ActivatedRoute
+              ) 
+              {}
 
    ionViewWillEnter() {
     this.presentLoading();

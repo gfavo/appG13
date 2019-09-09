@@ -1,14 +1,57 @@
 
-
-
 <ion-app>
 <style>
 
 ion-button{
-  margin-top: 3%;
+
+  --padding-top: 30%;
+  --padding-bottom: 30%;
+  
+
+
+ 
+
 }
 
 
+ion-menu{
+
+  --width: 35%;
+
+
+}
+
+ion-icon{
+font-size: 5vh;
+
+}
+
+
+.container{
+  position: absolute;
+
+  height: 100%;
+  width: 100%;
+
+  
+  }
+
+  @media screen and (min-height : 600px)  {
+    ion-button{
+      margin-bottom: 35%;
+    }
+
+  }
+
+  @media screen and (min-height : 800px)  {
+    ion-button{
+      margin-bottom: 35%;
+    }
+
+  }
+
+
+ 
 
 </style>
 
@@ -16,27 +59,40 @@ ion-button{
     <ion-menu contentId="content1" side="start">
         <ion-header>
           <ion-toolbar  color="primary">
-            <ion-title text-center>Olá, {{this.intrutor.getNome()}}</ion-title>
+            <ion-title text-center>Olá, {{this.intrutor.getNome()}}<ion-ripple-effect></ion-ripple-effect></ion-title>
           </ion-toolbar>
         </ion-header>
         <ion-content color="dark">
-         
+<div class="container">
 
-<ion-button expand="full" (click)="logoff()">
-    <ion-icon slot="start" name="log-out"></ion-icon>
-  Logout
-</ion-button>
+          <ion-button expand="full"  (click)="homepage()" class="botaolateral">
+            <div>
+               <ion-icon   name="home" style="margin-bottom: 20%"></ion-icon>
+            <br>          
+                <label  style="font-size: 75%;">Home</label>
+            </div>
+          </ion-button>
 
-<ion-button expand="full" (click)="logoff()">
-  <ion-icon slot="start" name="log-out"></ion-icon>
-Mudar perfil
-</ion-button>
+        <ion-button expand="full"  (click)="abreDiretorio()" class="botaolateral">
+            <div>
+                <ion-icon *ngIf='this.intrutor.getRole() != "ALUNOPAGO"' name="lock"></ion-icon><ion-icon  *ngIf='this.intrutor.getRole() == "ALUNOPAGO"'  name="bookmarks" style="margin-bottom: 20%"></ion-icon>
+            <br>          
+                <label  style="font-size: 75%;">Diretorio</label>
+            </div>
+          </ion-button>
+   
 
-<ion-button expand="full" (click)="homepage()">
-HomePage
-</ion-button>
+ 
+              <ion-button expand="full"  (click)="logoff()" class="botaolateral">
+          <div>
+              <ion-icon  name="log-out" style="margin-bottom: 20%"></ion-icon>
+          <br>          
+              <label  style="font-size: 75%;">Logout</label>
+          </div>
+        </ion-button>
 
-
+</div>
+          
         </ion-content>
       </ion-menu>
   <ion-router-outlet id="content1" main></ion-router-outlet>

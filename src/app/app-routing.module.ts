@@ -16,6 +16,7 @@ const routes: Routes = [
   { path: 'modalvideo', loadChildren: './modalvideo/modalvideo.module#ModalvideoPageModule' },
   { path: 'principalaluno', loadChildren: './principalaluno/principalaluno.module#PrincipalalunoPageModule' },
   { path: 'calendario', loadChildren: './calendario/calendario.module#CalendarioPageModule' },
+  { path: 'modaltecnicasdodia', loadChildren: './modaltecnicasdodia/modaltecnicasdodia.module#ModaltecnicasdodiaPageModule' },
 
 ];
 

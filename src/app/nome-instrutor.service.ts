@@ -33,6 +33,9 @@ idvimeo: number;
 senhavimeo: string;
 
 role: string;
+  tecnicasdia;
+  dia;
+  mes;
 
   constructor() { this.tecnicas = []; }
 
@@ -158,9 +161,23 @@ getRole(): string
 {
   return this.role;
 }
-
-
-
+setTecnicasDia(tecnicas)
+{
+  this.tecnicasdia = tecnicas;
+}
+getTecnicasDia()
+{
+  return this.tecnicasdia;
+}
+setDiaMes(dia,mes)
+{
+  this.dia = dia;
+  this.mes = mes;
+}
+getDiaMes()
+{
+  return this.dia+"/"+this.mes;
+}
 }
 
 

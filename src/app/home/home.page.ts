@@ -188,7 +188,7 @@ export class HomePage {
             }
             else
             {
-              this.router.navigate(["/principalaluno"]);
+              this.router.navigate(["/calendario"]);
             }
             this.instrutor.setNome(this.pessoa.user);
 
