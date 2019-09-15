@@ -20,7 +20,7 @@ class conteudoCheck{
 })
 export class CheckinsPage implements OnInit {
 subscription;
-conteudo: conteudoCheck;
+conteudo: conteudoCheck[];
 headers = new HttpHeaders({ "x-auth": this.instrutor.getToken() , 'Cache-Control':  'no-cache, no-store, must-revalidate, post-check=0, pre-check=0','Pragma': 'no-cache','Expires': '0'});
 
   constructor(
@@ -36,7 +36,7 @@ headers = new HttpHeaders({ "x-auth": this.instrutor.getToken() , 'Cache-Control
     this.subscription =  this.httpClient.get(this.instrutor.getUrl()+"/checkins.php", { responseType: "json", headers: this.headers })
     .subscribe(
       data => {
-        this.conteudo = (<conteudoCheck>data);
+        this.conteudo = (<conteudoCheck[]>data);
         console.log(JSON.stringify(this.conteudo));
   });
 
@@ -56,4 +56,9 @@ voltar(){
   this.router.navigateByUrl("/aula");
 }
 
+checkall(){
+  this.conteudo.forEach(element => {
+    element.confirmado = 1;
+  });
+}
 }

@@ -23,22 +23,22 @@
     <ion-label position="stacked">
       <h2>Descrição da aula</h2>
     </ion-label>
-    <ion-textarea row="2" id="descricao" required></ion-textarea>
+    <ion-textarea value="{{descricaoPadrao}}" row="2" id="descricao" required></ion-textarea>
   </ion-item>
 
   <br>
   <b>Aulas Semanais: </b>
 
   <ion-item>
-    <ion-select class="my-select" width = "100%" placeholder="Selecione uma aula" id="_aulaProgramada">
+    <ion-select class="my-select" width = "100%" placeholder="Selecione uma aula" id="_aulaProgramada" (ionChange)="action()">
       <ul *ngFor="let aula of aula.aulasProgramadas">
         <li>
-          <ion-select-option  value="{{aula.titulo}}">{{aula.titulo}}</ion-select-option>
+          <ion-select-option value="{{aula.titulo}}">{{aula.titulo}}</ion-select-option>
         </li>
       </ul>
     </ion-select>
   </ion-item>
-  <ion-button float-right size="medium" (click)="actionProgramadas()"><ion-icon slot="end" name="add"></ion-icon>Adicionar</ion-button>
+
 
   <br>
 
@@ -61,7 +61,7 @@
         Voltar
       </ion-button>
       <ion-button color="dark" (click)="continuar()"><ion-icon slot="start" name="arrow-forward"></ion-icon>
-        Continuar
+        Criar aula
       </ion-button>
     </ion-toolbar>
 

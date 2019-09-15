@@ -7,13 +7,30 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { NomeInstrutorService } from "../nome-instrutor.service";
 import { async } from '@angular/core/testing';
 import { Router, NavigationEnd } from '@angular/router';
-import { aula } from '../manutencao-aula/manutencao-aula.page';
+
 
 import { ActivatedRoute } from '@angular/router';
-import { MenuController, LoadingController, ModalController } from '@ionic/angular';
+import { MenuController, LoadingController, ModalController, AlertController } from '@ionic/angular';
 
 import { tecnicasDir, conteudoGetDiretorio } from '../diretorio/diretorio.page';
 import { ModalvideoPage } from '../modalvideo/modalvideo.page';
+
+ class Alunos {
+  id: string;
+  nome: string;
+  presenca: boolean;
+  codigo: string;
+}
+
+ class aula {
+
+  datetime: string;
+  id: string;
+  alunos: Alunos[];
+  tecnicasavulsas: number[];
+}
+
+
 
 export class aluno {
   id: number;
@@ -65,12 +82,31 @@ export class aula_nova {
 export class AulaPage implements OnInit {
   id: number;
 
+  subscription: any;
 
-subscription: any;
+  tecnicasVimeo: tecnicasDir[];
 
-tecnicasVimeo: tecnicasDir[];
+  aulaVimeo: conteudoGetDiretorio;
 
-aulaVimeo: conteudoGetDiretorio;
+  data: Date;
+ 
+  headers = new HttpHeaders({ "x-auth": this.instrutor.getToken() , 'Cache-Control':  'no-cache, no-store, must-revalidate, post-check=0, pre-check=0','Pragma': 'no-cache','Expires': '0'});
+
+  aula_nova: conjunto_aula_exemplo;
+
+  data_aula: string;
+
+  aula_aberta: boolean;
+
+  nome_instrutor: string;
+
+  isloading: boolean = false;
+
+  tecnicas: tecnicas[];
+
+  aulaConcluir: aula;
+
+  idaula: string;
 
   constructor(private modalController: ModalController,
               private load: LoadingController,
@@ -78,11 +114,28 @@ aulaVimeo: conteudoGetDiretorio;
               private httpClient: HttpClient,
               public instrutor: NomeInstrutorService,
               private router: Router, 
-              private _activatedRoute: ActivatedRoute
+              private _activatedRoute: ActivatedRoute,
+              private alertController: AlertController,
               ) 
               {}
 
    ionViewWillEnter() {
+
+ 
+
+  
+
+    this.httpClient.get(this.instrutor.getUrl() + "/alunos.php", { headers: this.headers })
+    .subscribe(
+      data => {
+        this.dismiss();
+        
+
+this.idaula = (<aula>data).id;
+console.log(data);
+      }
+    );
+
     this.presentLoading();
     this.nome_instrutor = this.instrutor.getNome();
     this.subscription =  this.httpClient.post(this.instrutor.getUrl()+"/aula.php", { '': '' }, { responseType: "json", headers: this.headers })
@@ -115,27 +168,33 @@ aulaVimeo: conteudoGetDiretorio;
         });
    }
 
-  data: Date;
-
-  headers = new HttpHeaders({ "x-auth": this.instrutor.getToken() , 'Cache-Control':  'no-cache, no-store, must-revalidate, post-check=0, pre-check=0','Pragma': 'no-cache','Expires': '0'});
-
-  aula_nova: conjunto_aula_exemplo;
-
-  data_aula: string;
-
-  aula_aberta: boolean;
-
-  nome_instrutor: string;
-
-  isloading: boolean = false;
-
-  tecnicas: tecnicas[];
+  
 
   async presentModal() {
     const modal = await this.modalController.create({
       component: ModalvideoPage,
     });
     return await modal.present();
+  }
+
+  async msgconcluir() {
+    const conclui = await this.alertController.create({
+
+      header: 'sucesso',
+      message: 'Concluido com Sucesso!',
+      buttons: [{ text: "OK", handler: () => { this.router.navigateByUrl("/aula"); } }]
+    })
+    await conclui.present();
+  }
+
+  async msgerroconcluir() {
+    const concluierro = await this.alertController.create({
+
+      header: 'falhou',
+      message: 'Registre antes de concluir',
+      buttons: [{ text: "OK" }]
+    })
+    await concluierro.present();
   }
 
   async presentLoading() {
@@ -169,7 +228,27 @@ ngOnInit(){}
   }
 
   completarAula() {
-    this.router.navigate(["/metodo"]);
+    this.router.navigate(["/manutencao-aula"]);
+  }
+
+  concluir() {
+    if (this.idaula != "") {
+      this.httpClient.post(this.instrutor.getUrl() + "/concluir.php", { 'id': parseInt(this.idaula) }, { observe: "response", headers: this.headers })
+        .subscribe(data => console.log(data.status));
+      
+
+      this.msgconcluir();
+      this.instrutor.setDatatime(this.data_aula);
+      this.subscription =  this.httpClient.post(this.instrutor.getUrl()+"/aula.php", { '': '' }, { responseType: "json", headers: this.headers })
+      .subscribe(
+        data => {
+          console.log(data);
+     this.ionViewWillEnter();
+        });
+    }
+    else {
+      this.msgerroconcluir();
+    }
   }
 
   formatDate(date) {

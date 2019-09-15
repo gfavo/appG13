@@ -48,7 +48,7 @@ font-size: 5vh;
 </style>
 
 
-    <ion-menu contentId="content1" side="start" *ngIf="this.intrutor.getRole() == 'ALUNO'">
+    <ion-menu contentId="content1" side="start" *ngIf="this.intrutor.getRole() != 'INSTRUTOR'">
 
         <ion-content color="primary">
 <div class="container">

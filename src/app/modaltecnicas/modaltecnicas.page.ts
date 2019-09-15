@@ -4,6 +4,8 @@ import { NomeInstrutorService } from '../nome-instrutor.service';
 import { conjunto_aula_exemplo, tecnicas, aula_exemplo } from '../aula/aula.page';
 
 
+
+
 export class tecnicaId
 {
   id: number;
@@ -35,15 +37,28 @@ tecnicasBool: tecnicaId[];
 
 idtecnicas: number[];
 
-
+itemsFiltrados: tecnicaId[];
 
 aulaComTecnicasAdicionais: aula_exemplo;
 
 tem: boolean;
 
+searchTerm: string;
+
 ngOnInit(){}
+
+filterItems(items,searchTerm) {
+  return items.filter(item => {
+    return item.nome.toUpperCase().indexOf(searchTerm.toUpperCase()) > -1;
+  });
+}
+//tecnica.nome.toUpperCase().includes(search_tecnica.value.toUpperCase())
+setFilteredItems() {
+  this.itemsFiltrados = this.filterItems(this.tecnicasBool,this.searchTerm);
+}
+
   ionViewWillEnter() {
-   
+  
 
    this.search_tecnica = document.getElementById('search_tecnica');
    this.aula =  this.instrutor.getAula();
@@ -53,6 +68,8 @@ ngOnInit(){}
    this.tecnicasBool.forEach(element => {
      element.incluir = false;
    });
+
+this.itemsFiltrados = this.tecnicasBool;
 
   }
 
@@ -100,7 +117,7 @@ adicionar(){
 
   console.log(JSON.stringify(this.instrutor.getIdTecnicas()));
   this.instrutor.setAulaSelecionada(this.aulaComTecnicasAdicionais);
- 
+  this.modalCtrl.dismiss();
   
 }
 

@@ -37,6 +37,7 @@ role: string;
   dia;
   mes;
   margem: any;
+  conteudoConcluir: aula;
 
   constructor() { this.tecnicas = []; }
 
@@ -178,6 +179,15 @@ setDiaMes(dia,mes)
 getDiaMes()
 {
   return this.dia+"/"+this.mes;
+}
+
+setConteudoConcluir(conteudo: aula)
+{
+this.conteudoConcluir = conteudo
+}
+getConteudoConcluir(): aula
+{
+  return this.conteudoConcluir;
 }
 
 }

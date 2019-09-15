@@ -21,19 +21,9 @@
 
 <ion-content onload="evento()" padding class="fonte">
 
-
-  <ion-item>
-    <ion-col text-center>
-      <h1>
-        Bem vindo , {{nome_instrutor}}
-      </h1>
-    </ion-col>
-  </ion-item>
-
   <ion-card padding>
     <div *ngIf="instrutor.getAulaAberta() == true">
-      <ion-button size="large" color="dark" expand="block" (click)="completarAula()">Completar aula!</ion-button>
-      <ion-button color="success" expand="block" (click)="checkins()">Ver Check-ins</ion-button>
+      
       <ion-label style="margin-top: 20px;">Data da aula: {{data_aula}}</ion-label>
 
       <ion-label>
@@ -41,12 +31,14 @@
       </ion-label>
   <br>
   
+  <ion-content class="lista">
   <ion-list *ngFor="let _tecnica of tecnicasVimeo">
-    <ion-segment-button (click)="abreVideo(_tecnica.idvimeo,_tecnica.senhavimeo)" class="item item-text-wrap">
+    <ion-item  (click)="abreVideo(_tecnica.idvimeo,_tecnica.senhavimeo)" class="item item-text-wrap ion-activatable">
     <ion-item class="ion-text-wrap">{{_tecnica.nome}}</ion-item>
-  </ion-segment-button>
+    <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+  </ion-item>
   </ion-list>
-  
+  </ion-content>
     </div>
     <div *ngIf="instrutor.getAulaAberta() == false">
 
@@ -54,8 +46,6 @@
         <ion-card-title style="font-size:20px" text-wrap>Nenhuma aula indentificada.</ion-card-title>
         <ion-card-subtitle>Crie uma aula!</ion-card-subtitle>
       </ion-card-header>
-      <ion-button style="--background: black;" expand="block" (click)="novaAula()">Adicionar nova aula</ion-button>
-      <ion-button color="success" expand="block" (click)="checkins()">Ver Check-ins</ion-button>
     </div>
   </ion-card>
 
@@ -69,7 +59,22 @@
     <ion-icon name="arrow-up" slot="end"></ion-icon>
   </ion-button>
 -->
-  
+
 
 
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+      <div *ngIf="instrutor.getAulaAberta() == true">
+          <ion-button size="default" color="dark" expand="block" (click)="completarAula()">Lista de Presença <ion-icon name="list"></ion-icon> </ion-button>
+          <ion-button color="dark" size="default" expand="block" [routerLink]="['/qr']"><ion-icon slot="start" name="qr-scanner"></ion-icon>Qr Code</ion-button>
+          <ion-button color="success" expand="block" (click)="checkins()">Ver Check-ins</ion-button>
+          <ion-button expand="block" size="default" (click)="concluir()"><ion-icon slot="end" name="checkmark"></ion-icon>Concluir Aula</ion-button>
+        </div>
+        <div *ngIf="instrutor.getAulaAberta() == false">
+            <ion-button style="--background: black;" expand="block" (click)="novaAula()">Adicionar nova aula</ion-button>
+            <ion-button color="success" expand="block" (click)="checkins()">Ver Check-ins</ion-button>
+         </div>
+  </ion-toolbar>
+</ion-footer>

@@ -61,6 +61,11 @@ export class ManutencaoAulaPage implements OnInit {
  
   isloading:boolean = false;
 
+
+  itemsFiltrados: Alunos[];
+
+  searchTerm: string;
+
   async registrado() {
     const registra = await this.alertController.create({
 
@@ -176,6 +181,17 @@ export class ManutencaoAulaPage implements OnInit {
     this.data = this.aula.datetime;
   }
 
+  filterItems(items,searchTerm) {
+    return items.filter(item => {
+      return item.nome.toUpperCase().indexOf(searchTerm.toUpperCase()) > -1;
+    });
+  }
+  //aluno.nome.toUpperCase().includes(search_aluno.value.toUpperCase())
+  setFilteredItems() {
+    this.itemsFiltrados = this.filterItems(this.aula.alunos,this.searchTerm);
+  }
+  
+
   ionViewWillEnter() {
   
     this.search_aluno = document.getElementById("search_aluno");
@@ -191,7 +207,8 @@ export class ManutencaoAulaPage implements OnInit {
           this.aula = <aula>data;
           this.mostraLista = true;
 
-          
+this.itemsFiltrados = this.aula.alunos;
+
         }
       );
       
@@ -199,12 +216,17 @@ export class ManutencaoAulaPage implements OnInit {
     this.dismiss();
   }
 
-  onCheck() {
+  onCheck(nome,presenca) {
     if (this.aula.alunos != this.alunos_original) {
       (<HTMLIonButtonElement>document.getElementById("botao_registrar")).disabled = false;
     }
+
+this.aula.alunos.find(x => x.nome = nome).presenca = presenca;
+
   }
   registrar() {
+
+    
 this.presentLoading();
 
     if (this.aula.id != null) {
@@ -226,6 +248,7 @@ this.presentLoading();
           this.registrado();
         });
     }
+    this.instrutor.setConteudoConcluir(this.aula);
   }
   concluir() {
     if (this.aula.id != null) {

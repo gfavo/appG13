@@ -76,6 +76,7 @@ async mostrarErro(erro) {
     .subscribe(
       data => {
        console.log(JSON.stringify(data.body));
+       this.mostrarErro("Sucesso! Seu checkin foi efetuado.");
       },
       error=>{
 this.mostrarErro(error.error.error);

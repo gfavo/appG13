@@ -2,6 +2,11 @@
   <ion-toolbar>
     <ion-title>Tecnicas Extra</ion-title>
   </ion-toolbar>
+
+  <ion-searchbar
+    [(ngModel)]="searchTerm"
+    (ionChange)="setFilteredItems()"
+  ></ion-searchbar>
 </ion-header>
 
 <ion-content padding>
@@ -9,15 +14,15 @@
 
 
 
-  <ion-searchbar id="search_tecnica" placeholder="Procure a tecnica desejada"></ion-searchbar>
+  
 
 
 
-<ion-list *ngFor="let tecnica of tecnicasBool">
-  <ion-item *ngIf="tecnica.nome.toUpperCase().includes(search_tecnica.value.toUpperCase())">
+<ion-list *ngFor="let tecnica of itemsFiltrados">
+  <ion-item>
     
     <ion-checkbox slot="end"  [(ngModel)]="tecnica.incluir" ></ion-checkbox>
-    <ion-label>
+    <ion-label class="ion-text-wrap">
       <h2 > {{tecnica.nome}} </h2>
     </ion-label>
   </ion-item>

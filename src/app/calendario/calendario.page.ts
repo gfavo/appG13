@@ -43,7 +43,7 @@ mesEscrito: string;
 ano: string;
 anoInt: number;
 dia: string;
-
+data: Date;
 currentDate;
 aula_datas: aula_data[];
 
@@ -82,7 +82,7 @@ urlFaixa;
     public instrutor: NomeInstrutorService,
     private router: Router,
     private _activatedRoute: ActivatedRoute,
-    private alertController: AlertController
+    private alertController: AlertController,
     ) { }
 
   ngOnInit() {
@@ -182,9 +182,13 @@ this.ano = this.viewTitle.substr(this.numeroEspaco+1);
     {
       console.log(data);
       this.aula_datas = (<conteudo>data).aula_datas;
-    
+   
       this.aula_datas.forEach(element => {
-        this.addEvent(element.nome,new Date(element.data),element.vimeoid,element.senhavimeoid);
+
+        this.data = new Date(element.data);
+        this.data.setDate(this.data.getDate()+1);
+
+        this.addEvent(element.nome,this.data,element.vimeoid,element.senhavimeoid);
       });
     
     }
@@ -275,5 +279,6 @@ avancaMes()
 {
   var mySwiper = document.querySelector('.swiper-container')['swiper'];
   mySwiper.slideNext();
+  
 }
 }

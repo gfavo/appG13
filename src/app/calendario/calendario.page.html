@@ -44,6 +44,7 @@
     <div class="calendario ion-justify-content-end">
     <div class="ion-text-center"><h2> <ion-button class="ion-text-left ion-margin-end ion-margin-bottom" size="small" (click)="voltaMes()"><ion-icon name="arrow-dropleft"></ion-icon></ion-button> {{ viewTitle }}  <ion-button  size="small" class="ion-text-left ion-margin-start ion-margin-bottom" (click)="avancaMes()"><ion-icon name="arrow-dropright"></ion-icon></ion-button></h2></div>
       <calendar 
+
       [eventSource]="eventSource" 
       [calendarMode]="calendar.mode" 
       [currentDate]="calendar.currentDate"
@@ -57,7 +58,6 @@
       startingDayWeek="1"
           >
       </calendar>
-
       </div>
   
 </ion-content>

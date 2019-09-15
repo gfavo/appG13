@@ -72,27 +72,32 @@
 
 
 
-  <ion-searchbar id="search_aluno"></ion-searchbar>
+<ion-searchbar
+[(ngModel)]="searchTerm"
+(ionChange)="setFilteredItems()"
+></ion-searchbar>
+
+
 
 <ng-container *ngIf="aula">
 <ng-container *ngIf="mostraLista">
-
-  <ion-list *ngFor="let aluno of aula.alunos">
-    <ion-item *ngIf="aluno.nome.toUpperCase().includes(search_aluno.value.toUpperCase())">
-      <ion-checkbox slot="end" (click)="onCheck()" [(ngModel)]="aluno.presenca"></ion-checkbox>
+    <ion-card>
+<ion-content class="lista">
+  <ion-list *ngFor="let aluno of itemsFiltrados">
+    <ion-item>
+      <ion-checkbox slot="end" (click)="onCheck(aluno.nome,aluno.presenca)" [(ngModel)]="aluno.presenca"></ion-checkbox>
       <ion-label>
-        <h2>{{aluno.nome}} está presente na aula? </h2>
+        <h2>{{aluno.nome}}</h2>
       </ion-label>
     </ion-item>
   </ion-list>
+</ion-content>
+</ion-card>
 </ng-container>
 </ng-container>
 
-  <div id="center">
-    <ion-button class="botao" id="botao_registrar" size="large" disabled="true" (click)="registrar()"><ion-icon slot="end" name="clipboard"></ion-icon>Registrar</ion-button>
-    <ion-button class="botao" size="large" (click)="concluir()"><ion-icon slot="end" name="checkmark"></ion-icon>Concluir</ion-button>
-    
-  </div>
+
+ 
 
 
 
@@ -101,3 +106,11 @@
 
 
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <div id="center">
+      <ion-button expanp="block" class="botao" id="botao_registrar" size="large" disabled="true" (click)="registrar()"><ion-icon slot="end" name="clipboard"></ion-icon>Registrar</ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>
