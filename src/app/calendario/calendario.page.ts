@@ -287,12 +287,5 @@ avancaMes()
   
 }
 
-encodedText(){
-  this.barcodeScanner.encode(this.barcodeScanner.Encode.TEXT_TYPE,this.encodeData).then((encodedData) => {
-      console.log(encodedData);
-      this.encodedData = encodedData;
-  }, (err) => {
-      console.log("Error occured : " + err);
-  });                 
-}
+
 }
