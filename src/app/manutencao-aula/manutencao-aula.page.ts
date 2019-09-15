@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 
 import { AlertController, NavController, LoadingController } from '@ionic/angular';
 import { tecnicas } from '../aula/aula.page';
+import { tecnicasDir, conteudoGetDiretorio } from '../diretorio/diretorio.page';
 
 
 export class Alunos {
@@ -67,6 +68,9 @@ export class ManutencaoAulaPage implements OnInit {
 
   searchTerm: string;
 
+  tecnicasMostrar: tecnicasDir[];
+
+  temExtra: boolean;
  
 
   async registrado() {
@@ -201,6 +205,17 @@ export class ManutencaoAulaPage implements OnInit {
 
     this.nomeinstrutor = this.instrutor.getNome();
     this.presentLoading();
+
+   this.http.post(this.instrutor.getUrl()+"/aula.php", { '': '' }, { responseType: "json", headers: this.headers })
+    .subscribe(
+      data => {
+        console.log(data);
+this.tecnicasMostrar = (<conteudoGetDiretorio>data).tecnicas;
+this.temExtra = this.checkTemExtra(this.tecnicasMostrar);
+
+      });
+
+
     this.http.get(this.instrutor.getUrl() + "/alunos.php", { headers: this.headers })
       .subscribe(
         data => {
@@ -222,9 +237,6 @@ this.itemsFiltrados = this.aula.alunos;
   }
 
   onCheck(nome,presenca) {
-   this.tecnicas.forEach(element => {
-console.log(JSON.stringify(element));
-   }); 
     if (this.aula.alunos != this.alunos_original) {
       (<HTMLIonButtonElement>document.getElementById("botao_registrar")).disabled = false;
     }
@@ -292,6 +304,18 @@ this.mostraLista = false;
   this.sucessoReload();
 
 
+}
+
+checkTemExtra(tecnicas: tecnicasDir[]): boolean
+{
+  var tem = false;
+tecnicas.forEach(element => {
+  if(element.tecnicaextra == 1)
+  {
+    tem = true;
+  }
+});
+return tem;
 }
 
 }

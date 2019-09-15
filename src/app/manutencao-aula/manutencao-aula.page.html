@@ -24,31 +24,7 @@
     </ion-fab-button>
   </ion-fab>
 
-  <ng-container *ngIf="instrutor.getIdPrograma()">
-
-    <ion-label>
-      <h2> Descrição da aula:</h2>
-      <h3><b>{{instrutor.getDescricao()}}</b></h3>
-    </ion-label>
-    <br>
-    <h2><b>
-        <ion-label>{{instrutor.getAulaSelecionada().titulo}}</ion-label>
-      </b></h2>
-
-    <ul *ngFor="let _tecnica of instrutor.getAulaSelecionada().tecnicas">
-      <li>{{_tecnica.nome}}</li>
-    </ul>
-
-
-
-
-    <ion-label *ngIf="aula">Data da aula: {{aula.datetime}}</ion-label>
-
-
-
-  </ng-container>
-
-  <ng-container *ngIf="!instrutor.getIdPrograma()">
+ 
 
       <ion-label>
           <h2> Tecnicas da aula:</h2>
@@ -56,9 +32,16 @@
     <br>
     
 
-    <ul *ngFor="let _tecnica of tecnicas">
-        <li>{{_tecnica.nome}}</li>
+    <ul *ngFor="let _tecnica of tecnicasMostrar">
+        <li *ngIf="_tecnica.tecnicaextra == 0">{{_tecnica.nome}}</li>
       </ul>
+
+      <h2 *ngIf="temExtra">Tecnicas Extra:</h2>
+
+      <ul *ngFor="let _tecnica of tecnicasMostrar">
+          <li *ngIf="_tecnica.tecnicaextra == 1">{{_tecnica.nome}}</li>
+        </ul>
+
 
     <ion-chip><ion-label>Data da aula: {{aula.datetime}}</ion-label></ion-chip>
 
@@ -67,7 +50,7 @@
 
     
 
-</ng-container>
+
 
 
 

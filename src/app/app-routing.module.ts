@@ -20,6 +20,7 @@ const routes: Routes = [
   { path: 'configuracoes', loadChildren: './configuracoes/configuracoes.module#ConfiguracoesPageModule' },
   { path: 'checkin', loadChildren: './checkin/checkin.module#CheckinPageModule' },
   { path: 'checkins', loadChildren: './checkins/checkins.module#CheckinsPageModule' },
+  { path: 'mensagens', loadChildren: './mensagens/mensagens.module#MensagensPageModule' },
 
 ];
 

@@ -8,6 +8,8 @@ export class tecnicasDir{
   idvimeo: number;
   nome: string;
   senhavimeo: string;
+  tecnicaextra: number;
+  descricao: string;
 }
 
 export class conteudoGetDiretorio{

@@ -129,4 +129,10 @@ this.alertaNaoPago();
 
     this.router.navigate(["/checkins"]);
   }
+
+  mensagens(){
+    this.menu.toggle();
+
+    this.router.navigate(["/mensagens"]);
+  }
 }

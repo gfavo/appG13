@@ -21,6 +21,7 @@ porcentagem_restante: number
 porcentagem_troca_faixa: number
 nomealuno: string
 foto: string
+id: number;
 }
 
 class aula_data{
@@ -46,6 +47,8 @@ dia: string;
 data: Date;
 currentDate;
 aula_datas: aula_data[];
+
+codigoQr: string;
 
 numeroEspaco: number;
 
@@ -115,6 +118,8 @@ urlFaixa;
         this.nomealuno = (<conteudo>data).nomealuno;
         this.url = (<conteudo>data).foto;
         this.urlFaixa = (<conteudo>data).faixa;
+
+        this.codigoQr = (<conteudo>data).id + ";" + (<conteudo>data).nomealuno;
       }
     );
   }
@@ -280,5 +285,14 @@ avancaMes()
   var mySwiper = document.querySelector('.swiper-container')['swiper'];
   mySwiper.slideNext();
   
+}
+
+encodedText(){
+  this.barcodeScanner.encode(this.barcodeScanner.Encode.TEXT_TYPE,this.encodeData).then((encodedData) => {
+      console.log(encodedData);
+      this.encodedData = encodedData;
+  }, (err) => {
+      console.log("Error occured : " + err);
+  });                 
 }
 }

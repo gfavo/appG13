@@ -1,0 +1,28 @@
+<ion-header>
+    <ion-toolbar color="dark">
+        <ion-buttons slot="start">
+            <ion-menu-button autoHide="false"></ion-menu-button>
+          </ion-buttons>
+        <ion-thumbnail slot="end">
+            <img src="../assets/images/logobola.png">
+          </ion-thumbnail>
+      <ion-title style="font-size: small" text-center>Mensagens</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content padding>
+
+<ion-list *ngFor="let mensagem of mensagens">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>{{mensagem.datahora}}</ion-card-subtitle>
+      <ion-card-title>{{mensagem.assunto}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      {{mensagem.mensagem}}
+    </ion-card-content>
+  </ion-card>
+</ion-list>
+
+
+</ion-content>

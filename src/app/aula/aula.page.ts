@@ -240,7 +240,7 @@ ngOnInit(){}
         .subscribe(data => console.log(data.status));
       
 
-      this.msgconcluir();
+      
       this.instrutor.setDatatime(this.data_aula);
       this.subscription =  this.httpClient.post(this.instrutor.getUrl()+"/aula.php", { '': '' }, { responseType: "json", headers: this.headers })
       .subscribe(
