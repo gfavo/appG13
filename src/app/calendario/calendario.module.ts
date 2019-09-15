@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { CalendarioPage } from './calendario.page';
 import { NgCalendarModule } from 'ionic2-calendar';
+import { NgxQRCodeModule } from 'ngx-qrcode2';
 
 const routes: Routes = [
   {
@@ -17,6 +18,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
+    NgxQRCodeModule,
     CommonModule,
     FormsModule,
     IonicModule,

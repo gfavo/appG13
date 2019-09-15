@@ -31,13 +31,22 @@
      
       </ng-template>
 <div class="center">
-<img src="{{url}}" class="center img circle-border">
+  <ion-grid fixed>
+    <ion-row>
+        <ion-col size="4"></ion-col>
+        <ion-col size="4"> <img src="{{url}}" class="img circle-border"></ion-col>
+      <ion-col size="4"><ngx-qrcode qrc-value="{{codigoQr}}" qrc-element-type="text"></ngx-qrcode></ion-col>
+      <ion-col size="4"></ion-col>
+    </ion-row>
+  </ion-grid>
+
 <br>
 
 <h2 class="centertext">{{ nomealuno }}</h2>   
 <br> 
 <div>
-<img src="{{urlFaixa}}" class="center faixa">
+<img src="{{urlFaixa}}" class="center faixa">  
+  
 </div>
 
 </div>

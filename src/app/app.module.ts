@@ -15,7 +15,7 @@ import { QRScanner } from '@ionic-native/qr-scanner/ngx';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 import { ModaldetalhesPageModule } from './modaldetalhes/modaldetalhes.module';
-import { NgxQRCodeModule } from 'ngx-qrcode3';
+
 import { Network } from '@ionic-native/network/ngx';
 
 import { IonicStorageModule } from '@ionic/storage';
@@ -23,14 +23,14 @@ import { ModaltecnicasPageModule } from './modaltecnicas/modaltecnicas.module';
 import { ModalvideoPageModule } from './modalvideo/modalvideo.module';
 import { NgCalendarModule  } from 'ionic2-calendar';
 import { ModaltecnicasdodiaPageModule } from './modaltecnicasdodia/modaltecnicasdodia.module';
-
-
+import { QRCodeModule } from 'angularx-qrcode';
+import { NgxQRCodeModule } from 'ngx-qrcode2';
 
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [NgxQRCodeModule,NgCalendarModule,FormsModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, ModaltecnicasPageModule,ModaldetalhesPageModule,ModalvideoPageModule,ModaltecnicasdodiaPageModule,IonicStorageModule.forRoot()],
+  imports: [NgxQRCodeModule,QRCodeModule,NgxQRCodeModule,NgCalendarModule,FormsModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, ModaltecnicasPageModule,ModaldetalhesPageModule,ModalvideoPageModule,ModaltecnicasdodiaPageModule,IonicStorageModule.forRoot()],
   providers: [
     Network,
     QRScanner,
