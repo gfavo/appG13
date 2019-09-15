@@ -61,6 +61,7 @@ headers = new HttpHeaders({ "x-auth": this.instrutor.getToken() , 'Cache-Control
 
   checkin(aulaid,instrutorid){
    console.log(aulaid + " - " + instrutorid);
+   
     this.subscription =  this.httpClient.post(this.instrutor.getUrl()+"/checkin.php",{"aulaid": aulaid,"instrutorid": instrutorid,"datahorasolicitacao":this.formatDate(new Date())} ,{ responseType: "json", headers: this.headers })
     .subscribe(
       data => {
