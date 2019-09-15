@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NomeInstrutorService } from '../nome-instrutor.service';
 import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { AlertController } from '@ionic/angular';
 
 class conteudoAulasAtivas{
   data: string
@@ -21,10 +22,21 @@ conteudo: conteudoAulasAtivas;
 subscription;
 headers = new HttpHeaders({ "x-auth": this.instrutor.getToken() , 'Cache-Control':  'no-cache, no-store, must-revalidate, post-check=0, pre-check=0','Pragma': 'no-cache','Expires': '0'});
 
+async mostrarErro(erro) {
+  const registra = await this.alertController.create({
+
+    header: '',
+    message: erro,
+    buttons: [{ text: "OK"}]
+  })
+  await registra.present();
+}
+
   constructor(
     private instrutor: NomeInstrutorService,
     private httpClient: HttpClient,
-    private router: Router
+    private router: Router,
+    private alertController: AlertController
   ) { }
 
   ngOnInit() {
@@ -60,13 +72,16 @@ headers = new HttpHeaders({ "x-auth": this.instrutor.getToken() , 'Cache-Control
   }
 
   checkin(aulaid,instrutorid){
-   console.log(aulaid + " - " + instrutorid);
-   
-    this.subscription =  this.httpClient.post(this.instrutor.getUrl()+"/checkin.php",{"aulaid": aulaid,"instrutorid": instrutorid,"datahorasolicitacao":this.formatDate(new Date())} ,{ responseType: "json", headers: this.headers })
+    this.subscription =  this.httpClient.post(this.instrutor.getUrl()+"/checkin.php",{"aulaid": aulaid,"instrutorid": instrutorid,"datahorasolicitacao":this.formatDate(new Date())} ,{observe: "response",responseType: "json" , headers: this.headers })
     .subscribe(
       data => {
-        
-        console.log(JSON.stringify(data));
-  });
+       console.log(JSON.stringify(data.body));
+      },
+      error=>{
+this.mostrarErro(error.error.error);
+      }  
+  );
+
+  
   }
 }
