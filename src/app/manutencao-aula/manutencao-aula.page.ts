@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 import { AlertController, NavController, LoadingController } from '@ionic/angular';
 import { tecnicas } from '../aula/aula.page';
 
+
 export class Alunos {
   id: string;
   nome: string;
@@ -65,6 +66,8 @@ export class ManutencaoAulaPage implements OnInit {
   itemsFiltrados: Alunos[];
 
   searchTerm: string;
+
+ 
 
   async registrado() {
     const registra = await this.alertController.create({
@@ -193,7 +196,6 @@ export class ManutencaoAulaPage implements OnInit {
   
 
   ionViewWillEnter() {
-  
     this.search_aluno = document.getElementById("search_aluno");
 
 
@@ -214,9 +216,15 @@ this.itemsFiltrados = this.aula.alunos;
       
     this.alunos_original = this.aula.alunos;
     this.dismiss();
+
+
+  
   }
 
   onCheck(nome,presenca) {
+   this.tecnicas.forEach(element => {
+console.log(JSON.stringify(element));
+   }); 
     if (this.aula.alunos != this.alunos_original) {
       (<HTMLIonButtonElement>document.getElementById("botao_registrar")).disabled = false;
     }
@@ -285,4 +293,5 @@ this.mostraLista = false;
 
 
 }
+
 }

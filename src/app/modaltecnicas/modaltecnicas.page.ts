@@ -41,6 +41,9 @@ itemsFiltrados: tecnicaId[];
 
 aulaComTecnicasAdicionais: aula_exemplo;
 
+nomesTecnicasAdicionais: string[] = [];
+numeroTecnicaAtual : number = 0;
+
 tem: boolean;
 
 searchTerm: string;
@@ -106,14 +109,17 @@ adicionar(){
 
   
   this.tecnicasBool.forEach(tecnica => {
+
+
     this.tem = false;
     if (tecnica.incluir == true && this.temTecnicas(tecnica,this.aulaComTecnicasAdicionais.tecnicas)==false)
       {
        this.aulaComTecnicasAdicionais.tecnicas.push(tecnica);
        this.instrutor.setIdTecnicas(tecnica.id);
-      }
-  });
 
+      }
+
+  });
 
   console.log(JSON.stringify(this.instrutor.getIdTecnicas()));
   this.instrutor.setAulaSelecionada(this.aulaComTecnicasAdicionais);

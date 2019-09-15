@@ -15,6 +15,8 @@ import { MenuController, LoadingController, ModalController, AlertController } f
 import { tecnicasDir, conteudoGetDiretorio } from '../diretorio/diretorio.page';
 import { ModalvideoPage } from '../modalvideo/modalvideo.page';
 
+import {Storage} from '@ionic/storage';
+
  class Alunos {
   id: string;
   nome: string;
@@ -116,6 +118,7 @@ export class AulaPage implements OnInit {
               private router: Router, 
               private _activatedRoute: ActivatedRoute,
               private alertController: AlertController,
+              private storage: Storage
               ) 
               {}
 
@@ -245,6 +248,17 @@ ngOnInit(){}
           console.log(data);
      this.ionViewWillEnter();
         });
+
+        var max;
+ this.storage.get('qtdtecnicas').then(val =>{max = val});
+
+        for (var i=0;i<max;i++)
+        {
+        this.storage.remove('tecnica_adicional'+i);
+        }
+
+        this.storage.remove('qtdtecnicas');
+
     }
     else {
       this.msgerroconcluir();

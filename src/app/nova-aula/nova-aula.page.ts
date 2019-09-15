@@ -5,9 +5,11 @@ import { NomeInstrutorService } from "../nome-instrutor.service";
 import { tecnicas, aula_nova, conjunto_aula_exemplo, aula_exemplo } from '../aula/aula.page';
 import { Router } from '@angular/router';
 import { AlertController, ModalController, LoadingController } from '@ionic/angular';
-import { ModaltecnicasPage } from '../modaltecnicas/modaltecnicas.page';
+import { ModaltecnicasPage, tecnicaId } from '../modaltecnicas/modaltecnicas.page';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { aula } from '../manutencao-aula/manutencao-aula.page';
+
+import {Storage} from '@ionic/storage';
 
 
 @Component({
@@ -33,6 +35,10 @@ export class NovaAulaPage implements OnInit {
   descricaoPadrao: string;
 
   aulaRegistro: aula;
+
+  temAdicionais: boolean = false;
+
+  nomesTecnicasAdicionais: string[] = [];
   
   headers = new HttpHeaders({ "x-auth": this.instrutor.getToken(), 'Cache-Control': 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0', 'Pragma': 'no-cache', 'Expires': '0' });
 
@@ -42,6 +48,7 @@ export class NovaAulaPage implements OnInit {
     public instrutor: NomeInstrutorService,
      private router: Router,
      private alertController: AlertController,
+     private storage: Storage
      ) { }
 
   async presentModal() {
@@ -143,14 +150,18 @@ export class NovaAulaPage implements OnInit {
   }
   
   action() {
+
+
     this.aula_escolhida = (<HTMLIonSelectElement>document.getElementById("_aulaProgramada")).value;
     this.instrutor.setIdPrograma(this.aula.aulasProgramadas.find(x => x.titulo === this.aula_escolhida).id);
     this.aula_mostrada = this.aula.aulasProgramadas.find(x => x.titulo === this.aula_escolhida);
+
 
     this.instrutor.setAulaSelecionada(this.aula_mostrada);
 
     this.descricaoPadrao = this.aula_escolhida + " - "  + this.instrutor.getNome()  + " - " + this.aula.datetime;
  
+
   }
 
   
@@ -192,4 +203,6 @@ mostraModal(){
   alert('Escolha primeiro uma aula semanal!');
   }
 }
+
+
 }

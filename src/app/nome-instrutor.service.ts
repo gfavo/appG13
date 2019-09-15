@@ -28,6 +28,8 @@ aberto: boolean;
 
 tecnicas: number[];
 
+
+
 idvimeo: number;
 
 senhavimeo: string;
@@ -38,6 +40,7 @@ role: string;
   mes;
   margem: any;
   conteudoConcluir: aula;
+  aulaProgramaEscolhida: aula_exemplo;
 
   constructor() { this.tecnicas = []; }
 
@@ -189,6 +192,12 @@ getConteudoConcluir(): aula
 {
   return this.conteudoConcluir;
 }
+
+setAulaProgramaEscolhida(aula: aula_exemplo)
+{
+this.aulaProgramaEscolhida = aula;
+}
+
 
 }
 
