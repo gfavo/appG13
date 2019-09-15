@@ -8,7 +8,7 @@ ion-button{
   --padding-bottom: 30%;
   
 
-  --box-shadow:  0px 2px 3px 0px rgba(255,255,255,1);
+  --box-shadow:  0px 1px 0px 0px rgba(255, 255, 255, 0.966);
  
 
 }
@@ -36,19 +36,11 @@ font-size: 5vh;
   
   }
 
-  @media screen and (min-height : 600px)  {
+  
     ion-button{
-      margin-bottom: 35%;
+      margin-bottom: var(--margin-bottom);
     }
 
-  }
-
-  @media screen and (min-height : 800px)  {
-    ion-button{
-      margin-bottom: 35%;
-    }
-
-  }
 
 
  
@@ -56,7 +48,7 @@ font-size: 5vh;
 </style>
 
 
-    <ion-menu contentId="content1" side="start">
+    <ion-menu contentId="content1" side="start" *ngIf="this.intrutor.getRole() == 'ALUNO'">
 
         <ion-content color="primary">
 <div class="container">
@@ -71,12 +63,87 @@ font-size: 5vh;
 
         <ion-button expand="full"  (click)="abreDiretorio()" class="botaolateral">
             <div>
-                <ion-icon *ngIf='this.intrutor.getRole() != "ALUNOPAGO"' name="lock"></ion-icon><ion-icon  *ngIf='this.intrutor.getRole() == "ALUNOPAGO"'  name="bookmarks" style="margin-bottom: 20%"></ion-icon>
+                <ion-icon *ngIf='this.intrutor.getRole() == "ALUNO"' name="lock"></ion-icon><ion-icon  *ngIf='this.intrutor.getRole() != "ALUNO"'  name="bookmarks" style="margin-bottom: 20%"></ion-icon>
             <br>          
                 <label  style="font-size: 75%;">Diretorio</label>
             </div>
           </ion-button>
    
+
+ 
+              <ion-button expand="full"  (click)="checkin()" class="botaolateral">
+          <div>
+              <ion-icon  name="checkbox-outline" style="margin-bottom: 20%"></ion-icon>
+          <br>          
+              <label  style="font-size: 75%;">Check-in</label>
+          </div>
+        </ion-button>
+
+        
+        <ion-button expand="full"  (click)="logoff()" class="botaolateral">
+          <div>
+              <ion-icon  name="log-out" style="margin-bottom: 20%"></ion-icon>
+          <br>          
+              <label  style="font-size: 75%;">Logout</label>
+          </div>
+        </ion-button>
+        
+       <!-- BOTOES CONFIGURAÇÂO E SOBRE --> 
+       <!--
+          <ion-button expand="full"  (click)="configuracoes()" class="botaolateral"  >
+          <div>
+              <ion-icon  name="settings" style="margin-bottom: 20%"></ion-icon>
+          <br>          
+              <label  style="font-size: 75%;">Configurações</label>
+          </div>
+        </ion-button>
+
+        <ion-button expand="full"  class="botaolateral">
+          <div>
+              <ion-icon  name="help" style="margin-bottom: 20%"></ion-icon>
+          <br>          
+              <label  style="font-size: 75%;">Sobre</label>
+          </div>
+        </ion-button>
+        -->
+</div>
+          
+        </ion-content>
+
+        
+          
+          
+     
+      </ion-menu>
+
+      <ion-menu contentId="content1" side="start" *ngIf="this.intrutor.getRole() == 'INSTRUTOR'">
+
+        <ion-content color="primary">
+<div class="container">
+
+          <ion-button expand="full"  (click)="homepage()" class="botaolateral">
+            <div>
+               <ion-icon   name="home" style="margin-bottom: 20%"></ion-icon>
+            <br>          
+                <label  style="font-size: 75%;">Home</label>
+            </div>
+          </ion-button>
+
+        <ion-button expand="full"  (click)="abreDiretorio()" class="botaolateral">
+            <div>
+               <ion-icon  name="bookmarks" style="margin-bottom: 20%"></ion-icon>
+            <br>          
+                <label  style="font-size: 75%;">Diretorio</label>
+            </div>
+          </ion-button>
+   
+          <ion-button expand="full"  (click)="checkins()" class="botaolateral">
+            <div>
+                <ion-icon  name="checkbox-outline" style="margin-bottom: 20%"></ion-icon>
+            <br>          
+                <label  style="font-size: 75%;">Check-in</label>
+            </div>
+          </ion-button>
 
  
               <ion-button expand="full"  (click)="logoff()" class="botaolateral">
@@ -86,15 +153,25 @@ font-size: 5vh;
               <label  style="font-size: 75%;">Logout</label>
           </div>
         </ion-button>
-
         
-        <ion-button expand="full"  class="botaolateral">
+       <!-- BOTOES CONFIGURAÇÂO E SOBRE --> 
+       
+     <!--     <ion-button expand="full"  class="botaolateral">
           <div>
               <ion-icon  name="settings" style="margin-bottom: 20%"></ion-icon>
           <br>          
               <label  style="font-size: 75%;">Configurações</label>
           </div>
         </ion-button>
+
+        <ion-button expand="full"  class="botaolateral">
+          <div>
+              <ion-icon  name="help" style="margin-bottom: 20%"></ion-icon>
+          <br>          
+              <label  style="font-size: 75%;">Sobre</label>
+          </div>
+        </ion-button>
+        -->
 </div>
           
         </ion-content>

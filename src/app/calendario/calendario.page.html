@@ -31,14 +31,18 @@
      
       </ng-template>
 <div class="center">
-<ion-img src="{{url}}" class="center"></ion-img>
+<img src="{{url}}" class="center img circle-border">
 <br>
 
-<h2 class="centertext">{{ nomealuno }}</h2>    
+<h2 class="centertext">{{ nomealuno }}</h2>   
+<br> 
+<div>
+<img src="{{urlFaixa}}" class="center faixa">
+</div>
 
 </div>
     <div class="calendario ion-justify-content-end">
-    <div class="ion-text-center"><h1> <ion-button class="ion-text-left ion-margin-end ion-margin-bottom" size="small" (click)="voltaMes()"><ion-icon name="arrow-dropleft"></ion-icon></ion-button> {{ viewTitle }}  <ion-button  size="small" class="ion-text-left ion-margin-start ion-margin-bottom" (click)="avancaMes()"><ion-icon name="arrow-dropright"></ion-icon></ion-button></h1></div>
+    <div class="ion-text-center"><h2> <ion-button class="ion-text-left ion-margin-end ion-margin-bottom" size="small" (click)="voltaMes()"><ion-icon name="arrow-dropleft"></ion-icon></ion-button> {{ viewTitle }}  <ion-button  size="small" class="ion-text-left ion-margin-start ion-margin-bottom" (click)="avancaMes()"><ion-icon name="arrow-dropright"></ion-icon></ion-button></h2></div>
       <calendar 
       [eventSource]="eventSource" 
       [calendarMode]="calendar.mode" 

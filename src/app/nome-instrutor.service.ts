@@ -36,6 +36,7 @@ role: string;
   tecnicasdia;
   dia;
   mes;
+  margem: any;
 
   constructor() { this.tecnicas = []; }
 
@@ -178,6 +179,7 @@ getDiaMes()
 {
   return this.dia+"/"+this.mes;
 }
+
 }
 
 

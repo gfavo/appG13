@@ -86,6 +86,8 @@ export class HomePage {
 
   }
   ionViewWillEnter() {
+
+
     this.pessoa.pass = "";
     this.pessoa.user = "";
     this.lembrar = false;
@@ -120,6 +122,9 @@ export class HomePage {
   }
 
   ionViewDidEnter() {
+
+
+
     /*this.status = 0;
 
 

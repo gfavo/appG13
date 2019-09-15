@@ -27,7 +27,7 @@
  
   <ng-container *ngIf="tecnicas.expandida">  
       <ion-list *ngFor="let tecnica of tecnicaExpandida.tecnicas">
-          <ion-label><ion-segment-button (click)="abreVideo(tecnica.idvimeo,tecnica.senhavimeo)">{{tecnica.nome}}</ion-segment-button></ion-label>
+          <ion-label><ion-segment-button  class="ion-text-wrap" (click)="abreVideo(tecnica.idvimeo,tecnica.senhavimeo)">{{tecnica.nome}}</ion-segment-button></ion-label>
       </ion-list>
     </ng-container>
   

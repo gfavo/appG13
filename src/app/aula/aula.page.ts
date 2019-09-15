@@ -223,6 +223,10 @@ abreVideo(numeroTecnica: number,senhavimeo: string){
   this.presentModal();
 }
 
+checkins(){
+  this.router.navigateByUrl("/checkins");
+}
+
 }
 
 

@@ -99,7 +99,7 @@ else{
 
   abreDiretorio()
   {
-    if (this.intrutor.getRole() == "ALUNOPAGO")
+    if (this.intrutor.getRole() != "ALUNO")
     {
       this.menu.toggle();
       this.router.navigate(["/diretorio"]);
@@ -110,5 +110,23 @@ this.alertaNaoPago();
     }
 
   }
+
+  configuracoes(){
+    this.menu.toggle();
+    
+    
+    this.router.navigate(["/configuracoes"]);
+  }
   
+  checkin(){
+    this.menu.toggle();
+
+    this.router.navigate(["/checkin"]);
+  }
+
+  checkins(){
+    this.menu.toggle();
+
+    this.router.navigate(["/checkins"]);
+  }
 }

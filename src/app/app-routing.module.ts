@@ -17,6 +17,9 @@ const routes: Routes = [
   { path: 'principalaluno', loadChildren: './principalaluno/principalaluno.module#PrincipalalunoPageModule' },
   { path: 'calendario', loadChildren: './calendario/calendario.module#CalendarioPageModule' },
   { path: 'modaltecnicasdodia', loadChildren: './modaltecnicasdodia/modaltecnicasdodia.module#ModaltecnicasdodiaPageModule' },
+  { path: 'configuracoes', loadChildren: './configuracoes/configuracoes.module#ConfiguracoesPageModule' },
+  { path: 'checkin', loadChildren: './checkin/checkin.module#CheckinPageModule' },
+  { path: 'checkins', loadChildren: './checkins/checkins.module#CheckinsPageModule' },
 
 ];
 

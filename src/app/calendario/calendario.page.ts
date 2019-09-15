@@ -52,6 +52,7 @@ numeroEspaco: number;
 tecnicasExistem: boolean = false;
 nomealuno: string;
 url: string;
+urlFaixa;
 
   headers = new HttpHeaders({ "x-auth": this.instrutor.getToken() , 'Cache-Control':  'no-cache, no-store, must-revalidate, post-check=0, pre-check=0','Pragma': 'no-cache','Expires': '0'});
 
@@ -113,6 +114,7 @@ url: string;
 
         this.nomealuno = (<conteudo>data).nomealuno;
         this.url = (<conteudo>data).foto;
+        this.urlFaixa = (<conteudo>data).faixa;
       }
     );
   }
