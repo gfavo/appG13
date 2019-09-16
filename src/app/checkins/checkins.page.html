@@ -28,14 +28,14 @@
     <ion-toolbar>
         <ion-grid>
             <ion-row no-padding no-margin>
-                <ion-col col-4 no-padding>
-                    <ion-button (click)="voltar()"><ion-icon slot="start" name="arrow-back"></ion-icon> Voltar</ion-button>
+                <ion-col size="4">
+                    <ion-button expand="block" (click)="voltar()"><ion-icon slot="start" name="arrow-back"></ion-icon> Voltar</ion-button>
                 </ion-col>
-                <ion-col col-4 no-padding>
-                  <ion-button (click)="checkall()">Checkar todos!</ion-button>
+                <ion-col size="4">
+                  <ion-button expand="block" (click)="checkall()" class="ion-text-wrap">Checkar todos!</ion-button>
                 </ion-col>
-                <ion-col col-4 no-padding>
-                    <ion-button (click)="confirmar()">Confirmar!</ion-button>
+                <ion-col size="4">
+                    <ion-button expand="block" (click)="confirmar()">Confirmar!</ion-button>
                 </ion-col>
             </ion-row>
         </ion-grid>
