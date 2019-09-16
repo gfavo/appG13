@@ -76,31 +76,28 @@ console.log(data);
   }
 
   openCategoria(x: string){
-this.podeExpandir = true;
+
+
+
+
 this.ConteudoDiretorio.forEach(element => {
-  if(element.expandida == true)
+  if(element.expandida == true && element.categoria != x)
   {
-    this.podeExpandir = false;
+    element.expandida = false;
   }
 });
-
-if (this.podeExpandir == true)
-{
-    this.ConteudoDiretorio.find(y => y.categoria === x).expandida = true;
-    this.tecnicaExpandida =  this.ConteudoDiretorio.find(y => y.categoria === x);
-  
-
-}
-else
-{
   if( this.ConteudoDiretorio.find(y => y.categoria === x).expandida == true)
   {
     this.ConteudoDiretorio.find(y => y.categoria === x).expandida = false;
-
-
   }
+  else if(this.ConteudoDiretorio.find(y => y.categoria === x).expandida == false)
+  {
+    this.ConteudoDiretorio.find(y => y.categoria === x).expandida = true;
+    this.tecnicaExpandida =  this.ConteudoDiretorio.find(y => y.categoria === x);
+  }
+
 }
-  }
+  
   abreVideo(numeroTecnica: number,senhavimeo: string){
     this.instrutor.setIdVimeo(numeroTecnica);
     this.instrutor.setSenhaVimeo(senhavimeo);
