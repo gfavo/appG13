@@ -135,4 +135,10 @@ this.alertaNaoPago();
 
     this.router.navigate(["/mensagens"]);
   }
+
+  sobre(){
+    this.menu.toggle();
+
+    this.router.navigate(["/sobre"]);
+  }
 }

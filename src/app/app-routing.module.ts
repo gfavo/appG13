@@ -21,6 +21,7 @@ const routes: Routes = [
   { path: 'checkin', loadChildren: './checkin/checkin.module#CheckinPageModule' },
   { path: 'checkins', loadChildren: './checkins/checkins.module#CheckinsPageModule' },
   { path: 'mensagens', loadChildren: './mensagens/mensagens.module#MensagensPageModule' },
+  { path: 'sobre', loadChildren: './sobre/sobre.module#SobrePageModule' },
 
 ];
 
