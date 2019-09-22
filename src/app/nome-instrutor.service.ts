@@ -3,11 +3,21 @@ import { Injectable } from '@angular/core';
 import { tecnicas,aula_nova,conjunto_aula_exemplo,aula_exemplo } from './aula/aula.page';
 import { aula } from './manutencao-aula/manutencao-aula.page';
 import { AbstractEmitterVisitor } from '@angular/compiler/src/output/abstract_emitter';
+import { HttpHeaders } from '@angular/common/http';
+
+export class error{
+  error: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class NomeInstrutorService {
+
+error: error;
+
+  headers = new HttpHeaders({'x-version':'1.0.1' , "x-auth": this.getToken() , 'Cache-Control':  'no-cache, no-store, must-revalidate, post-check=0, pre-check=0','Pragma': 'no-cache','Expires': '0'});
+
 nome_instrutor: string;
 
 token: string;
@@ -27,7 +37,6 @@ url: string;
 aberto: boolean;
 
 tecnicas: number[];
-
 
 
 idvimeo: number;

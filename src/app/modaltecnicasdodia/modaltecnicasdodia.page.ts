@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NomeInstrutorService } from '../nome-instrutor.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController, IonRippleEffect } from '@ionic/angular';
 import { ModalvideoPage } from '../modalvideo/modalvideo.page';
 
 @Component({
@@ -15,7 +15,7 @@ diames;
 
   constructor(
     private instrutor: NomeInstrutorService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
   ) { }
 
 
@@ -28,7 +28,7 @@ diames;
   }
 
   ngOnInit() {
-    
+   
   }
 
   ionViewWillEnter() {

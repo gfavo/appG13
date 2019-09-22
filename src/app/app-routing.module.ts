@@ -22,6 +22,7 @@ const routes: Routes = [
   { path: 'checkins', loadChildren: './checkins/checkins.module#CheckinsPageModule' },
   { path: 'mensagens', loadChildren: './mensagens/mensagens.module#MensagensPageModule' },
   { path: 'sobre', loadChildren: './sobre/sobre.module#SobrePageModule' },
+  { path: 'error', loadChildren: './error/error.module#ErrorPageModule' },
 
 ];
 

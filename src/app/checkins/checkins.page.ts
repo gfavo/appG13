@@ -21,7 +21,7 @@ class conteudoCheck{
 export class CheckinsPage implements OnInit {
 subscription;
 conteudo: conteudoCheck[];
-headers = new HttpHeaders({ "x-auth": this.instrutor.getToken() , 'Cache-Control':  'no-cache, no-store, must-revalidate, post-check=0, pre-check=0','Pragma': 'no-cache','Expires': '0'});
+headers = new HttpHeaders({"x-version":"1.0.1" ,"x-auth": this.instrutor.getToken() , 'Cache-Control':  'no-cache, no-store, must-revalidate, post-check=0, pre-check=0','Pragma': 'no-cache','Expires': '0'});
 
   constructor(
     private instrutor: NomeInstrutorService,

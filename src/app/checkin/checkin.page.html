@@ -14,11 +14,11 @@
 
 </ion-header>
 
-<ion-content padding>
+<ion-content  *ngIf="checkin_==false" padding>
 
     <ion-list *ngFor="let aula of conteudo">
 
-            <ion-card>
+<ion-card>
                 <ion-card-header>
                   <ion-card-title>Instrutor: {{aula.nomeinstrutor}}</ion-card-title>
                   <ion-card-content>
@@ -35,4 +35,22 @@
 
     
 
+</ion-content>
+<ion-content  *ngIf="checkin_" padding>
+    <ion-list *ngFor="let aula of conteudo">
+
+        <ion-card>
+                        <ion-card-header>
+                          <ion-card-title>Instrutor: {{aula.nomeinstrutor}}</ion-card-title>
+                          <ion-card-content>
+                            Descrição da aula: {{aula.descricao}}
+                            </ion-card-content>
+        <ion-button (click)="cancelar(aula.idcheckin)">
+          Cancelar checkin!
+        </ion-button>
+                        </ion-card-header>
+                </ion-card>
+        
+              </ion-list>
+        
 </ion-content>

@@ -9,7 +9,7 @@ import { ModaltecnicasPage, tecnicaId } from '../modaltecnicas/modaltecnicas.pag
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { aula } from '../manutencao-aula/manutencao-aula.page';
 
-import {Storage} from '@ionic/storage';
+
 
 
 @Component({
@@ -38,9 +38,9 @@ export class NovaAulaPage implements OnInit {
 
   temAdicionais: boolean = false;
 
-  nomesTecnicasAdicionais: string[] = [];
   
-  headers = new HttpHeaders({ "x-auth": this.instrutor.getToken(), 'Cache-Control': 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0', 'Pragma': 'no-cache', 'Expires': '0' });
+  
+  headers = new HttpHeaders({"x-version":"1.0.1", "x-auth": this.instrutor.getToken(), 'Cache-Control': 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0', 'Pragma': 'no-cache', 'Expires': '0' });
 
   constructor(private load: LoadingController,
     private http: HttpClient,
@@ -48,7 +48,7 @@ export class NovaAulaPage implements OnInit {
     public instrutor: NomeInstrutorService,
      private router: Router,
      private alertController: AlertController,
-     private storage: Storage
+     
      ) { }
 
   async presentModal() {

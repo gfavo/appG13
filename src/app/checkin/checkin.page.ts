@@ -10,6 +10,8 @@ class conteudoAulasAtivas{
   id: number
   nomeinstrutor: string
   idinstrutor: number
+  checkin: boolean
+  idcheckin: number
 }
 
 @Component({
@@ -18,9 +20,10 @@ class conteudoAulasAtivas{
   styleUrls: ['./checkin.page.scss'],
 })
 export class CheckinPage implements OnInit {
-conteudo: conteudoAulasAtivas;
+checkin_: boolean;
+conteudo: conteudoAulasAtivas[];
 subscription;
-headers = new HttpHeaders({ "x-auth": this.instrutor.getToken() , 'Cache-Control':  'no-cache, no-store, must-revalidate, post-check=0, pre-check=0','Pragma': 'no-cache','Expires': '0'});
+headers = new HttpHeaders({"x-version":"1.0.1" ,"x-auth": this.instrutor.getToken() , 'Cache-Control':  'no-cache, no-store, must-revalidate, post-check=0, pre-check=0','Pragma': 'no-cache','Expires': '0'});
 
 async mostrarErro(erro) {
   const registra = await this.alertController.create({
@@ -47,8 +50,13 @@ async mostrarErro(erro) {
     this.subscription =  this.httpClient.get(this.instrutor.getUrl()+"/aulasativas.php", { responseType: "json", headers: this.headers })
     .subscribe(
       data => {
-        this.conteudo = (<conteudoAulasAtivas>data);
+        this.conteudo = (<conteudoAulasAtivas[]>data);
         console.log(data);
+this.checkin_ = false;
+(<conteudoAulasAtivas[]>data).forEach(element => {
+  if(element.checkin) this.checkin_ = true;
+});
+
   });
   }
 
@@ -82,7 +90,40 @@ async mostrarErro(erro) {
 this.mostrarErro(error.error.error);
       }  
   );
-
+  this.subscription =  this.httpClient.get(this.instrutor.getUrl()+"/aulasativas.php", { responseType: "json", headers: this.headers })
+  .subscribe(
+    data => {
+      this.conteudo = (<conteudoAulasAtivas[]>data);
+      console.log(data);
+this.checkin_ = false;
+(<conteudoAulasAtivas[]>data).forEach(element => {
+if(element.checkin) this.checkin_ = true;
+});
+});
   
   }
+cancelar(idcheckin){
+  this.subscription =  this.httpClient.post(this.instrutor.getUrl()+"/cancelar_checkin.php",{idcheckin: idcheckin}, { headers: this.headers })
+  .subscribe(
+    data =>{
+      console.log(data);
+      this.mostrarErro("Checkin cancelado com sucesso!");
+    },
+    error=>{
+      console.log(error);
+    }
+  );
+  this.subscription =  this.httpClient.get(this.instrutor.getUrl()+"/aulasativas.php", { responseType: "json", headers: this.headers })
+  .subscribe(
+    data => {
+      this.conteudo = (<conteudoAulasAtivas[]>data);
+      console.log(data);
+this.checkin_ = false;
+(<conteudoAulasAtivas[]>data).forEach(element => {
+if(element.checkin) this.checkin_ = true;
+});
+});
+
+}
+  
 }

@@ -1,11 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { toSegments } from '@ionic/angular/dist/directives/navigation/stack-utils';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from "rxjs";
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
-import { NomeInstrutorService } from "../nome-instrutor.service";
-import { async } from '@angular/core/testing';
+import { NomeInstrutorService, error } from "../nome-instrutor.service"
 import { Router, NavigationEnd } from '@angular/router';
 
 
@@ -92,7 +88,7 @@ export class AulaPage implements OnInit {
 
   data: Date;
  
-  headers = new HttpHeaders({ "x-auth": this.instrutor.getToken() , 'Cache-Control':  'no-cache, no-store, must-revalidate, post-check=0, pre-check=0','Pragma': 'no-cache','Expires': '0'});
+  headers = new HttpHeaders({"x-version":"1.0.1" , "x-auth": this.instrutor.getToken() , 'Cache-Control':  'no-cache, no-store, must-revalidate, post-check=0, pre-check=0','Pragma': 'no-cache','Expires': '0'});
 
   aula_nova: conjunto_aula_exemplo;
 
@@ -132,10 +128,8 @@ export class AulaPage implements OnInit {
     .subscribe(
       data => {
         this.dismiss();
-        
-
-this.idaula = (<aula>data).id;
-console.log(data);
+        this.idaula = (<aula>data).id;
+        console.log(data);
       }
     );
 
@@ -168,6 +162,11 @@ console.log(data);
            if (this.instrutor.getDescricao() == undefined) this.instrutor.setDescricao(JSON.stringify((<Aula_aberta>data).tecnicas));
           }
 
+        },
+        error =>{
+          this.instrutor.error = (<error>error);
+          this.dismiss();
+          this.router.navigate(['/error']);
         });
    }
 

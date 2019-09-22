@@ -16,7 +16,7 @@ mensagem: string
 })
 export class MensagensPage implements OnInit {
   mensagens: mensagem[];
-  headers = new HttpHeaders({ "x-auth": this.instrutor.getToken(), 'Cache-Control': 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0', 'Pragma': 'no-cache', 'Expires': '0' });
+  headers = new HttpHeaders({"x-version":"1.0.1", "x-auth": this.instrutor.getToken(), 'Cache-Control': 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0', 'Pragma': 'no-cache', 'Expires': '0' });
 
   constructor(
     private instrutor: NomeInstrutorService,
