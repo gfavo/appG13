@@ -29,7 +29,7 @@ export class AppComponent {
   }
 
   exibe_diretorio: boolean = true;
-
+modo_frontdesk: boolean = false;
 
   async alertaNaoPago() {
     const alert = await this.alertController.create({
@@ -140,5 +140,23 @@ this.alertaNaoPago();
     this.menu.toggle();
 
     this.router.navigate(["/sobre"]);
+  }
+
+  frontdesk()
+  {
+
+    this.menu.toggle();
+   
+
+    this.router.navigate(["/frontdesk"]);
+    this.modo_frontdesk = true;
+  }
+
+  normal()
+  {
+    this.menu.toggle();
+
+    this.router.navigate(["/aula"]);
+    this.modo_frontdesk = false;
   }
 }

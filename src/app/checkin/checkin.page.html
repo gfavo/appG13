@@ -14,43 +14,43 @@
 
 </ion-header>
 
-<ion-content  *ngIf="checkin_==false" padding>
+<ion-content *ngIf="checkin_==false" padding>
 
-    <ion-list *ngFor="let aula of conteudo">
+  <ion-list *ngFor="let aula of conteudo">
 
-<ion-card>
-                <ion-card-header>
-                  <ion-card-title>Instrutor: {{aula.nomeinstrutor}}</ion-card-title>
-                  <ion-card-content>
-                    Descrição da aula: {{aula.descricao}}
-                    </ion-card-content>
-<ion-button (click)="checkin(aula.id,aula.idinstrutor)">
-  Fazer Check-In
-</ion-button>
-                </ion-card-header>
-        </ion-card>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Instrutor: {{aula.nomeinstrutor}}</ion-card-title>
+        <ion-card-content>
+          Descrição da aula: {{aula.descricao}}
+        </ion-card-content>
+        <ion-button (click)="checkin(aula.id,aula.idinstrutor)">
+          Fazer Check-In
+        </ion-button>
+      </ion-card-header>
+    </ion-card>
 
-      </ion-list>
+  </ion-list>
 
 
-    
+
 
 </ion-content>
-<ion-content  *ngIf="checkin_" padding>
-    <ion-list *ngFor="let aula of conteudo">
+<ion-content *ngIf="checkin_" padding>
+  <ion-list *ngFor="let aula of conteudo">
 
-        <ion-card>
-                        <ion-card-header>
-                          <ion-card-title>Instrutor: {{aula.nomeinstrutor}}</ion-card-title>
-                          <ion-card-content>
-                            Descrição da aula: {{aula.descricao}}
-                            </ion-card-content>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Instrutor: {{aula.nomeinstrutor}}</ion-card-title>
+        <ion-card-content>
+          Descrição da aula: {{aula.descricao}}
+        </ion-card-content>
         <ion-button (click)="cancelar(aula.idcheckin)">
           Cancelar checkin!
         </ion-button>
-                        </ion-card-header>
-                </ion-card>
-        
-              </ion-list>
-        
+      </ion-card-header>
+    </ion-card>
+
+  </ion-list>
+
 </ion-content>

@@ -23,6 +23,7 @@ const routes: Routes = [
   { path: 'mensagens', loadChildren: './mensagens/mensagens.module#MensagensPageModule' },
   { path: 'sobre', loadChildren: './sobre/sobre.module#SobrePageModule' },
   { path: 'error', loadChildren: './error/error.module#ErrorPageModule' },
+  { path: 'frontdesk', loadChildren: './frontdesk/frontdesk.module#FrontdeskPageModule' },
 
 ];
 

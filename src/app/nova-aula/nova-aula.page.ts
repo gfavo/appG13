@@ -40,7 +40,7 @@ export class NovaAulaPage implements OnInit {
 
   
   
-  headers = new HttpHeaders({"x-version":"1.0.1", "x-auth": this.instrutor.getToken(), 'Cache-Control': 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0', 'Pragma': 'no-cache', 'Expires': '0' });
+  headers = new HttpHeaders({"x-version":"1.0.3", "x-auth": this.instrutor.getToken(), 'Cache-Control': 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0', 'Pragma': 'no-cache', 'Expires': '0' });
 
   constructor(private load: LoadingController,
     private http: HttpClient,

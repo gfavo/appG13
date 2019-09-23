@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { NomeInstrutorService, error } from "../nome-instrutor.service"
+import { NomeInstrutorService } from "../nome-instrutor.service"
 import { Router, NavigationEnd } from '@angular/router';
 
 
@@ -68,6 +68,13 @@ export class aula_nova {
   tecnicasAvulsas: tecnicas[];
 }
 
+class erro{
+  error: error;
+}
+
+class error{
+  error: string;
+}
 
 @Component({
   selector: 'app-aula',
@@ -88,7 +95,7 @@ export class AulaPage implements OnInit {
 
   data: Date;
  
-  headers = new HttpHeaders({"x-version":"1.0.1" , "x-auth": this.instrutor.getToken() , 'Cache-Control':  'no-cache, no-store, must-revalidate, post-check=0, pre-check=0','Pragma': 'no-cache','Expires': '0'});
+  headers = new HttpHeaders({"x-version":"1.0.3" , "x-auth": this.instrutor.getToken() , 'Cache-Control':  'no-cache, no-store, must-revalidate, post-check=0, pre-check=0','Pragma': 'no-cache','Expires': '0'});
 
   aula_nova: conjunto_aula_exemplo;
 
@@ -135,7 +142,7 @@ export class AulaPage implements OnInit {
 
     this.presentLoading();
     this.nome_instrutor = this.instrutor.getNome();
-    this.subscription =  this.httpClient.post(this.instrutor.getUrl()+"/aula.php", { '': '' }, { responseType: "json", headers: this.headers })
+    this.subscription =  this.httpClient.post(this.instrutor.getUrl()+"/aula.php", { '': '' }, { responseType: "json", headers: this.headers, observe: "body" })
       .subscribe(
         data => {
           console.log(data);
@@ -164,7 +171,7 @@ export class AulaPage implements OnInit {
 
         },
         error =>{
-          this.instrutor.error = (<error>error);
+          this.instrutor.error = (<erro>error).error.error;
           this.dismiss();
           this.router.navigate(['/error']);
         });
@@ -236,7 +243,9 @@ ngOnInit(){}
   concluir() {
     if (this.idaula != "") {
       this.httpClient.post(this.instrutor.getUrl() + "/concluir.php", { 'id': parseInt(this.idaula) }, { observe: "response", headers: this.headers })
-        .subscribe(data => console.log(data.status));
+        .subscribe(data => {console.log(data.status)
+          this.instrutor.setAulaAberta(false);
+          });
       
 
       
@@ -255,9 +264,7 @@ ngOnInit(){}
         {
         this.storage.remove('tecnica_adicional'+i);
         }
-
         this.storage.remove('qtdtecnicas');
-
     }
     else {
       this.msgerroconcluir();

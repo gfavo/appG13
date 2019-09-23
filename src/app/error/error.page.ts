@@ -9,7 +9,7 @@ import { NomeInstrutorService, error } from '../nome-instrutor.service';
   styleUrls: ['./error.page.scss'],
 })
 export class ErrorPage implements OnInit {
-erro: error;
+erro;
 
   constructor(
     private instrutor: NomeInstrutorService

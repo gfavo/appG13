@@ -8,7 +8,7 @@ import { CalendarComponent } from 'ionic2-calendar/calendar';
 import { identifierModuleUrl } from '@angular/compiler';
 import { ModalvideoPage } from '../modalvideo/modalvideo.page';
 import { ModaltecnicasdodiaPage } from '../modaltecnicasdodia/modaltecnicasdodia.page';
-import {error} from '../nome-instrutor.service';
+
 
 class conteudo{
 aula_datas:aula_data[];
@@ -30,6 +30,14 @@ class aula_data{
 nome: string
 senhavimeoid: string
 vimeoid: string
+}
+
+class erro{
+  error: error;
+}
+
+class error{
+  error: string;
 }
 
 @Component({
@@ -58,7 +66,7 @@ nomealuno: string;
 url: string;
 urlFaixa;
 
-  headers = new HttpHeaders({"x-version":"1.0.1", "x-auth": this.instrutor.getToken() , 'Cache-Control':  'no-cache, no-store, must-revalidate, post-check=0, pre-check=0','Pragma': 'no-cache','Expires': '0'});
+  headers = new HttpHeaders({"x-version":"1.0.3", "x-auth": this.instrutor.getToken() , 'Cache-Control':  'no-cache, no-store, must-revalidate, post-check=0, pre-check=0','Pragma': 'no-cache','Expires': '0'});
 
   event = {
     title: '',
@@ -123,7 +131,7 @@ urlFaixa;
         this.codigoQr = (<conteudo>data).id + ";" + (<conteudo>data).nomealuno;
       },
       error =>{
-        this.instrutor.error = (<error>error);
+        this.instrutor.error =  this.instrutor.error = (<erro>error).error.error;
         this.router.navigate(['/error']);
       });
    

@@ -172,7 +172,7 @@ export class HomePage {
 
       this.presentLoading();
 
-      this.httpClient.post(this.instrutor.getUrl() + "/login.php", JSON.stringify(this.pessoa), { responseType: 'text', observe: "response", withCredentials: true, headers: new HttpHeaders({'x-version': '1.0.1'})})
+      this.httpClient.post(this.instrutor.getUrl() + "/login.php", JSON.stringify(this.pessoa), { responseType: 'text', observe: "response", withCredentials: true, headers: new HttpHeaders({'x-version': '1.0.3'})})
 
         .subscribe(
           response => {
