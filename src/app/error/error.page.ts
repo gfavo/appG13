@@ -1,22 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { NomeInstrutorService, error } from '../nome-instrutor.service';
-
-
+import { Component, OnInit } from "@angular/core";
+import { NomeInstrutorService, error } from "../nome-instrutor.service";
 
 @Component({
-  selector: 'app-error',
-  templateUrl: './error.page.html',
-  styleUrls: ['./error.page.scss'],
+  selector: "app-error",
+  templateUrl: "./error.page.html",
+  styleUrls: ["./error.page.scss"]
 })
 export class ErrorPage implements OnInit {
-erro;
+  erro;
 
-  constructor(
-    private instrutor: NomeInstrutorService
-  ) { }
+  constructor(private instrutor: NomeInstrutorService) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   ionViewWillEnter() {
     this.erro = this.instrutor.error;

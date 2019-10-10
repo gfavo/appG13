@@ -1,43 +1,63 @@
 <ion-header>
   <ion-toolbar color="primary">
-      <ion-thumbnail slot="start">
-          <img src="../assets/images/logobola.png">
-        </ion-thumbnail>
+    <ion-thumbnail slot="start">
+      <img src="../assets/images/logobola.png" />
+    </ion-thumbnail>
     <ion-title>
-    Faça seu login 
+      Faça seu login
     </ion-title>
   </ion-toolbar>
-
-  
 </ion-header>
 
-
 <ion-content>
+  <form #Form="ngForm" (ngSubmit)="onSubmit()" class="form">
+    <!-- {{pessoa.user}} . {{pessoa.pass}} -->
 
-
-<form #Form="ngForm" (ngSubmit)="onSubmit()" class="form">
- <!-- {{pessoa.user}} . {{pessoa.pass}} -->
- 
-    <ion-item  class="form-item">
-    <ion-label class="form-label" position="stacked" >Usuário</ion-label>
-    <ion-input type="text" class="form-control" id="user"  required [(ngModel)]="pessoa.user" name="user"></ion-input>
+    <ion-item class="form-item">
+      <ion-label class="form-label" position="stacked">Usuário</ion-label>
+      <ion-input
+        type="text"
+        class="form-control"
+        id="user"
+        required
+        [(ngModel)]="pessoa.user"
+        name="user"
+      ></ion-input>
     </ion-item>
-  
 
-  
-<ion-item class="form-item">
-    <ion-label class="form-label"  position="stacked" for="pass">Senha</ion-label>
-    <ion-input type="password" class="form-control" id="pass" required [(ngModel)]="pessoa.pass" [ngModelOptions]="{standalone: true}" name="pass"></ion-input>
+    <ion-item class="form-item">
+      <ion-label class="form-label" position="stacked" for="pass"
+        >Senha</ion-label
+      >
+      <ion-input
+        type="password"
+        class="form-control"
+        id="pass"
+        required
+        [(ngModel)]="pessoa.pass"
+        [ngModelOptions]="{ standalone: true }"
+        name="pass"
+      ></ion-input>
     </ion-item>
-  <br>
-  <br>
-   <ion-item   slot="start"><b (click)="lembrarTrue()">Lembrar login ?</b> <ion-checkbox slot="end" name="lembrar" id="lembrar" [(ngModel)]="lembrar"></ion-checkbox></ion-item>
-    
-  <ion-button color="dark" id="login-button" expand="full" type="submit" class="btn btn-success"><ion-icon slot="start" name="log-in"></ion-icon>Login</ion-button>
- 
+    <br />
+    <br />
+    <ion-item slot="start"
+      ><b (click)="lembrarTrue()">Lembrar login ?</b>
+      <ion-checkbox
+        slot="end"
+        name="lembrar"
+        id="lembrar"
+        [(ngModel)]="lembrar"
+      ></ion-checkbox
+    ></ion-item>
 
-
-</form>
-
-
+    <ion-button
+      color="dark"
+      id="login-button"
+      expand="full"
+      type="submit"
+      class="btn btn-success"
+      ><ion-icon slot="start" name="log-in"></ion-icon>Login</ion-button
+    >
+  </form>
 </ion-content>

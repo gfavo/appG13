@@ -1,123 +1,151 @@
 <ion-header>
-    <ion-toolbar color="dark">
-        <ion-buttons slot="start">
-            <ion-menu-button autoHide="false"></ion-menu-button>
-          </ion-buttons>
-        <ion-thumbnail slot="end">
-            <img src="../assets/images/logobola.png">
-          </ion-thumbnail>
-      <ion-title text-center>Digite o codigo</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-thumbnail slot="end">
+      <img src="../assets/images/logobola.png" />
+    </ion-thumbnail>
+    <ion-title text-center>Digite o codigo</ion-title>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content padding>
-
-
-  
   <ion-fab vertical="bottom" horizontal="start" slot="fixed">
     <ion-fab-button (click)="backPage()">
       <ion-icon name="arrow-back"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-  
-  <ion-button style="font-size: 15px;" expand="block" color="dark" size="large" (click)="mostraDetalhes()" vertical="top">Mostrar Detalhes da aula</ion-button>
 
-            <ion-input class="input_" type="password" id="pincode" readonly></ion-input>
-        
+  <ion-button
+    style="font-size: 15px;"
+    expand="block"
+    color="dark"
+    size="large"
+    (click)="mostraDetalhes()"
+    vertical="top"
+    >Mostrar Detalhes da aula</ion-button
+  >
 
+  <ion-input class="input_" type="password" id="pincode" readonly></ion-input>
 
   <ion-grid text-center>
-   
     <ion-row>
       <ion-col></ion-col>
       <ion-col>
-        <ion-button id="mostrar" fill="outline" (click)="mostrarSenha()" float-center>Mostrar PIN</ion-button>
+        <ion-button
+          id="mostrar"
+          fill="outline"
+          (click)="mostrarSenha()"
+          float-center
+          >Mostrar PIN</ion-button
+        >
       </ion-col>
       <ion-col></ion-col>
     </ion-row>
 
     <ion-card>
-    <ion-row>
-      <ion-col></ion-col>
-     
-      <ion-col>
-        <ion-button color="dark" size="large" (click)="handleInput('1')">1</ion-button>
-      </ion-col>
-      <ion-col size="4">
-        <ion-button color="dark" size="large" (click)="handleInput('2')">2</ion-button>
-      </ion-col>
-      <ion-col>
-        <ion-button color="dark" size="large" (click)="handleInput('3')">3</ion-button>
-      </ion-col>
-      <ion-col></ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col></ion-col>
-      <ion-col>
-        <ion-button color="dark" size="large" (click)="handleInput('4')">4</ion-button>
-      </ion-col>
-      <ion-col size="4">
-        <ion-button color="dark" round size="large" (click)="handleInput('5')">5</ion-button>
-      </ion-col>
-      <ion-col>
-        <ion-button color="dark" round size="large" (click)="handleInput('6')">6</ion-button>
-      </ion-col>
-      <ion-col></ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col></ion-col>
-      <ion-col>
-        <ion-button color="dark" round size="large" (click)="handleInput('7')">7</ion-button>
-      </ion-col>
-      <ion-col size="4">
-        <ion-button color="dark" round size="large" (click)="handleInput('8')">8</ion-button>
-      </ion-col>
-      <ion-col>
-        <ion-button color="dark" round size="large" (click)="handleInput('9')">9</ion-button>
-      </ion-col>
-      <ion-col></ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
+      <ion-row>
+        <ion-col></ion-col>
 
-      </ion-col>
-      <ion-col>
-        <ion-button color="dark" round size="large" (click)="handleInput('0')">0</ion-button>
-      </ion-col>
-   
-      <ion-col>
+        <ion-col>
+          <ion-button color="dark" size="large" (click)="handleInput('1')"
+            >1</ion-button
+          >
+        </ion-col>
+        <ion-col size="4">
+          <ion-button color="dark" size="large" (click)="handleInput('2')"
+            >2</ion-button
+          >
+        </ion-col>
+        <ion-col>
+          <ion-button color="dark" size="large" (click)="handleInput('3')"
+            >3</ion-button
+          >
+        </ion-col>
+        <ion-col></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col></ion-col>
+        <ion-col>
+          <ion-button color="dark" size="large" (click)="handleInput('4')"
+            >4</ion-button
+          >
+        </ion-col>
+        <ion-col size="4">
+          <ion-button color="dark" round size="large" (click)="handleInput('5')"
+            >5</ion-button
+          >
+        </ion-col>
+        <ion-col>
+          <ion-button color="dark" round size="large" (click)="handleInput('6')"
+            >6</ion-button
+          >
+        </ion-col>
+        <ion-col></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col></ion-col>
+        <ion-col>
+          <ion-button color="dark" round size="large" (click)="handleInput('7')"
+            >7</ion-button
+          >
+        </ion-col>
+        <ion-col size="4">
+          <ion-button color="dark" round size="large" (click)="handleInput('8')"
+            >8</ion-button
+          >
+        </ion-col>
+        <ion-col>
+          <ion-button color="dark" round size="large" (click)="handleInput('9')"
+            >9</ion-button
+          >
+        </ion-col>
+        <ion-col></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col> </ion-col>
+        <ion-col>
+          <ion-button color="dark" round size="large" (click)="handleInput('0')"
+            >0</ion-button
+          >
+        </ion-col>
 
-      </ion-col>
-  
-    </ion-row>
+        <ion-col> </ion-col>
+      </ion-row>
 
- 
+      <ion-row>
+        <ion-col>
+          <ion-button
+            style="font-size: 15px;"
+            color="dark"
+            size="large"
+            (click)="handleInput('clear')"
+          >
+            <ion-icon slot="start" name="refresh"></ion-icon>Limpar
+          </ion-button>
+        </ion-col>
+        <ion-col> </ion-col>
+        <ion-col> </ion-col>
+        <ion-col>
+          <ion-button
+            style="font-size: 17px;"
+            ion-ion-button
+            color="dark"
+            size="large"
+            (click)="okAluno()"
+          >
+            <ion-icon slot="start" name="person"></ion-icon>OK
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card>
     <ion-row>
       <ion-col>
-        <ion-button style="font-size: 15px;" color="dark" size="large" (click)="handleInput('clear')">
-          <ion-icon slot="start" name="refresh"></ion-icon>Limpar
-        </ion-button>
-      </ion-col>
-      <ion-col>
-
-      </ion-col>
-      <ion-col>
-
-      </ion-col>
-      <ion-col>
-        <ion-button style="font-size: 17px;" ion-ion-button color="dark" size="large" (click)="okAluno()">
-          <ion-icon slot="start" name="person"></ion-icon>OK
-        </ion-button>
+        <ion-button color="tertiary" size="large" (click)="encerra()"
+          >Encerrar</ion-button
+        >
       </ion-col>
     </ion-row>
-  </ion-card>
-    <ion-row>
-      <ion-col>
-        <ion-button color="tertiary" size="large" (click)="encerra()">Encerrar</ion-button>
-      </ion-col>
-    </ion-row>
-
   </ion-grid>
-
- 
 </ion-content>

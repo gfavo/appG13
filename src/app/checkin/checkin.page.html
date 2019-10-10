@@ -1,56 +1,77 @@
 <ion-header class="fonte">
-
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button autoHide="false"></ion-menu-button>
     </ion-buttons>
     <ion-thumbnail slot="end">
-      <img src="../assets/images/logobola.png">
+      <img src="../assets/images/logobola.png" />
     </ion-thumbnail>
     <ion-title text-center>Check-in</ion-title>
   </ion-toolbar>
-
-
-
 </ion-header>
 
-<ion-content *ngIf="checkin_==false" padding>
-
+<ion-content *ngIf="checkin_ == false && temaulainstrutor == false" padding>
   <ion-list *ngFor="let aula of conteudo">
-
     <ion-card>
       <ion-card-header>
-        <ion-card-title>Instrutor: {{aula.nomeinstrutor}}</ion-card-title>
+        <ion-card-title>Instrutor: {{ aula.nomeinstrutor }}</ion-card-title>
         <ion-card-content>
-          Descrição da aula: {{aula.descricao}}
+          Descrição da aula: {{ aula.descricao }}
         </ion-card-content>
-        <ion-button (click)="checkin(aula.id,aula.idinstrutor)">
+        <ion-button (click)="checkin(aula.id, aula.idinstrutor)">
           Fazer Check-In
         </ion-button>
       </ion-card-header>
     </ion-card>
-
   </ion-list>
-
-
-
-
 </ion-content>
-<ion-content *ngIf="checkin_" padding>
-  <ion-list *ngFor="let aula of conteudo">
-
+<ion-content *ngIf="checkin_ == false && temaulainstrutor == true" padding>
+  <ion-list>
     <ion-card>
       <ion-card-header>
-        <ion-card-title>Instrutor: {{aula.nomeinstrutor}}</ion-card-title>
+        <ion-card-title>Instrutor: {{ conteudo[0].nomeinstrutor }}</ion-card-title>
         <ion-card-content>
-          Descrição da aula: {{aula.descricao}}
+          Descrição da aula: {{ conteudo[0].descricao }}
+        </ion-card-content>
+        <ion-button (click)="checkin(conteudo[0].id, conteudo[0].idinstrutor)">
+          Fazer Check-In
+        </ion-button>
+      </ion-card-header>
+    </ion-card>
+<ion-button (click)="mostra_avulsas()" expand="full" *ngIf="mostraravulsas==false">
+  Mostrar outras
+</ion-button>
+  </ion-list>
+  <ng-container *ngIf="mostraravulsas">
+
+  <ion-list  *ngFor="let aula of conteudo">
+    <ion-card *ngIf="aula != conteudo[0]">
+      <ion-card-header>
+        <ion-card-title>Instrutor: {{ aula.nomeinstrutor }}</ion-card-title>
+        <ion-card-content>
+          Descrição da aula: {{ aula.descricao }}
+        </ion-card-content>
+        <ion-button (click)="checkin(conteudo[0].id, conteudo[0].idinstrutor)">
+          Fazer Check-In
+        </ion-button>
+      </ion-card-header>
+    </ion-card>
+  </ion-list></ng-container>
+</ion-content>
+
+
+<ion-content *ngIf="checkin_" padding>
+  <ion-list *ngFor="let aula of conteudo">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Instrutor: {{ aula.nomeinstrutor }}</ion-card-title>
+        <ion-card-content>
+          Descrição da aula: {{ aula.descricao }}
         </ion-card-content>
         <ion-button (click)="cancelar(aula.idcheckin)">
           Cancelar checkin!
         </ion-button>
       </ion-card-header>
     </ion-card>
-
   </ion-list>
-
 </ion-content>

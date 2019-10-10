@@ -16,7 +16,7 @@ export class NomeInstrutorService {
 
 error: string;
 
-  headers = new HttpHeaders({'x-version':'1.0.3' , "x-auth": this.getToken() , 'Cache-Control':  'no-cache, no-store, must-revalidate, post-check=0, pre-check=0','Pragma': 'no-cache','Expires': '0'});
+  headers = new HttpHeaders({'x-version':'1.0.6' , "x-auth": this.getToken() , 'Cache-Control':  'no-cache, no-store, must-revalidate, post-check=0, pre-check=0','Pragma': 'no-cache','Expires': '0'});
 
 nome_instrutor: string;
 

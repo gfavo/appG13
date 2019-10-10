@@ -1,89 +1,91 @@
 <ion-header>
-    <ion-toolbar color="dark">
-        <ion-buttons slot="start">
-            <ion-menu-button autoHide="false"></ion-menu-button>
-          </ion-buttons>
-        <ion-thumbnail slot="end">
-            <img src="../assets/images/logobola.png">
-          </ion-thumbnail>
-      <ion-title text-center>Registre uma nova aula!</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-thumbnail slot="end">
+      <img src="../assets/images/logobola.png" />
+    </ion-thumbnail>
+    <ion-title text-center>Registre uma nova aula!</ion-title>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content padding>
- <ion-chip><ion-label>Data da Aula: {{aula.datetime}}</ion-label> </ion-chip>
+  <ion-chip
+    ><ion-label>Data da Aula: {{ aula.datetime }}</ion-label>
+  </ion-chip>
 
- <ion-fab vertical="bottom" horizontal="start" slot="fixed">
-  <ion-fab-button (click)="backPage()">
-    <ion-icon name="arrow-back"></ion-icon>
-  </ion-fab-button>
-</ion-fab>
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+    <ion-fab-button (click)="backPage()">
+      <ion-icon name="arrow-back"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
- 
-
-  <br>
+  <br />
   <b>Aulas Semanais: </b>
 
   <ion-item>
-    <ion-select class="my-select" width = "100%" placeholder="Selecione uma aula" id="_aulaProgramada" (ionChange)="action()">
+    <ion-select
+      class="my-select"
+      width="100%"
+      placeholder="Selecione uma aula"
+      id="_aulaProgramada"
+      (ionChange)="action()"
+    >
       <ul *ngFor="let aula of aula.aulasProgramadas">
         <li>
-          <ion-select-option value="{{aula.titulo}}">{{aula.titulo}}</ion-select-option>
+          <ion-select-option value="{{ aula.titulo }}">{{
+            aula.titulo
+          }}</ion-select-option>
         </li>
       </ul>
     </ion-select>
   </ion-item>
 
-
-  <br>
+  <br />
 
   <ion-item>
-      <ion-label position="stacked">
-        <h2>Descrição da aula</h2>
-      </ion-label>
-      <ion-textarea value="{{descricaoPadrao}}" row="2" id="descricao" required></ion-textarea>
-    </ion-item>
-  
+    <ion-label position="stacked">
+      <h2>Descrição da aula</h2>
+    </ion-label>
+    <ion-textarea
+      value="{{ descricaoPadrao }}"
+      row="2"
+      id="descricao"
+      required
+    ></ion-textarea>
+  </ion-item>
 
- 
-   <ion-button  size="default" (click)="mostraModal()" expand="block">
+  <ion-button size="default" (click)="mostraModal()" expand="block">
     Tecnicas Extra
-   </ion-button>
+  </ion-button>
 
- 
-
-
-  <br><br><br>
+  <br /><br /><br />
 
   <ion-footer vertical="bottom">
-   
-
- 
-
-    
-
-
-  <ion-card *ngIf="instrutor.getIdPrograma() != null" padding>
-        <ion-label position="stacked">
-          <h2><b>Detalhes da Aula</b></h2>
-        </ion-label>
-      <h2 id="tituloaula"><b> {{aula_mostrada.titulo}} -></b></h2>
-        <ul id="tecnicaslista" *ngFor="let _tecnica of aula_mostrada.tecnicas">
-          <li  *ngIf="_tecnica.incluir == undefined" (click)="mostracom(_tecnica)">{{_tecnica.nome}}</li>
-        </ul>
-        <h2 *ngIf="this.instrutor.getIdTecnicas().length > 0"><b> Tecnicas Extra -></b></h2>
-        <ul id="tecnicaslista" *ngFor="let _tecnica of aula_mostrada.tecnicas">
-          <li  *ngIf="_tecnica.incluir != undefined" (click)="mostracom(_tecnica)">{{_tecnica.nome}}</li>
-        </ul>
-
-
-      </ion-card>
-
-
+    <ion-card *ngIf="instrutor.getIdPrograma() != null" padding>
+      <ion-label position="stacked">
+        <h2><b>Detalhes da Aula</b></h2>
+      </ion-label>
+      <h2 id="tituloaula">
+        <b> {{ aula_mostrada.titulo }} -></b>
+      </h2>
+      <ul id="tecnicaslista" *ngFor="let _tecnica of aula_mostrada.tecnicas">
+        <li *ngIf="_tecnica.incluir == undefined" (click)="mostracom(_tecnica)">
+          {{ _tecnica.nome }} <ng-container *ngIf="_tecnica.avancada==1"> - <b>Avançada</b></ng-container>
+       
+        </li>
+      </ul>
+      <h2 *ngIf="this.instrutor.getIdTecnicas().length > 0">
+        <b> Tecnicas Extra -></b>
+      </h2>
+      <ul id="tecnicaslista" *ngFor="let _tecnica of aula_mostrada.tecnicas">
+        <li *ngIf="_tecnica.incluir != undefined" (click)="mostracom(_tecnica)">
+          {{ _tecnica.nome }}  <ng-container *ngIf="_tecnica.avancada==1"> - <b>Avançada</b></ng-container>
+        </li>
+      </ul>
+    </ion-card>
   </ion-footer>
-
-
-
 </ion-content>
 
 <ion-footer>
@@ -92,19 +94,19 @@
       <ion-grid fixed>
         <ion-row>
           <ion-col size="6">
-            <ion-button expand="block" color="dark" (click)="voltar()"><ion-icon slot="start" name="arrow-back"></ion-icon>
-            Voltar
-          </ion-button>
-        </ion-col>
+            <ion-button expand="block" color="dark" (click)="voltar()"
+              ><ion-icon slot="start" name="arrow-back"></ion-icon>
+              Voltar
+            </ion-button>
+          </ion-col>
           <ion-col size="6">
-              <ion-button expand="block" color="dark" (click)="continuar()"><ion-icon slot="start" name="arrow-forward"></ion-icon>
-                Criar aula
-              </ion-button>
+            <ion-button expand="block" color="dark" (click)="continuar()"
+              ><ion-icon slot="start" name="arrow-forward"></ion-icon>
+              Criar aula
+            </ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>
-      
-      
     </ion-toolbar>
   </ion-toolbar>
 </ion-footer>

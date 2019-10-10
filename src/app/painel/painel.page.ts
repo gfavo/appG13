@@ -1,28 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { NomeInstrutorService } from '../nome-instrutor.service';
+import { Component, OnInit } from "@angular/core";
+import { NomeInstrutorService } from "../nome-instrutor.service";
 
 @Component({
-  selector: 'app-painel',
-  templateUrl: './painel.page.html',
-  styleUrls: ['./painel.page.scss'],
+  selector: "app-painel",
+  templateUrl: "./painel.page.html",
+  styleUrls: ["./painel.page.scss"]
 })
 export class PainelPage implements OnInit {
+  enderecoNovo: string;
 
-enderecoNovo: string;
+  constructor(public instrutor: NomeInstrutorService) {}
 
+  ngOnInit() {}
 
-  constructor(public instrutor: NomeInstrutorService) { }
-
-  ngOnInit() {
+  mudarUrl() {
+    this.instrutor.setUrl(this.enderecoNovo);
   }
-
-
-
-
-mudarUrl(){
-  this.instrutor.setUrl(this.enderecoNovo);
 }
-
-}
-
-

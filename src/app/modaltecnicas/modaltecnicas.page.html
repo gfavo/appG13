@@ -10,39 +10,22 @@
 </ion-header>
 
 <ion-content padding>
-
-
-
-
-  
-
-
-
-<ion-list *ngFor="let tecnica of itemsFiltrados">
-  <ion-item>
-    
-    <ion-checkbox slot="end"  [(ngModel)]="tecnica.incluir" ></ion-checkbox>
-    <ion-label class="ion-text-wrap">
-      <h2 > {{tecnica.nome}} </h2>
-    </ion-label>
-  </ion-item>
-</ion-list>
-
-
-
-
-
-
-
-  
+  <ion-list *ngFor="let tecnica of itemsFiltrados">
+    <ion-item>
+      <ion-checkbox slot="end" [(ngModel)]="tecnica.incluir"></ion-checkbox>
+      <ion-label class="ion-text-wrap">
+        <h2>{{ tecnica.nome }}</h2>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>
 
 <ion-footer no-shadow>
   <ion-toolbar position="bottom">
-      <ion-button expand="full" (click)="adicionar()" color="dark">
-          Adicionar Tecnicas
-        </ion-button>
-      
+    <ion-button expand="full" (click)="adicionar()" color="dark">
+      Adicionar Tecnicas
+    </ion-button>
+
     <ion-button expand="full" (click)="dismiss()">
       Fechar detalhes
     </ion-button>

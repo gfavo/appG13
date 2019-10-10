@@ -1,27 +1,28 @@
 <ion-header>
-    <ion-toolbar color="dark">
-        <ion-buttons slot="start">
-          </ion-buttons>
-        <ion-thumbnail slot="end">
-            <img src="../assets/images/logobola.png">
-          </ion-thumbnail>
-      <ion-title text-center>Video</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start"> </ion-buttons>
+    <ion-thumbnail slot="end">
+      <img src="../assets/images/logobola.png" />
+    </ion-thumbnail>
+    <ion-title text-center>Video</ion-title>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content padding>
   <div class="video-container">
-    <iframe  width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen id="player"></iframe>
+    <iframe
+      width="640"
+      height="360"
+      frameborder="0"
+      allow="autoplay; fullscreen"
+      allowfullscreen
+      id="player"
+    ></iframe>
   </div>
-
-
-
 </ion-content>
-    <ion-footer>
-
-      senha: {{senhavimeo}}
-<ion-button expand="full" (click)="dismiss()">
-    Fechar 
+<ion-footer>
+  senha: {{ senhavimeo }}
+  <ion-button expand="full" (click)="dismiss()">
+    Fechar
   </ion-button>
 </ion-footer>

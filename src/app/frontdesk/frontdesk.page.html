@@ -4,7 +4,7 @@
       <ion-menu-button autoHide="false"></ion-menu-button>
     </ion-buttons>
     <ion-thumbnail slot="end">
-      <img src="../assets/images/logobola.png">
+      <img src="../assets/images/logobola.png" />
     </ion-thumbnail>
     <ion-title text-center>Frontdesk</ion-title>
   </ion-toolbar>
@@ -17,15 +17,19 @@
     <ion-icon name="search" slot="end"></ion-icon>
   </ion-button>
 </ion-header>
-<ion-content *ngIf="alunos!=undefined" padding>
+<ion-content *ngIf="alunos != undefined" padding>
   <ion-list *ngFor="let aluno of checklist">
     <ion-card>
       <ion-card-header>
-        <ion-card-title>{{aluno.nome}}</ion-card-title>
+        <ion-card-title>{{ aluno.nome }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <ion-button expand="block" class="ion-float-right" (click)="checkin(aluno.nome,aluno.id)">
-         Checkin
+        <ion-button
+          expand="block"
+          class="ion-float-right"
+          (click)="checkin(aluno.nome, aluno.id)"
+        >
+          Checkin
         </ion-button>
       </ion-card-content>
     </ion-card>

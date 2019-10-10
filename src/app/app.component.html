@@ -1,63 +1,63 @@
 <ion-app>
   <style>
     ion-button {
-
       --padding-top: 30%;
       --padding-bottom: 30%;
 
-
       --box-shadow: 0px 1px 0px 0px rgba(255, 255, 255, 0.966);
-
-
     }
 
-
     ion-menu {
-
       --width: 35%;
-
-
     }
 
     ion-icon {
       font-size: 5vh;
-
     }
-
 
     .container {
       position: absolute;
 
       height: 100%;
       width: 100%;
-
-
     }
-
 
     ion-button {
       margin-bottom: var(--margin-bottom);
     }
   </style>
   <!--Menu do aluno-->
-  <ion-menu contentId="content1" side="start" *ngIf="this.intrutor.getRole() != 'INSTRUTOR'">
-
+  <ion-menu
+    contentId="content1"
+    side="start"
+    *ngIf="this.intrutor.getRole() != 'INSTRUTOR'"
+  >
     <ion-content color="primary">
       <div class="container">
-
         <ion-button expand="full" (click)="homepage()" class="botaolateral">
           <div>
             <ion-icon name="home" style="margin-bottom: 20%"></ion-icon>
-            <br>
+            <br />
             <label style="font-size: 75%;">Home</label>
           </div>
         </ion-button>
 
-        <ion-button expand="full" (click)="abreDiretorio()" class="botaolateral">
+        <ion-button
+          expand="full"
+          (click)="abreDiretorio()"
+          class="botaolateral"
+        >
           <div>
-            <ion-icon *ngIf='this.intrutor.getRole() == "ALUNO"' name="lock"></ion-icon>
-            <ion-icon *ngIf='this.intrutor.getRole() != "ALUNO"' name="book" style="margin-bottom: 20%"></ion-icon>
-            <br>
+            <ion-icon
+              *ngIf="this.intrutor.getRole() == 'ALUNO'"
+              name="lock"
+            ></ion-icon>
+            <ion-icon
+              *ngIf="this.intrutor.getRole() != 'ALUNO'"
+              name="book"
+              style="margin-bottom: 20%"
+            ></ion-icon>
+            <br />
             <label style="font-size: 75%;">Biblioteca</label>
           </div>
         </ion-button>
@@ -65,24 +65,26 @@
         <ion-button expand="full" (click)="mensagens()" class="botaolateral">
           <div>
             <ion-icon name="mail" style="margin-bottom: 20%"></ion-icon>
-            <br>
+            <br />
             <label style="font-size: 75%;">Mensagens</label>
           </div>
         </ion-button>
 
         <ion-button expand="full" (click)="checkin()" class="botaolateral">
           <div>
-            <ion-icon name="checkbox-outline" style="margin-bottom: 20%"></ion-icon>
-            <br>
+            <ion-icon
+              name="checkbox-outline"
+              style="margin-bottom: 20%"
+            ></ion-icon>
+            <br />
             <label style="font-size: 75%;">Check-in</label>
           </div>
         </ion-button>
 
-
         <ion-button expand="full" (click)="logoff()" class="botaolateral">
           <div>
             <ion-icon name="log-out" style="margin-bottom: 20%"></ion-icon>
-            <br>
+            <br />
             <label style="font-size: 75%;">Logout</label>
           </div>
         </ion-button>
@@ -99,39 +101,42 @@
         -->
         <ion-button expand="full" class="botaolateral" (click)="sobre()">
           <div>
-            <ion-icon name="information-circle-outline" style="margin-bottom: 20%"></ion-icon>
-            <br>
+            <ion-icon
+              name="information-circle-outline"
+              style="margin-bottom: 20%"
+            ></ion-icon>
+            <br />
             <label style="font-size: 75%;">Sobre</label>
           </div>
         </ion-button>
       </div>
-
     </ion-content>
-
-
-
-
-
   </ion-menu>
   <!--Menu do instrutor-->
-  <ion-menu contentId="content1" side="start" *ngIf="this.intrutor.getRole() == 'INSTRUTOR'">
-
+  <ion-menu
+    contentId="content1"
+    side="start"
+    *ngIf="this.intrutor.getRole() == 'INSTRUTOR'"
+  >
     <ion-content color="primary">
       <div class="container">
         <ng-container *ngIf="modo_frontdesk == false">
-
           <ion-button expand="full" (click)="homepage()" class="botaolateral">
             <div>
               <ion-icon name="home" style="margin-bottom: 20%"></ion-icon>
-              <br>
+              <br />
               <label style="font-size: 75%;">Home</label>
             </div>
           </ion-button>
 
-          <ion-button expand="full" (click)="abreDiretorio()" class="botaolateral">
+          <ion-button
+            expand="full"
+            (click)="abreDiretorio()"
+            class="botaolateral"
+          >
             <div>
               <ion-icon name="book" style="margin-bottom: 20%"></ion-icon>
-              <br>
+              <br />
               <label style="font-size: 75%;">Biblioteca</label>
             </div>
           </ion-button>
@@ -139,32 +144,39 @@
           <ion-button expand="full" (click)="mensagens()" class="botaolateral">
             <div>
               <ion-icon name="mail" style="margin-bottom: 20%"></ion-icon>
-              <br>
+              <br />
               <label style="font-size: 75%;">Mensagens</label>
             </div>
           </ion-button>
 
           <ion-button expand="full" (click)="checkins()" class="botaolateral">
             <div>
-              <ion-icon name="checkbox-outline" style="margin-bottom: 20%"></ion-icon>
-              <br>
+              <ion-icon
+                name="checkbox-outline"
+                style="margin-bottom: 20%"
+              ></ion-icon>
+              <br />
               <label style="font-size: 75%;">Check-in</label>
             </div>
           </ion-button>
 
-          <ion-button expand="full" (click)="frontdesk()" class="botaolateral" *ngIf="intrutor.getAulaAberta()">
+          <ion-button
+            expand="full"
+            (click)="frontdesk()"
+            class="botaolateral"
+            *ngIf="intrutor.getAulaAberta()"
+          >
             <div>
               <ion-icon name="reorder" style="margin-bottom: 20%"></ion-icon>
-              <br>
+              <br />
               <label style="font-size: 75%;">Frontdesk</label>
             </div>
           </ion-button>
 
-
           <ion-button expand="full" (click)="logoff()" class="botaolateral">
             <div>
               <ion-icon name="log-out" style="margin-bottom: 20%"></ion-icon>
-              <br>
+              <br />
               <label style="font-size: 75%;">Logout</label>
             </div>
           </ion-button>
@@ -181,8 +193,11 @@
 -->
           <ion-button expand="full" class="botaolateral" (click)="sobre()">
             <div>
-              <ion-icon name="information-circle-outline" style="margin-bottom: 20%"></ion-icon>
-              <br>
+              <ion-icon
+                name="information-circle-outline"
+                style="margin-bottom: 20%"
+              ></ion-icon>
+              <br />
               <label style="font-size: 75%;">Sobre</label>
             </div>
           </ion-button>
@@ -190,8 +205,11 @@
         <ng-container *ngIf="modo_frontdesk">
           <ion-button expand="full" class="botaolateral" (click)="normal()">
             <div>
-              <ion-icon name="return-left" style="margin-bottom: 20%"></ion-icon>
-              <br>
+              <ion-icon
+                name="return-left"
+                style="margin-bottom: 20%"
+              ></ion-icon>
+              <br />
               <label style="font-size: 75%;">Modo normal</label>
             </div>
           </ion-button>

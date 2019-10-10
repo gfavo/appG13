@@ -1,41 +1,39 @@
 <ion-header class="fonte">
-
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button autoHide="false"></ion-menu-button>
     </ion-buttons>
     <ion-thumbnail slot="end">
-      <img src="../assets/images/logobola.png">
+      <img src="../assets/images/logobola.png" />
     </ion-thumbnail>
     <ion-title text-center>Diretorio</ion-title>
   </ion-toolbar>
-
-
-
 </ion-header>
 
-
 <ion-content padding>
-
-<ion-list *ngFor="let tecnicas of ConteudoDiretorio">
-  
-    <ion-button expand="full" (click)="openCategoria(tecnicas.categoria)" color="light" slot="start">
-        <ion-item>
-  {{tecnicas.categoria}}
-</ion-item>
+  <ion-list *ngFor="let tecnicas of ConteudoDiretorio">
+    <ion-button
+      expand="full"
+      (click)="openCategoria(tecnicas.categoria)"
+      color="light"
+      slot="start"
+    >
+      <ion-item>
+        {{ tecnicas.categoria }}
+      </ion-item>
     </ion-button>
- 
-  <ng-container *ngIf="tecnicas.expandida">  
+
+    <ng-container *ngIf="tecnicas.expandida">
       <ion-list *ngFor="let tecnica of tecnicaExpandida.tecnicas">
-          <ion-label><ion-item  class="item item-text-wrap ion-activatable" (click)="abreVideo(tecnica.idvimeo,tecnica.senhavimeo)">{{tecnica.nome}}</ion-item></ion-label>
-            <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+        <ion-label
+          ><ion-item
+            class="item item-text-wrap ion-activatable"
+            (click)="abreVideo(tecnica.idvimeo, tecnica.senhavimeo)"
+            >{{ tecnica.nome }}</ion-item
+          ></ion-label
+        >
+        <ion-ripple-effect type="unbounded"></ion-ripple-effect>
       </ion-list>
     </ng-container>
-  
-
-
-</ion-list>
-
-
-
+  </ion-list>
 </ion-content>

@@ -32,8 +32,28 @@ ion-img{
 }
 
 .faixa{
-    max-width: 75%;
-    max-height: 75%;
+    max-width: 50%;
+    max-height: 50%;
     height: auto;
     width: auto;
 }
+
+.square {
+    width: 16vw;
+    border: 1px solid black;
+padding: 2%;
+
+  }
+
+  .square:after{
+    content: "";
+    display: block;
+  }
+
+  .container {
+    justify-content:  center;
+    display: flex;
+
+  }
+
+  
