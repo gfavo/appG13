@@ -71,45 +71,8 @@ export class QrPage implements OnInit {
   }
 
   scanCode() {
-    this.instrutor.setAulaAberta(true);
-    if (this.aula.id == null) {
-      this.http
-        .post(
-          this.instrutor.getUrl() + "/registrar.php",
-          {
-            id: "",
-            descricao: this.instrutor.getDescricao(),
-            datetime: this.instrutor.getAula().datetime,
-            idaulaprogramada: this.instrutor.getIdPrograma(),
-            alunos: this.aula.alunos
-          },
-          { headers: this.headers }
-        )
-        .subscribe(res => {
-          console.log(res);
-          this.aula.id = (<aula>res).id;
-        });
-    } else {
-      this.instrutor.setAulaAberta(true);
-      this.http
-        .post(
-          this.instrutor.getUrl() + "/registrar.php",
-          {
-            id: "",
-            descricao: this.instrutor.getDescricao(),
-            datetime: this.instrutor.getAula().datetime,
-            idaulaprogramada: this.instrutor.getIdPrograma(),
-            idtecnicasavulsas: this.instrutor.getIdTecnicas(),
-            alunos: this.aula.alunos
-          },
-          { headers: this.headers }
-        )
-        .subscribe(data => {
-          console.log(data);
 
-          this.aula.id = (<aula>data).id;
-        });
-    }
+      this.instrutor.setAulaAberta(true);    
     this.barCode.scan().then(data => {
       this.scannedCode = data.text;
       this.aluno_cobaia = this.achaAluno(this.scannedCode, this.aula.alunos);
@@ -134,22 +97,6 @@ export class QrPage implements OnInit {
         }
       }
     });
-  }
-
-  encerra() {
-    if (this.aula.id != null) {
-      this.http
-        .post(
-          this.instrutor.getUrl() + "/concluir.php",
-          { id: this.aula.id, tecnicasavulsas: this.instrutor.getIdTecnicas() },
-          { observe: "response", headers: this.headers }
-        )
-        .subscribe(data => console.log(data.status));
-      this.instrutor.setAulaAberta(false);
-      this.simple_alert("Foi concluída com sucesso!", true);
-    } else {
-      this.simple_alert("Primeiro escaneie um aluno!", false);
-    }
   }
 
   procurarAluno(codigo: string, alunos: Alunos[]): boolean {
