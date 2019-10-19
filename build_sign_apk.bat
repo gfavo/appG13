@@ -1,5 +1,5 @@
 CALL cd C:\Users\Gabriel\Desktop\projetos\tozi\tozi_mobile
-CALL ionic cordova build android --prod --release --versionCode=6
+CALL ionic cordova build android --prod --release --versionCode=7
 CALL cd C:\Users\Gabriel\Desktop\projetos\tozi\tozi_mobile\platforms\android\app\build\outputs\apk\release
 CALL copy app-release-unsigned.apk C:\Users\Gabriel\Desktop\App_g13bjj_unsigned_release
 CALL cd C:\Users\Gabriel\Desktop\App_g13bjj_unsigned_release

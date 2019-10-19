@@ -1,10 +1,15 @@
 import { Component, OnInit } from "@angular/core";
 import { BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
 import { Router } from "@angular/router";
-import { HttpHeaders, HttpClient } from "@angular/common/http";
-import { NomeInstrutorService } from "../nome-instrutor.service";
+import { HttpHeaders, HttpClient, HttpResponse, HttpResponseBase, HttpErrorResponse } from "@angular/common/http";
+import { NomeInstrutorService, error } from "../nome-instrutor.service";
 import { aula, Alunos } from "../manutencao-aula/manutencao-aula.page";
 import { AlertController } from "@ionic/angular";
+
+class sucesso{
+  success: string;
+}
+
 
 @Component({
   selector: "app-qr",
@@ -18,10 +23,13 @@ export class QrPage implements OnInit {
 
   codigo: string = "";
 
+  codigoAluno: string;
+
   teste_nome: string = "";
+  
 
   headers = new HttpHeaders({
-    "x-version": "1.0.6",
+    "x-version": "1.0.7",
     "x-auth": this.instrutor.getToken(),
     "Cache-Control":
       "no-cache, no-store, must-revalidate, post-check=0, pre-check=0",
@@ -31,25 +39,19 @@ export class QrPage implements OnInit {
 
   aula: aula;
 
+
   situacao: string = "";
 
-  async simple_alert(message: string, act: boolean) {
-    const presente = await this.alertController.create({
-      header: "Note",
-      message: message,
-      buttons: [
-        {
-          text: "OK",
-          handler: () => {
-            if (act) {
-              this.router.navigate(["/aula"]);
-            }
-          }
-        }
-      ]
+  async alertaSimples(mensagem) {
+    const alert = await this.alertController.create({
+      header: "Atenção",
+      message: mensagem,
+      buttons: ["OK"]
     });
-    await presente.present();
+    await alert.present();
   }
+
+ 
 
   constructor(
     private alertController: AlertController,
@@ -75,54 +77,29 @@ export class QrPage implements OnInit {
       this.instrutor.setAulaAberta(true);    
     this.barCode.scan().then(data => {
       this.scannedCode = data.text;
-      this.aluno_cobaia = this.achaAluno(this.scannedCode, this.aula.alunos);
-
-      if (this.procurarAluno(this.scannedCode, this.aula.alunos) == false) {
-        this.simple_alert("O aluno não existe na sua grade!", false);
-      } else {
-        if (this.aluno_cobaia.presenca == false) {
-          this.achaAluno(this.scannedCode, this.aula.alunos).presenca = true;
+   
 
           this.http
-            .post(this.instrutor.getUrl() + "/registrar.php", this.aula, {
+            .post(this.instrutor.getUrl() + "/qrcode.php",{"alunoid": parseInt(this.scannedCode)} , {
+              responseType: "json", 
+               observe: "response",
+              withCredentials: true,
               headers: this.headers
             })
-            .subscribe(res => {
-              console.log(res);
-              this.aula.id = (<aula>res).id;
+            .subscribe(response => {
+              console.log(response);
+this.alertaSimples((<sucesso>response.body).success);
+              }
+           ,error => {
+           this.alertaSimples((<error>(<HttpErrorResponse>error).error).error);
             });
-          this.simple_alert("O aluno foi presenciado com sucesso!", false);
-        } else {
-          this.simple_alert("O aluno existe, porem ja tem presença!", false);
-        }
-      }
+            
+         
+      
     });
   }
 
-  procurarAluno(codigo: string, alunos: Alunos[]): boolean {
-    var achou = false;
-    var i = 0;
-    for (i = 0; i < alunos.length; i++) {
-      if (codigo == alunos[i].codigo) {
-        achou = true;
-      }
-    }
 
-    if (achou == true) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  achaAluno(codigo: string, alunos: Alunos[]): Alunos {
-    var i = 0;
-    for (i = 0; i < alunos.length; i++) {
-      if (codigo == alunos[i].codigo) {
-        return alunos[i];
-      }
-    }
-  }
 
   backPage() {
     this.router.navigateByUrl("/aula");

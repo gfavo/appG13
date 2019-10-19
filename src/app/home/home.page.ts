@@ -89,7 +89,7 @@ export class HomePage {
     this.status = 0;
 
     if (this.instrutor.getUrl() == null) {
-      this.instrutor.setUrl("https://www.g13bjj.com.br/ct/mobile");
+      this.instrutor.setUrl("http://192.168.25.201/mobile");
     }
 
     this.storage.get("login").then(val => {
@@ -150,14 +150,13 @@ export class HomePage {
             responseType: "text",
             observe: "response",
             withCredentials: true,
-            headers: new HttpHeaders({ "x-version": "1.0.6" })
+            headers: new HttpHeaders({ "x-version": "1.0.7" })
           }
         )
 
         .subscribe(
           response => {
             this.dismiss();
-
             this.status = response.status;
 
             if (this.lembrar == true) {
@@ -176,10 +175,12 @@ export class HomePage {
             this.instrutor.setToken(response.headers.get("x-auth"));
           },
           error => {
+            
             this.dismiss();
             // alert("Login ou senha errados, por favor , tente novamente");
             this.alertaDeErro();
             this.status = error.status;
+          
           }
         );
     }
