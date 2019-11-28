@@ -2,13 +2,14 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', redirectTo: '', pathMatch: 'full' },
   { path: 'home', loadChildren: './home/home.module#HomePageModule' },
   { path: 'aula', loadChildren: './aula/aula.module#AulaPageModule' },
   { path: 'manutencao-aula', loadChildren: './manutencao-aula/manutencao-aula.module#ManutencaoAulaPageModule' },
   { path: 'nova-aula', loadChildren: './nova-aula/nova-aula.module#NovaAulaPageModule' },
   { path: 'metodo', loadChildren: './metodo/metodo.module#MetodoPageModule' },
-  { path: 'pin', loadChildren: './pin/pin.module#PinPageModule' },  { path: 'qr', loadChildren: './qr/qr.module#QrPageModule' },
+  { path: 'pin', loadChildren: './pin/pin.module#PinPageModule' },
+  { path: 'qr', loadChildren: './qr/qr.module#QrPageModule' },
   { path: 'modaldetalhes', loadChildren: './modaldetalhes/modaldetalhes.module#ModaldetalhesPageModule' },
   { path: 'painel', loadChildren: './painel/painel.module#PainelPageModule' },
   { path: 'modaltecnicas', loadChildren: './modaltecnicas/modaltecnicas.module#ModaltecnicasPageModule' },
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'sobre', loadChildren: './sobre/sobre.module#SobrePageModule' },
   { path: 'error', loadChildren: './error/error.module#ErrorPageModule' },
   { path: 'frontdesk', loadChildren: './frontdesk/frontdesk.module#FrontdeskPageModule' },
+  { path: 'load-login', loadChildren: './load-login/load-login.module#LoadLoginPageModule' },
 
 ];
 

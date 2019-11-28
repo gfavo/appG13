@@ -14,6 +14,7 @@ import { NomeInstrutorService } from "./nome-instrutor.service";
 import { Storage } from "@ionic/storage";
 import { $ } from "protractor";
 import { BrowserTransferStateModule } from "@angular/platform-browser";
+import { Globalization } from '@ionic-native/globalization/ngx';
 
 @Component({
   selector: "app-root",
@@ -28,8 +29,10 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private globalization: Globalization
   ) {
+    this.checkIdioma();
     this.initializeApp();
   }
 
@@ -46,9 +49,23 @@ export class AppComponent {
   }
   initializeApp() {
     this.platform.ready().then(() => {
+      this.storage.get("login").then(val => {
+        if (val != "") {
+        this.router.navigate(['/load-login']);
+        }
+        else
+        {
+          this.router.navigate(['/home']);
+        }
+      });
+
+
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      
     });
+
+  
   }
 
   ionViewWillEnter() {
@@ -150,5 +167,24 @@ export class AppComponent {
 
     this.router.navigate(["/aula"]);
     this.modo_frontdesk = false;
+  }
+
+  checkIdioma(){
+    this.storage.get("idioma").then(val => {
+     if(val == "") {
+        this.globalization.getPreferredLanguage().then(res => 
+          {
+if(res.value.includes("en"))
+{
+this.storage.set("idioma","en");
+}
+else if(res.value.includes("pt"))
+{
+this.storage.set("idioma","ptbr");
+}
+          })
+      }
+
+    });
   }
 }

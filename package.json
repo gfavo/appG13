@@ -22,6 +22,7 @@
     "@angular/router": "^7.2.2",
     "@ionic-native/barcode-scanner": "^5.5.0",
     "@ionic-native/core": "^5.0.0",
+    "@ionic-native/globalization": "^5.17.1",
     "@ionic-native/keyboard": "^5.16.0",
     "@ionic-native/native-storage": "^5.8.0",
     "@ionic-native/network": "^5.5.0",
@@ -35,6 +36,7 @@
     "cordova-android-support-gradle-release": "3.0.1",
     "cordova-ios": "4.5.5",
     "cordova-plugin-device": "^2.0.2",
+    "cordova-plugin-globalization": "1.11.0",
     "cordova-plugin-ionic-keyboard": "^2.1.3",
     "cordova-plugin-ionic-webview": "^3.1.2",
     "cordova-plugin-nativestorage": "2.3.2",
@@ -93,7 +95,8 @@
       "cordova-plugin-nativestorage": {},
       "cordova-sqlite-storage": {},
       "phonegap-plugin-barcodescanner": {},
-      "cordova-android-support-gradle-release": {}
+      "cordova-android-support-gradle-release": {},
+      "cordova-plugin-globalization": {}
     },
     "platforms": [
       "ios",

@@ -1,9 +1,21 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>configuracoes</ion-title>
+<ion-header class="fonte">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-thumbnail slot="end">
+      <img src="../assets/images/logobola.png" />
+    </ion-thumbnail>
+    <ion-title text-center>Configuracoes</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  <h2>Margem Atual: {{ margemAtual }}</h2>
+  <ion-item>
+    <ion-label>Idioma</ion-label>
+    <ion-select [(ngModel)]="idioma" (ionChange)="mudouIdioma($event);">
+      <ion-select-option value="en">English</ion-select-option>
+      <ion-select-option value="ptbr">Português</ion-select-option>
+    </ion-select>
+  </ion-item>
 </ion-content>

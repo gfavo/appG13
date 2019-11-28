@@ -1,20 +1,20 @@
-<ion-header>
+<ion-header *ngIf="label != undefined">
   <ion-toolbar color="primary">
     <ion-thumbnail slot="start">
       <img src="../assets/images/logobola.png" />
     </ion-thumbnail>
-    <ion-title>
-      Faça seu login
+    <ion-title >
+  {{label[idiomaPadrao]["titulo"]}}
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="label != undefined">
   <form #Form="ngForm" (ngSubmit)="onSubmit()" class="form">
     <!-- {{pessoa.user}} . {{pessoa.pass}} -->
 
     <ion-item class="form-item">
-      <ion-label class="form-label" position="stacked">Usuário</ion-label>
+      <ion-label class="form-label" position="stacked">{{label[idiomaPadrao]["usuario"]}}</ion-label>
       <ion-input
         type="text"
         class="form-control"
@@ -27,7 +27,7 @@
 
     <ion-item class="form-item">
       <ion-label class="form-label" position="stacked" for="pass"
-        >Senha</ion-label
+        >{{label[idiomaPadrao]["senha"]}}</ion-label
       >
       <ion-input
         type="password"
@@ -42,7 +42,7 @@
     <br />
     <br />
     <ion-item slot="start"
-      ><b (click)="lembrarTrue()">Lembrar login ?</b>
+      ><b (click)="lembrarTrue()">{{label[idiomaPadrao]["lembrar"]}}</b>
       <ion-checkbox
         slot="end"
         name="lembrar"
@@ -57,7 +57,7 @@
       expand="full"
       type="submit"
       class="btn btn-success"
-      ><ion-icon slot="start" name="log-in"></ion-icon>Login</ion-button
+      ><ion-icon slot="start" name="log-in"></ion-icon>{{label[idiomaPadrao]["login"]}}</ion-button
     >
   </form>
 </ion-content>

@@ -25,6 +25,7 @@ import { NgCalendarModule  } from 'ionic2-calendar';
 import { ModaltecnicasdodiaPageModule } from './modaltecnicasdodia/modaltecnicasdodia.module';
 import { QRCodeModule } from 'angularx-qrcode';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
+import { Globalization } from '@ionic-native/globalization/ngx';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
   entryComponents: [],
   imports: [NgxQRCodeModule,QRCodeModule,NgxQRCodeModule,NgCalendarModule,FormsModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, ModaltecnicasPageModule,ModaldetalhesPageModule,ModalvideoPageModule,ModaltecnicasdodiaPageModule,IonicStorageModule.forRoot()],
   providers: [
+    Globalization,
     Network,
     QRScanner,
     StatusBar,

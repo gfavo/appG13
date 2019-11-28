@@ -38,8 +38,6 @@ aberto: boolean;
 
 tecnicas: number[];
 
-lingua: string;
-
 idvimeo: number;
 
 senhavimeo: string;

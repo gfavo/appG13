@@ -252,7 +252,7 @@ export class AulaPage implements OnInit {
     this.isloading = true;
     const loading = await this.load.create({
       message: "Aguarde por favor",
-      duration: 5000
+      duration: 2500
     });
     await loading.present();
 

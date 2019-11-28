@@ -19,7 +19,9 @@ import { Network } from "@ionic-native/network/ngx";
 import { Storage } from "@ionic/storage";
 
 import { LoadingController } from "@ionic/angular";
-import { LabelsHome } from './labels';
+import { LabelsHome, AssociativeArray } from './labels';
+import { Globalization } from '@ionic-native/globalization/ngx';
+
 
 const headers = new HttpHeaders({ teste: "123" });
 
@@ -42,9 +44,15 @@ export class HomePage {
 
   testeUrl: string;
 
+  mostrarTela: boolean;
+
   lembrar: boolean = false;
 
   isloading: boolean = false;
+
+   label: {};
+  
+   idiomaPadrao: string;
 
   constructor(
     private load: LoadingController,
@@ -54,13 +62,14 @@ export class HomePage {
     private router: Router,
     public instrutor: NomeInstrutorService,
     private alertController: AlertController,
-    private labels: LabelsHome
+    private labelsHome: LabelsHome,
+    private globalization: Globalization
   ) {}
 
   async alertaDeErro() {
     const alert = await this.alertController.create({
       header: "Erro",
-      message: "Sua senha ou usuario está errado.Favor tentar novamente.",
+      message: this.label[this.idiomaPadrao]["usuarioerrado"],
       buttons: ["OK"]
     });
     await alert.present();
@@ -69,7 +78,7 @@ export class HomePage {
   async presentLoading() {
     this.isloading = true;
     const loading = await this.load.create({
-      message: "Aguarde por favor",
+      message: this.label[this.idiomaPadrao]["loading"],
       duration: 5000
     });
     await loading.present();
@@ -83,7 +92,16 @@ export class HomePage {
   }
 
   ngOnInit() {}
+
+
   ionViewWillEnter() {
+    
+    
+
+this.storage.get("idioma").then(res => this.idiomaPadrao = res);
+
+this.label = this.labelsHome.getLabel();
+
     this.pessoa.pass = "";
     this.pessoa.user = "";
     this.lembrar = false;
@@ -103,6 +121,10 @@ export class HomePage {
           this.pessoa.pass = val;
           this.onSubmit();
         });
+      }
+      else
+      {
+this.mostrarTela = true;
       }
     });
   }
@@ -200,4 +222,5 @@ export class HomePage {
       this.lembrar = false;
     }
   }
+
 }
