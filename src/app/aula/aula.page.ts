@@ -9,13 +9,17 @@ import {
   MenuController,
   LoadingController,
   ModalController,
-  AlertController
+  AlertController,
+  Platform
 } from "@ionic/angular";
 
 import { tecnicasDir, conteudoGetDiretorio } from "../diretorio/diretorio.page";
 import { ModalvideoPage } from "../modalvideo/modalvideo.page";
 
 import { Storage } from "@ionic/storage";
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+
+
 
 class Alunos {
   id: string;
@@ -96,7 +100,7 @@ export class AulaPage implements OnInit {
   data: Date;
 
   headers = new HttpHeaders({
-    "x-version": "1.0.7",
+    "x-version": "1.0.9",
     "x-auth": this.instrutor.getToken(),
     "Cache-Control":
       "no-cache, no-store, must-revalidate, post-check=0, pre-check=0",
@@ -120,6 +124,8 @@ export class AulaPage implements OnInit {
 
   idaula: string;
 
+
+
   constructor(
     private modalController: ModalController,
     private load: LoadingController,
@@ -129,10 +135,25 @@ export class AulaPage implements OnInit {
     private router: Router,
     private _activatedRoute: ActivatedRoute,
     private alertController: AlertController,
-    private storage: Storage
+    private storage: Storage,
+    private platform: Platform,
+    private statusBar: StatusBar
   ) {}
 
   ionViewWillEnter() {
+
+    this.platform.ready().then(() => {
+      this.platform.backButton.subscribeWithPriority(9999, () => {
+        document.addEventListener('backbutton', function (event) {
+          event.preventDefault();
+          event.stopPropagation();
+          console.log('hello');
+        }, false);
+      });
+      this.statusBar.styleDefault();
+    });
+
+    this.presentLoading();
     this.httpClient
       .get(this.instrutor.getUrl() + "/alunos.php", { headers: this.headers })
       .subscribe(data => {
@@ -140,8 +161,8 @@ export class AulaPage implements OnInit {
         this.idaula = (<aula>data).id;
         console.log(data);
       });
-
-    this.presentLoading();
+      
+    
     this.nome_instrutor = this.instrutor.getNome();
     this.subscription = this.httpClient
       .post(
@@ -256,6 +277,7 @@ export class AulaPage implements OnInit {
 
   concluir() {
     if (this.idaula != "") {
+      this.presentLoading();
       this.httpClient
         .post(
           this.instrutor.getUrl() + "/concluir.php",
@@ -288,6 +310,7 @@ export class AulaPage implements OnInit {
         this.storage.remove("tecnica_adicional" + i);
       }
       this.storage.remove("qtdtecnicas");
+      this.dismiss();
     } else {
       this.msgerroconcluir();
     }
@@ -313,6 +336,7 @@ export class AulaPage implements OnInit {
   }
 
   novaAula() {
+    this.presentLoading();
     this.data = new Date();
     this.aula_nova.datetime =
       this.formatDate(this.data.toDateString()) +
@@ -323,7 +347,9 @@ export class AulaPage implements OnInit {
       ":" +
       this.formatZero(this.data.getSeconds().toString());
     this.instrutor.setAula(this.aula_nova);
+    this.dismiss();
     this.router.navigate(["/nova-aula"]);
+    
   }
 
   openMenu() {

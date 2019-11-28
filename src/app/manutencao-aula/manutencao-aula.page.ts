@@ -48,7 +48,7 @@ export class ManutencaoAulaPage implements OnInit {
     private navCtrl: NavController
   ) {}
   headers = new HttpHeaders({
-    "x-version": "1.0.7",
+    "x-version": "1.0.9",
     "x-auth": this.instrutor.getToken(),
     "Cache-Control":
       "no-cache, no-store, must-revalidate, post-check=0, pre-check=0",
@@ -79,6 +79,8 @@ export class ManutencaoAulaPage implements OnInit {
   temExtra: boolean;
 
   podepesquisar: boolean = false;
+
+  mostrarBotoes: boolean = true;
 
   async registrado() {
     const registra = await this.alertController.create({
@@ -226,6 +228,16 @@ export class ManutencaoAulaPage implements OnInit {
 
   ionViewWillEnter() {
 
+    window.addEventListener('keyboardWillShow', (event) => {
+      this.mostrarBotoes = false;
+      // Describe your logic which will be run each time when keyboard is about to be shown.
+  });
+
+  window.addEventListener('keyboardWillHide', () => {
+    this.mostrarBotoes = true;
+    // Describe your logic which will be run each time when keyboard is about to be closed.
+});
+
 (<HTMLIonButtonElement>document.getElementById('pesquisar')).disabled = !this.podepesquisar;
 
     this.search_aluno = document.getElementById("search_aluno");
@@ -354,6 +366,7 @@ export class ManutencaoAulaPage implements OnInit {
   }
   
   filtra(){
+    this.presentLoading();
     this.http
     .post(this.instrutor.getUrl() + "/alunos.php", {search: this.searchTerm} ,{ headers: this.headers })
     .subscribe(data => {
@@ -362,7 +375,7 @@ export class ManutencaoAulaPage implements OnInit {
       this.aula = <aula>data;
       this.mostraLista = true;
 
-      
+      this.dismiss();
     });
   }
 

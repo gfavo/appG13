@@ -16,7 +16,7 @@ export class NomeInstrutorService {
 
 error: string;
 
-  headers = new HttpHeaders({'x-version':'1.0.7' , "x-auth": this.getToken() , 'Cache-Control':  'no-cache, no-store, must-revalidate, post-check=0, pre-check=0','Pragma': 'no-cache','Expires': '0'});
+  headers = new HttpHeaders({'x-version':'1.0.9' , "x-auth": this.getToken() , 'Cache-Control':  'no-cache, no-store, must-revalidate, post-check=0, pre-check=0','Pragma': 'no-cache','Expires': '0'});
 
 nome_instrutor: string;
 
@@ -38,6 +38,7 @@ aberto: boolean;
 
 tecnicas: number[];
 
+lingua: string;
 
 idvimeo: number;
 
@@ -205,6 +206,11 @@ getConteudoConcluir(): aula
 setAulaProgramaEscolhida(aula: aula_exemplo)
 {
 this.aulaProgramaEscolhida = aula;
+}
+
+getMensagem(): string
+{
+return 'Assine o plano PRO para ter acesso.<br>Coloque login e senha e selecione o plano desejado.'
 }
 
 

@@ -39,8 +39,8 @@ export class AppComponent {
   async alertaNaoPago() {
     const alert = await this.alertController.create({
       header: "",
-      message: "Você deve ser um usuario premium para acessar esse conteúdo!",
-      buttons: ["OK"]
+      message: this.intrutor.getMensagem(),
+      buttons: [{text: "ACESSAR", handler: ()=>{window.open("https://www.g13bjj.com.br/ct/?adesao")}},"FECHAR"]
     });
     await alert.present();
   }
@@ -52,6 +52,19 @@ export class AppComponent {
   }
 
   ionViewWillEnter() {
+    //Disabilita o botao voltar 
+    this.platform.ready().then(() => {
+      this.platform.backButton.subscribeWithPriority(9999, () => {
+        document.addEventListener('backbutton', function (event) {
+          event.preventDefault();
+          event.stopPropagation();
+          console.log('hello');
+        }, false);
+      });
+      this.statusBar.styleDefault();
+    });
+
+
     if (this.intrutor.getRole() == "ALUNOPAGO") {
       this.exibe_diretorio = true;
     } else {
@@ -68,7 +81,7 @@ export class AppComponent {
     this.intrutor.setIdPrograma(undefined);
     this.intrutor.setNome(undefined);
     this.intrutor.setToken(undefined);
-    this.intrutor.setUrl(undefined);
+    //Deixar com que o url continue o mesmo depois do logout this.intrutor.setUrl(undefined);
     this.storage.set("login", "");
     this.storage.set("senha", "");
 

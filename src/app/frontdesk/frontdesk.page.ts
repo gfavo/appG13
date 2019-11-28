@@ -6,7 +6,7 @@ import {
 } from "@angular/common/http";
 import { NomeInstrutorService } from "../nome-instrutor.service";
 import { ThrowStmt } from "@angular/compiler";
-import { AlertController } from "@ionic/angular";
+import { AlertController, LoadingController } from "@ionic/angular";
 
 class alunos {
   codigo: string;
@@ -44,7 +44,7 @@ class error {
 })
 export class FrontdeskPage implements OnInit {
   headers = new HttpHeaders({
-    "x-version": "1.0.7",
+    "x-version": "1.0.9",
     "x-auth": this.instrutor.getToken(),
     "Cache-Control":
       "no-cache, no-store, must-revalidate, post-check=0, pre-check=0",
@@ -56,11 +56,13 @@ export class FrontdeskPage implements OnInit {
   alunos: alunos[] = undefined;
   checklist: checklist[];
   conteudo: conteudo;
+  isloading: boolean;
 
   constructor(
     private instrutor: NomeInstrutorService,
     private httpClient: HttpClient,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private load: LoadingController
   ) {}
 
   async msg(head, msg) {
@@ -70,6 +72,22 @@ export class FrontdeskPage implements OnInit {
       buttons: ["OK"]
     });
     await m.present();
+  }
+
+  async presentLoading() {
+    this.isloading = true;
+    const loading = await this.load.create({
+      message: "Aguarde por favor",
+      duration: 5000
+    });
+    await loading.present();
+
+    const { role, data } = await loading.onDidDismiss();
+  }
+
+  async dismiss() {
+    this.isloading = false;
+    return await this.load.dismiss().then(() => console.log("dismissed"));
   }
 
   async msgcertezacheckin(nome: string, id) {
@@ -138,6 +156,7 @@ export class FrontdeskPage implements OnInit {
   ionViewWillEnter() {}
 
   pesquisa() {
+    this.presentLoading();
     this.httpClient
       .post(
         this.instrutor.getUrl() + "/aula_filtro.php",
@@ -151,6 +170,7 @@ export class FrontdeskPage implements OnInit {
         this.conteudo = <conteudo>data;
 
         this.checklist.forEach(element => (element.mandar = false));
+        this.dismiss();
       });
   }
 

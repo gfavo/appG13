@@ -109,6 +109,16 @@
             <label style="font-size: 75%;">Sobre</label>
           </div>
         </ion-button>
+        <ion-button expand="full" class="botaolateral" (click)="sobre()">
+          <div>
+            <ion-icon
+              name="globe"
+              style="margin-bottom: 20%"
+            ></ion-icon>
+            <br />
+            <label style="font-size: 75%;">Idiom/Idioma</label>
+          </div>
+        </ion-button>
       </div>
     </ion-content>
   </ion-menu>
@@ -201,6 +211,17 @@
               <label style="font-size: 75%;">Sobre</label>
             </div>
           </ion-button>
+          <ion-button expand="full" class="botaolateral" (click)="sobre()">
+            <div>
+              <ion-icon
+                name="globe"
+                style="margin-bottom: 20%"
+              ></ion-icon>
+              <br />
+              <label style="font-size: 75%;">Idiom/Idioma</label>
+            </div>
+          </ion-button>
+
         </ng-container>
         <ng-container *ngIf="modo_frontdesk">
           <ion-button expand="full" class="botaolateral" (click)="normal()">

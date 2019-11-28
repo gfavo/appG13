@@ -51,7 +51,7 @@
         <ion-card-content>
           Descrição da aula: {{ aula.descricao }}
         </ion-card-content>
-        <ion-button (click)="checkin(conteudo[0].id, conteudo[0].idinstrutor)">
+        <ion-button (click)="checkin(aula.id,aula.idinstrutor)">
           Fazer Check-In
         </ion-button>
       </ion-card-header>

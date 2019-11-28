@@ -13,13 +13,13 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed" *ngIf="mostrarBotoes">
     <ion-fab-button (click)="backPage()">
       <ion-icon name="arrow-back"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="mostrarBotoes">
     <ion-fab-button (click)="refresh()">
       <ion-icon name="refresh"></ion-icon>
     </ion-fab-button>

@@ -19,6 +19,7 @@ import { Network } from "@ionic-native/network/ngx";
 import { Storage } from "@ionic/storage";
 
 import { LoadingController } from "@ionic/angular";
+import { LabelsHome } from './labels';
 
 const headers = new HttpHeaders({ teste: "123" });
 
@@ -52,7 +53,8 @@ export class HomePage {
     private httpClient: HttpClient,
     private router: Router,
     public instrutor: NomeInstrutorService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private labels: LabelsHome
   ) {}
 
   async alertaDeErro() {
@@ -150,7 +152,7 @@ export class HomePage {
             responseType: "text",
             observe: "response",
             withCredentials: true,
-            headers: new HttpHeaders({ "x-version": "1.0.7" })
+            headers: new HttpHeaders({ "x-version": "1.0.9" })
           }
         )
 

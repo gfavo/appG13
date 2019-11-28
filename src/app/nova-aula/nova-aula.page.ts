@@ -45,7 +45,7 @@ export class NovaAulaPage implements OnInit {
   temAdicionais: boolean = false;
 
   headers = new HttpHeaders({
-    "x-version": "1.0.7",
+    "x-version": "1.0.9",
     "x-auth": this.instrutor.getToken(),
     "Cache-Control":
       "no-cache, no-store, must-revalidate, post-check=0, pre-check=0",
@@ -112,7 +112,7 @@ export class NovaAulaPage implements OnInit {
           text: "SIM",
           handler: () => {
             //-------------------------------------------------------------------------------
-
+            this.presentLoading();
             this.instrutor.setAulaAberta(true);
             this.http
               .post(
@@ -132,6 +132,7 @@ export class NovaAulaPage implements OnInit {
                 this.dismiss();
                 this.aulaRegistro.id = (<aula>data).id;
                 this.aulacriada();
+                this.dismiss();
               });
             //-------------------------------------------------------------------------------
           }

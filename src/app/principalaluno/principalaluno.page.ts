@@ -20,8 +20,8 @@ export class PrincipalalunoPage implements OnInit {
   async alertaNaoPago() {
     const alert = await this.alertController.create({
       header: "",
-      message: "Você deve ser um usuario premium para acessar esse conteúdo!",
-      buttons: ["OK"]
+      message: this.instrutor.getMensagem(),
+      buttons: [{text: "ACESSAR", handler: ()=>{window.open("https://www.g13bjj.com.br/ct/?adesao")}},"FECHAR"]
     });
     await alert.present();
   }

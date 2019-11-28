@@ -29,7 +29,7 @@ export class CheckinPage implements OnInit {
   conteudo: conteudoAulasAtivas[];
   subscription;
   headers = new HttpHeaders({
-    "x-version": "1.0.7",
+    "x-version": "1.0.9",
     "x-auth": this.instrutor.getToken(),
     "Cache-Control":
       "no-cache, no-store, must-revalidate, post-check=0, pre-check=0",
