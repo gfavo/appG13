@@ -32,7 +32,7 @@ export class AppComponent {
     private alertController: AlertController,
     private globalization: Globalization
   ) {
-    this.checkIdioma();
+   
     this.initializeApp();
   }
 
@@ -49,8 +49,11 @@ export class AppComponent {
   }
   initializeApp() {
     this.platform.ready().then(() => {
+
+      this.checkIdioma();
+
       this.storage.get("login").then(val => {
-        if (val != "") {
+        if (val != ""  && val != null) {
         this.router.navigate(['/load-login']);
         }
         else

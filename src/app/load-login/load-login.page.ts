@@ -3,7 +3,7 @@ import { LoadingController, AlertController } from '@ionic/angular';
 import { Network } from '@ionic-native/network/ngx';
 import { Router } from '@angular/router';
 import { NomeInstrutorService } from '../nome-instrutor.service';
-import { LabelsHome } from '../home/labels';
+import { Globalization } from '@ionic-native/globalization/ngx';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Storage } from "@ionic/storage";
 
@@ -37,10 +37,32 @@ export class LoadLoginPage implements OnInit {
     private router: Router,
     public instrutor: NomeInstrutorService,
     private alertController: AlertController,
-    private labelsHome: LabelsHome
+    private globalization: Globalization,
   ) {}
 
   ngOnInit() {
+  }
+
+  checkIdioma(){
+    this.storage.get("idioma").then(res => {
+        
+    if(res == "" || res == null)
+  {
+    this.globalization.getPreferredLanguage().then(res => {
+  if(res.value.includes("pt"))
+  {
+  this.storage.set("idioma","ptbr");
+
+  }
+  else if(res.value.includes("en"))
+  {
+  this.storage.set("idioma","en");
+
+  }
+  
+    });
+  }
+  });
   }
 
 ionViewWillEnter(){

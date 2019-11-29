@@ -125,7 +125,7 @@ export class AulaPage implements OnInit {
 
   idaula: string;
 
-label: {};
+
 
   constructor(
     private modalController: ModalController,
@@ -140,11 +140,12 @@ label: {};
     private platform: Platform,
     private statusBar: StatusBar,
     private labels: LabelsAula
+
   ) {}
 
   ionViewWillEnter() {
 
-this.label = this.labels.getLabel();
+
 
     this.platform.ready().then(() => {
       this.platform.backButton.subscribeWithPriority(9999, () => {

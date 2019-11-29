@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
-import { type } from 'os';
-import { T } from '@angular/core/src/render3';
+
 
 export class Label{
   ptbr: string;
   en: string;
 }
 
-export type AssociativeArray<T = unknown> = {[key: string]: T | undefined} | T[];
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,47 +16,43 @@ export type AssociativeArray<T = unknown> = {[key: string]: T | undefined} | T[]
 
 export class LabelsHome {
 
+loading: Label = new Label();
+usuarioerrado: Label = new Label();
+titulo: Label = new Label();
+usuario: Label = new Label();
+senha: Label = new Label();
+lembrar: Label = new Label();
+login: Label = new Label();
 
 
 
 
 constructor(){
-  
+
+
+  this.loading["ptbr"]  = "Aguarde por favor";
+  this.loading["en"] = "Loading"; 
+
+  this.usuarioerrado["ptbr"] = "Sua senha ou usuario está errado.Favor tentar novamente.";
+  this.usuarioerrado["en"]  = "Login or password is wrong. Please try again with different credentials.";
+
+  this.titulo["ptbr"] = "Faça seu login";
+  this.titulo["en"] = "Please login";
+
+  this.usuario["ptbr"] = "Usuário";
+  this.usuario["en"]  = "Login";
+
+  this.senha["ptbr"] = "Senha";
+  this.senha["en"] = "Password";
+
+  this.lembrar["ptbr"] = "Lembrar login";
+  this.lembrar["en"] = "Remember login";
+
+  this.login["ptbr"] = "Login";
+  this.login["en"] = "Login";
+
 }
 
-
-
-
-getLabel()
-{
-  
-var labels = {};
-labels["ptbr"] = {};
-labels["en"] = {};
-
-  labels["ptbr"]["loading"] = "Aguarde por favor";
-  labels["en"]["loading"] = "Loading";
-
-  labels["ptbr"]["usuarioerrado"] = "Sua senha ou usuario está errado.Favor tentar novamente.";
-  labels["en"]["usuarioerrado"] = "Login or password is wrong. Please try again with different credentials.";
-
-  labels["ptbr"]["titulo"] = "Faça seu login";
-  labels["en"]["titulo"] = "Please login";
-
-  labels["ptbr"]["usuario"] = "Usuário";
-  labels["en"]["usuario"] = "Login";
-
-  labels["ptbr"]["senha"] = "Senha";
-  labels["en"]["senha"] = "Password";
- 
-  labels["ptbr"]["lembrar"] = "Lembrar login";
-  labels["en"]["lembrar"] = "Remember login";
-  
-  labels["ptbr"]["login"] = "Login";
-  labels["en"]["login"] = "Login";
-
-  return labels;
-}
 
 
 }

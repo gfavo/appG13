@@ -19,8 +19,10 @@ import { Network } from "@ionic-native/network/ngx";
 import { Storage } from "@ionic/storage";
 
 import { LoadingController } from "@ionic/angular";
-import { LabelsHome, AssociativeArray } from './labels';
+
 import { Globalization } from '@ionic-native/globalization/ngx';
+import { LabelsHome } from './labels';
+import { Alert } from 'selenium-webdriver';
 
 
 const headers = new HttpHeaders({ teste: "123" });
@@ -50,7 +52,7 @@ export class HomePage {
 
   isloading: boolean = false;
 
-   label: {};
+ 
   
    idiomaPadrao: string;
 
@@ -62,14 +64,14 @@ export class HomePage {
     private router: Router,
     public instrutor: NomeInstrutorService,
     private alertController: AlertController,
-    private labelsHome: LabelsHome,
+    public labels: LabelsHome,
     private globalization: Globalization
   ) {}
 
   async alertaDeErro() {
     const alert = await this.alertController.create({
       header: "Erro",
-      message: this.label[this.idiomaPadrao]["usuarioerrado"],
+      message: this.labels.usuarioerrado[this.idiomaPadrao],
       buttons: ["OK"]
     });
     await alert.present();
@@ -78,7 +80,7 @@ export class HomePage {
   async presentLoading() {
     this.isloading = true;
     const loading = await this.load.create({
-      message: this.label[this.idiomaPadrao]["loading"],
+      message: this.labels.loading[this.idiomaPadrao],
       duration: 5000
     });
     await loading.present();
@@ -93,14 +95,32 @@ export class HomePage {
 
   ngOnInit() {}
 
+checkIdioma(){
+  this.storage.get("idioma").then(res => {
+      
+    this.idiomaPadrao = res;
+  if(res == "" || res == null)
+{
+  this.globalization.getPreferredLanguage().then(res => {
+if(res.value.includes("pt"))
+{
+this.storage.set("idioma","ptbr");
+this.idiomaPadrao = "ptbr";
+}
+else if(res.value.includes("en"))
+{
+this.storage.set("idioma","en");
+this.idiomaPadrao = "en";
+}
+
+  });
+}
+});
+}
 
   ionViewWillEnter() {
-    
-    
-
-this.storage.get("idioma").then(res => this.idiomaPadrao = res);
-
-this.label = this.labelsHome.getLabel();
+   
+this.checkIdioma();
 
     this.pessoa.pass = "";
     this.pessoa.user = "";
@@ -113,7 +133,7 @@ this.label = this.labelsHome.getLabel();
     }
 
     this.storage.get("login").then(val => {
-      if (val != "") {
+      if (val != "" && val != null) {
         this.storage.get("login").then(val => {
           this.pessoa.user = val;
         });
