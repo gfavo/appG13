@@ -18,6 +18,7 @@ import { ModalvideoPage } from "../modalvideo/modalvideo.page";
 
 import { Storage } from "@ionic/storage";
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { LabelsAula } from './labels';
 
 
 
@@ -124,7 +125,7 @@ export class AulaPage implements OnInit {
 
   idaula: string;
 
-
+label: {};
 
   constructor(
     private modalController: ModalController,
@@ -137,10 +138,13 @@ export class AulaPage implements OnInit {
     private alertController: AlertController,
     private storage: Storage,
     private platform: Platform,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private labels: LabelsAula
   ) {}
 
   ionViewWillEnter() {
+
+this.label = this.labels.getLabel();
 
     this.platform.ready().then(() => {
       this.platform.backButton.subscribeWithPriority(9999, () => {

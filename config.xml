@@ -89,4 +89,5 @@
     <plugin name="cordova-plugin-nativestorage" spec="~2.3.2" />
     <plugin name="cordova-sqlite-storage" spec="~3.2.1" />
     <engine name="ios" spec="4.5.5" />
+    <allow-navigation href="http://192.168.212.81:8100" sessionid="96085d58" />
 </widget>
