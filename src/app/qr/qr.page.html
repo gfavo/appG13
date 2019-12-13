@@ -7,7 +7,7 @@
       <img src="../assets/images/logobola.png" />
     </ion-thumbnail>
     <ion-title style="font-size: medium" text-center
-      >Scan do codigo Qr</ion-title
+      >{{labels.titulo[idiomaPadrao]}}</ion-title
     >
   </ion-toolbar>
 </ion-header>
@@ -25,21 +25,20 @@
       size="large"
       expand="block"
       (click)="scanCode()"
-      ><ion-icon slot="end" name="qr-scanner"></ion-icon>Escanear
-      Codigo</ion-button
+      ><ion-icon slot="end" name="qr-scanner"></ion-icon>{{labels.scancodigo[idiomaPadrao]}}</ion-button
     >
   </ion-grid>
 
   <ion-card *ngIf="scannedCode">
     <ion-card-content>
-      Result From Scan: {{ aluno_cobaia.nome }} Presente:
+      {{labels.resultado[idiomaPadrao]}}: {{ aluno_cobaia.nome }} {{labels.presente[idiomaPadrao]}}:
       {{ aluno_cobaia.presenca }}
     </ion-card-content>
   </ion-card>
 
   <ng-container *ngIf="instrutor.getIdPrograma()">
     <ion-label>
-      <h2>Descrição da aula:</h2>
+      <h2>{{labels.descricao[idiomaPadrao]}}:</h2>
       <h3>
         <b>{{ instrutor.getDescricao() }}</b>
       </h3>

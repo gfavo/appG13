@@ -5,6 +5,9 @@ import { HttpHeaders, HttpClient, HttpResponse, HttpResponseBase, HttpErrorRespo
 import { NomeInstrutorService, error } from "../nome-instrutor.service";
 import { aula, Alunos } from "../manutencao-aula/manutencao-aula.page";
 import { AlertController } from "@ionic/angular";
+import { Storage } from "@ionic/storage";
+import { Globalization } from '@ionic-native/globalization/ngx';
+import { LabelsQr } from './labelsQr';
 
 class sucesso{
   success: string;
@@ -26,10 +29,12 @@ export class QrPage implements OnInit {
   codigoAluno: string;
 
   teste_nome: string = "";
+
+  idiomaPadrao: string;
   
 
   headers = new HttpHeaders({
-    "x-version": "1.0.9",
+    "x-version": "1.1.0",
     "x-auth": this.instrutor.getToken(),
     "Cache-Control":
       "no-cache, no-store, must-revalidate, post-check=0, pre-check=0",
@@ -58,12 +63,44 @@ export class QrPage implements OnInit {
     public instrutor: NomeInstrutorService,
     private barCode: BarcodeScanner,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private storage: Storage,
+    private globalization: Globalization,
+    public labels: LabelsQr
   ) {}
 
   ngOnInit() {}
 
+  checkIdioma(){
+    this.storage.get("idioma").then(res => {
+        
+      this.idiomaPadrao = res;
+    if(res == "" || res == null)
+  {
+    this.globalization.getPreferredLanguage().then(res => {
+  if(res.value.includes("pt"))
+  {
+  this.storage.set("idioma","ptbr");
+  this.idiomaPadrao = "ptbr";
+  }
+  else if(res.value.includes("en"))
+  {
+  this.storage.set("idioma","en");
+  this.idiomaPadrao = "en";
+  }
+  
+    });
+  }
+  });
+  }
+
+
+
+
   ionViewWillEnter() {
+this.checkIdioma();
+
+
     this.http
       .get(this.instrutor.getUrl() + "/alunos.php", { headers: this.headers })
       .subscribe(data => {

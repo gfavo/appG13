@@ -92,7 +92,7 @@ ionViewWillEnter(){
             responseType: "text",
             observe: "response",
             withCredentials: true,
-            headers: new HttpHeaders({ "x-version": "1.0.9" })
+            headers: new HttpHeaders({ "x-version": "1.1.0" })
           }
         )
 

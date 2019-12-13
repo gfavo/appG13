@@ -9,7 +9,7 @@ import { HttpHeaders } from "@angular/common/http";
 
 import { Router } from "@angular/router";
 
-import { AlertController, IonItem } from "@ionic/angular";
+import { AlertController, IonItem, Platform } from "@ionic/angular";
 
 import { NomeInstrutorService } from "../nome-instrutor.service";
 import { Response } from "selenium-webdriver/http";
@@ -21,8 +21,9 @@ import { Storage } from "@ionic/storage";
 import { LoadingController } from "@ionic/angular";
 
 import { Globalization } from '@ionic-native/globalization/ngx';
-import { LabelsHome } from './labels';
+import { LabelsHome } from './labelsHome';
 import { Alert } from 'selenium-webdriver';
+import { OneSignal } from '@ionic-native/onesignal/ngx';
 
 
 const headers = new HttpHeaders({ teste: "123" });
@@ -30,6 +31,7 @@ const headers = new HttpHeaders({ teste: "123" });
 export class Customer {
   user: string;
   pass: string;
+  playerid: string;
 }
 
 @Component({
@@ -51,10 +53,8 @@ export class HomePage {
   lembrar: boolean = false;
 
   isloading: boolean = false;
-
- 
   
-   idiomaPadrao: string;
+  idiomaPadrao: string;
 
   constructor(
     private load: LoadingController,
@@ -65,7 +65,9 @@ export class HomePage {
     public instrutor: NomeInstrutorService,
     private alertController: AlertController,
     public labels: LabelsHome,
-    private globalization: Globalization
+    private globalization: Globalization,
+    private onesignal: OneSignal,
+    private platform: Platform
   ) {}
 
   async alertaDeErro() {
@@ -81,7 +83,7 @@ export class HomePage {
     this.isloading = true;
     const loading = await this.load.create({
       message: this.labels.loading[this.idiomaPadrao],
-      duration: 5000
+      duration: 10000
     });
     await loading.present();
 
@@ -181,10 +183,20 @@ this.mostrarTela = true;
   }
 
   onSubmit() {
+
+    this.instrutor.idiomaPadrao = this.idiomaPadrao;
     if (this.pessoa.user == "painel" && this.pessoa.pass == "painelmaster123") {
       this.router.navigate(["/painel"]);
     } else {
       this.presentLoading();
+
+if(this.platform.is("cordova"))
+{
+
+ this.setupPush();
+ this.onesignal.getIds().then(res => {
+
+this.pessoa.playerid = res.userId;
 
       this.httpClient
         .post(
@@ -194,13 +206,13 @@ this.mostrarTela = true;
             responseType: "text",
             observe: "response",
             withCredentials: true,
-            headers: new HttpHeaders({ "x-version": "1.0.9" })
+            headers: new HttpHeaders({ "x-version": "1.1.0"})
           }
         )
 
         .subscribe(
           response => {
-            this.dismiss();
+           
             this.status = response.status;
 
             if (this.lembrar == true) {
@@ -227,7 +239,57 @@ this.mostrarTela = true;
           
           }
         );
+      });
+    
+    
+    }else
+    {
+      this.httpClient
+      .post(
+        this.instrutor.getUrl() + "/login.php",
+        JSON.stringify(this.pessoa),
+        {
+          responseType: "text",
+          observe: "response",
+          withCredentials: true,
+          headers: new HttpHeaders({ "x-version": "1.1.0" })
+        }
+      )
+
+      .subscribe(
+        response => {
+          this.dismiss();
+          this.status = response.status;
+
+          if (this.lembrar == true) {
+            this.storage.set("login", this.pessoa.user);
+            this.storage.set("senha", this.pessoa.pass);
+          }
+
+          this.instrutor.setRole(response.headers.get("x-role"));
+          if (response.headers.get("x-role") == "INSTRUTOR") {
+            this.router.navigate(["/aula"]);
+          } else {
+            this.router.navigate(["/calendario"]);
+          }
+          this.instrutor.setNome(this.pessoa.user);
+
+          this.instrutor.setToken(response.headers.get("x-auth"));
+        },
+        error => {
+          
+          this.dismiss();
+          // alert("Login ou senha errados, por favor , tente novamente");
+          this.alertaDeErro();
+          this.status = error.status;
+        
+        }
+      );
     }
+  }
+
+ 
+  
   }
 
   esquece() {
@@ -242,5 +304,17 @@ this.mostrarTela = true;
       this.lembrar = false;
     }
   }
+
+  setupPush(){
+
+    this.onesignal.startInit('263822b5-7136-41c1-bf15-1f6656905a42','39062838804');
+  
+    this.onesignal.handleNotificationReceived().subscribe(res => {});
+    
+    this.onesignal.handleNotificationOpened().subscribe(res => {});
+
+    this.onesignal.endInit();
+
+    }
 
 }

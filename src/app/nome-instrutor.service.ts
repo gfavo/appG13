@@ -16,7 +16,7 @@ export class NomeInstrutorService {
 
 error: string;
 
-  headers = new HttpHeaders({'x-version':'1.0.9' , "x-auth": this.getToken() , 'Cache-Control':  'no-cache, no-store, must-revalidate, post-check=0, pre-check=0','Pragma': 'no-cache','Expires': '0'});
+  headers = new HttpHeaders({'x-version':'1.1.0' , "x-auth": this.getToken() , 'Cache-Control':  'no-cache, no-store, must-revalidate, post-check=0, pre-check=0','Pragma': 'no-cache','Expires': '0'});
 
 nome_instrutor: string;
 
@@ -41,6 +41,8 @@ tecnicas: number[];
 idvimeo: number;
 
 senhavimeo: string;
+
+idiomaPadrao: string;
 
 role: string;
   tecnicasdia;
@@ -206,9 +208,20 @@ setAulaProgramaEscolhida(aula: aula_exemplo)
 this.aulaProgramaEscolhida = aula;
 }
 
-getMensagem(): string
+getMensagem(idioma: string): string
 {
-return 'Assine o plano PRO para ter acesso.<br>Coloque login e senha e selecione o plano desejado.'
+var texto = "";
+
+if(idioma == "ptbr")
+{
+  texto="Assine o plano PRO para ter acesso.<br>Coloque login e senha e selecione o plano desejado.";
+}
+else if(idioma == "en")
+{
+  texto="Subscribe to the PRO plan to have access.<br>Insert your login and password and select your preferred plan";
+}
+
+return texto;
 }
 
 

@@ -2,7 +2,9 @@ import { Component, OnInit } from "@angular/core";
 import { NomeInstrutorService } from "../nome-instrutor.service";
 import { HttpHeaders, HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
-
+import { Globalization } from '@ionic-native/globalization/ngx';
+import { LabelsCheckins } from './labelsCheckins';
+import { Storage } from '@ionic/storage';
 class conteudoCheck {
   aulaid: number;
   confirmado: number;
@@ -21,23 +23,53 @@ export class CheckinsPage implements OnInit {
   subscription;
   conteudo: conteudoCheck[];
   headers = new HttpHeaders({
-    "x-version": "1.0.9",
+    "x-version": "1.1.0",
     "x-auth": this.instrutor.getToken(),
     "Cache-Control":
       "no-cache, no-store, must-revalidate, post-check=0, pre-check=0",
     Pragma: "no-cache",
     Expires: "0"
   });
+  idiomaPadrao: string;
 
   constructor(
     private instrutor: NomeInstrutorService,
     private httpClient: HttpClient,
-    private router: Router
+    private router: Router,
+    private storage: Storage,
+    private globalization: Globalization,
+    public labels: LabelsCheckins
   ) {}
 
   ngOnInit() {}
 
+  checkIdioma(){
+    this.storage.get("idioma").then(res => {
+        
+      this.idiomaPadrao = res;
+    if(res == "" || res == null)
+  {
+    this.globalization.getPreferredLanguage().then(res => {
+  if(res.value.includes("pt"))
+  {
+  this.storage.set("idioma","ptbr");
+  this.idiomaPadrao = "ptbr";
+  }
+  else if(res.value.includes("en"))
+  {
+  this.storage.set("idioma","en");
+  this.idiomaPadrao = "en";
+  }
+  
+    });
+  }
+  });
+  }
+
+
   ionViewWillEnter() {
+
+    this.checkIdioma();
     this.subscription = this.httpClient
       .get(this.instrutor.getUrl() + "/checkins.php", {
         responseType: "json",

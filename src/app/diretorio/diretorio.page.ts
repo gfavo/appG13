@@ -3,6 +3,10 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { NomeInstrutorService } from "../nome-instrutor.service";
 import { ModalvideoPage } from "../modalvideo/modalvideo.page";
 import { ModalController } from "@ionic/angular";
+import { Storage } from "@ionic/storage";
+import { Globalization } from '@ionic-native/globalization/ngx';
+import { LabelsDiretorio } from './labelsDiretorio';
+
 
 export class tecnicasDir {
   idvimeo: number;
@@ -26,7 +30,7 @@ export class conteudoGetDiretorio {
 })
 export class DiretorioPage implements OnInit {
   headers = new HttpHeaders({
-    "x-version": "1.0.9",
+    "x-version": "1.1.0",
     "x-auth": this.instrutor.getToken(),
     "Cache-Control":
       "no-cache, no-store, must-revalidate, post-check=0, pre-check=0",
@@ -42,10 +46,15 @@ export class DiretorioPage implements OnInit {
 
   tecnicaExpandida: conteudoGetDiretorio;
 
+idiomaPadrao: string;
+
   constructor(
     private modalController: ModalController,
     private httpClient: HttpClient,
     private instrutor: NomeInstrutorService,
+    private storage: Storage,
+    private globalization: Globalization,
+    public labels: LabelsDiretorio
   ) {}
 
   async presentModal() {
@@ -55,9 +64,40 @@ export class DiretorioPage implements OnInit {
     return await modal.present();
   }
 
+
+  checkIdioma(){
+    this.storage.get("idioma").then(res => {
+        
+      this.idiomaPadrao = res;
+    if(res == "" || res == null)
+  {
+    this.globalization.getPreferredLanguage().then(res => {
+  if(res.value.includes("pt"))
+  {
+  this.storage.set("idioma","ptbr");
+  this.idiomaPadrao = "ptbr";
+  }
+  else if(res.value.includes("en"))
+  {
+  this.storage.set("idioma","en");
+  this.idiomaPadrao = "en";
+  }
+  
+    });
+  }
+  });
+  }
+
+
+
+
+
+
   ionViewWillEnter() {
+this.checkIdioma();
+
     this.subscription = this.httpClient
-      .get(this.instrutor.getUrl() + "/diretorio.php", {
+      .get(this.instrutor.getUrl() + "/diretorio.php?idioma="+this.instrutor.idiomaPadrao, {
         responseType: "json",
         headers: this.headers
       })

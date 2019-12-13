@@ -28,6 +28,7 @@
   </style>
   <!--Menu do aluno-->
   <ion-menu
+    (ionWillOpen)="abriu()"
     contentId="content1"
     side="start"
     *ngIf="this.intrutor.getRole() != 'INSTRUTOR'"
@@ -38,7 +39,7 @@
           <div>
             <ion-icon name="home" style="margin-bottom: 20%"></ion-icon>
             <br />
-            <label style="font-size: 75%;">Home</label>
+            <label style="font-size: 75%;">{{labels.home[idiomaPadrao]}}</label>
           </div>
         </ion-button>
 
@@ -58,7 +59,7 @@
               style="margin-bottom: 20%"
             ></ion-icon>
             <br />
-            <label style="font-size: 75%;">Biblioteca</label>
+            <label style="font-size: 75%;">{{labels.biblioteca[idiomaPadrao]}}</label>
           </div>
         </ion-button>
 
@@ -66,7 +67,7 @@
           <div>
             <ion-icon name="mail" style="margin-bottom: 20%"></ion-icon>
             <br />
-            <label style="font-size: 75%;">Mensagens</label>
+            <label style="font-size: 75%;">{{labels.mensagens[idiomaPadrao]}}</label>
           </div>
         </ion-button>
 
@@ -77,7 +78,7 @@
               style="margin-bottom: 20%"
             ></ion-icon>
             <br />
-            <label style="font-size: 75%;">Check-in</label>
+            <label style="font-size: 75%;">{{labels.checkin[idiomaPadrao]}}</label>
           </div>
         </ion-button>
 
@@ -85,7 +86,7 @@
           <div>
             <ion-icon name="log-out" style="margin-bottom: 20%"></ion-icon>
             <br />
-            <label style="font-size: 75%;">Logout</label>
+            <label style="font-size: 75%;">{{labels.logout[idiomaPadrao]}}</label>
           </div>
         </ion-button>
 
@@ -106,7 +107,7 @@
               style="margin-bottom: 20%"
             ></ion-icon>
             <br />
-            <label style="font-size: 75%;">Sobre</label>
+            <label style="font-size: 75%;">{{labels.sobre[idiomaPadrao]}}</label>
           </div>
         </ion-button>
         <ion-button expand="full" class="botaolateral" (click)="configuracoes()">
@@ -116,7 +117,7 @@
               style="margin-bottom: 20%"
             ></ion-icon>
             <br />
-            <label style="font-size: 75%;">Idiom/Idioma</label>
+            <label style="font-size: 75%;">{{labels.idioma[idiomaPadrao]}}</label>
           </div>
         </ion-button>
       </div>
@@ -135,7 +136,7 @@
             <div>
               <ion-icon name="home" style="margin-bottom: 20%"></ion-icon>
               <br />
-              <label style="font-size: 75%;">Home</label>
+              <label style="font-size: 75%;">{{labels.home[idiomaPadrao]}}</label>
             </div>
           </ion-button>
 
@@ -147,7 +148,7 @@
             <div>
               <ion-icon name="book" style="margin-bottom: 20%"></ion-icon>
               <br />
-              <label style="font-size: 75%;">Biblioteca</label>
+              <label style="font-size: 75%;">{{labels.biblioteca[idiomaPadrao]}}</label>
             </div>
           </ion-button>
 
@@ -155,7 +156,7 @@
             <div>
               <ion-icon name="mail" style="margin-bottom: 20%"></ion-icon>
               <br />
-              <label style="font-size: 75%;">Mensagens</label>
+              <label style="font-size: 75%;">{{labels.mensagens[idiomaPadrao]}}</label>
             </div>
           </ion-button>
 
@@ -166,7 +167,7 @@
                 style="margin-bottom: 20%"
               ></ion-icon>
               <br />
-              <label style="font-size: 75%;">Check-in</label>
+              <label style="font-size: 75%;">{{labels.checkin[idiomaPadrao]}}</label>
             </div>
           </ion-button>
 
@@ -179,7 +180,7 @@
             <div>
               <ion-icon name="reorder" style="margin-bottom: 20%"></ion-icon>
               <br />
-              <label style="font-size: 75%;">Frontdesk</label>
+              <label style="font-size: 75%;">{{labels.frontdesk[idiomaPadrao]}}</label>
             </div>
           </ion-button>
 
@@ -187,7 +188,7 @@
             <div>
               <ion-icon name="log-out" style="margin-bottom: 20%"></ion-icon>
               <br />
-              <label style="font-size: 75%;">Logout</label>
+              <label style="font-size: 75%;">{{labels.logout[idiomaPadrao]}}</label>
             </div>
           </ion-button>
 
@@ -208,7 +209,7 @@
                 style="margin-bottom: 20%"
               ></ion-icon>
               <br />
-              <label style="font-size: 75%;">Sobre</label>
+              <label style="font-size: 75%;">{{labels.sobre[idiomaPadrao]}}</label>
             </div>
           </ion-button>
           <ion-button expand="full" class="botaolateral" (click)="configuracoes()">
@@ -218,7 +219,7 @@
                 style="margin-bottom: 20%"
               ></ion-icon>
               <br />
-              <label style="font-size: 75%;">Idiom/Idioma</label>
+              <label style="font-size: 75%;">{{labels.idioma[idiomaPadrao]}}</label>
             </div>
           </ion-button>
 
@@ -231,7 +232,7 @@
                 style="margin-bottom: 20%"
               ></ion-icon>
               <br />
-              <label style="font-size: 75%;">Modo normal</label>
+              <label style="font-size: 75%;">{{labels.modonormal[idiomaPadrao]}}</label>
             </div>
           </ion-button>
         </ng-container>

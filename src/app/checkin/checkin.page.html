@@ -6,7 +6,7 @@
     <ion-thumbnail slot="end">
       <img src="../assets/images/logobola.png" />
     </ion-thumbnail>
-    <ion-title text-center>Check-in</ion-title>
+    <ion-title text-center>{{labels.titleCheckin[idiomaPadrao]}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -14,12 +14,12 @@
   <ion-list *ngFor="let aula of conteudo">
     <ion-card>
       <ion-card-header>
-        <ion-card-title>Instrutor: {{ aula.nomeinstrutor }}</ion-card-title>
+        <ion-card-title>{{labels.labelInstrutor[idiomaPadrao]}}: {{ aula.nomeinstrutor }}</ion-card-title>
         <ion-card-content>
-          Descrição da aula: {{ aula.descricao }}
+          {{labels.labelDescricaoAula[idiomaPadrao]}}: {{ aula.descricao }}
         </ion-card-content>
         <ion-button (click)="checkin(aula.id, aula.idinstrutor)">
-          Fazer Check-In
+          {{labels.labelFazerCheckin[idiomaPadrao]}}
         </ion-button>
       </ion-card-header>
     </ion-card>
@@ -29,17 +29,17 @@
   <ion-list>
     <ion-card>
       <ion-card-header>
-        <ion-card-title>Instrutor: {{ conteudo[0].nomeinstrutor }}</ion-card-title>
+        <ion-card-title>{{labels.labelInstrutor[idiomaPadrao]}}: {{ conteudo[0].nomeinstrutor }}</ion-card-title>
         <ion-card-content>
-          Descrição da aula: {{ conteudo[0].descricao }}
+          {{labels.titleCheckin[idiomaPadrao]}}: {{ conteudo[0].descricao }}
         </ion-card-content>
         <ion-button (click)="checkin(conteudo[0].id, conteudo[0].idinstrutor)">
-          Fazer Check-In
+          {{labels.labelFazerCheckin[idiomaPadrao]}}
         </ion-button>
       </ion-card-header>
     </ion-card>
 <ion-button (click)="mostra_avulsas()" expand="full" *ngIf="mostraravulsas==false">
-  Mostrar outras
+  {{labels.labelMostrarOutras[idiomaPadrao]}}
 </ion-button>
   </ion-list>
   <ng-container *ngIf="mostraravulsas">
@@ -47,12 +47,12 @@
   <ion-list  *ngFor="let aula of conteudo">
     <ion-card *ngIf="aula != conteudo[0]">
       <ion-card-header>
-        <ion-card-title>Instrutor: {{ aula.nomeinstrutor }}</ion-card-title>
+        <ion-card-title>{{labels.labelInstrutor[idiomaPadrao]}}: {{ aula.nomeinstrutor }}</ion-card-title>
         <ion-card-content>
-          Descrição da aula: {{ aula.descricao }}
+          {{labels.labelDescricaoAula[idiomaPadrao]}}: {{ aula.descricao }}
         </ion-card-content>
         <ion-button (click)="checkin(aula.id,aula.idinstrutor)">
-          Fazer Check-In
+          {{labels.labelFazerCheckin[idiomaPadrao]}}
         </ion-button>
       </ion-card-header>
     </ion-card>
@@ -64,12 +64,12 @@
   <ion-list *ngFor="let aula of conteudo">
     <ion-card>
       <ion-card-header>
-        <ion-card-title>Instrutor: {{ aula.nomeinstrutor }}</ion-card-title>
+        <ion-card-title>{{labels.labelInstrutor[idiomaPadrao]}}: {{ aula.nomeinstrutor }}</ion-card-title>
         <ion-card-content>
-          Descrição da aula: {{ aula.descricao }}
+          {{labels.labelDescricaoAula[idiomaPadrao]}}: {{ aula.descricao }}
         </ion-card-content>
         <ion-button (click)="cancelar(aula.idcheckin)">
-          Cancelar checkin!
+          {{labels.labelCancelarChekin[idiomaPadrao]}}!
         </ion-button>
       </ion-card-header>
     </ion-card>

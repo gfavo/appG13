@@ -18,7 +18,8 @@ import { ModalvideoPage } from "../modalvideo/modalvideo.page";
 
 import { Storage } from "@ionic/storage";
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { LabelsAula } from './labels';
+import { LabelsAula } from './labelsAula';
+import { Globalization } from '@ionic-native/globalization/ngx';
 
 
 
@@ -90,7 +91,7 @@ class error {
 export class AulaPage implements OnInit {
   id: number;
 
-  subscription: any;
+
 
   tecnicasVimeo: tecnicasDir[];
 
@@ -101,7 +102,7 @@ export class AulaPage implements OnInit {
   data: Date;
 
   headers = new HttpHeaders({
-    "x-version": "1.0.9",
+    "x-version": "1.1.0",
     "x-auth": this.instrutor.getToken(),
     "Cache-Control":
       "no-cache, no-store, must-revalidate, post-check=0, pre-check=0",
@@ -124,6 +125,7 @@ export class AulaPage implements OnInit {
   aulaConcluir: aula;
 
   idaula: string;
+  idiomaPadrao: string;
 
 
 
@@ -139,12 +141,40 @@ export class AulaPage implements OnInit {
     private storage: Storage,
     private platform: Platform,
     private statusBar: StatusBar,
-    private labels: LabelsAula
+    public labels: LabelsAula,
+    private globalization: Globalization
 
   ) {}
 
-  ionViewWillEnter() {
+  checkIdioma(){
+    this.storage.get("idioma").then(res => {
+        
+      this.idiomaPadrao = res;
+    if(res == "" || res == null)
+  {
+    this.globalization.getPreferredLanguage().then(res => {
+  if(res.value.includes("pt"))
+  {
+  this.storage.set("idioma","ptbr");
+  this.idiomaPadrao = "ptbr";
+  }
+  else if(res.value.includes("en"))
+  {
+  this.storage.set("idioma","en");
+  this.idiomaPadrao = "en";
+  }
+  
+    });
+  }
+  });
+  }
 
+
+
+
+  ionViewWillEnter() {
+    this.dismiss();
+    this.checkIdioma();
 
 
     this.platform.ready().then(() => {
@@ -169,9 +199,9 @@ export class AulaPage implements OnInit {
       
     
     this.nome_instrutor = this.instrutor.getNome();
-    this.subscription = this.httpClient
+     this.httpClient
       .post(
-        this.instrutor.getUrl() + "/aula.php",
+        this.instrutor.getUrl() + "/aula.php?idioma="+this.instrutor.idiomaPadrao,
         { "": "" },
         { responseType: "json", headers: this.headers, observe: "body" }
       )
@@ -230,8 +260,8 @@ export class AulaPage implements OnInit {
 
   async msgconcluir() {
     const conclui = await this.alertController.create({
-      header: "sucesso",
-      message: "Concluido com Sucesso!",
+      header: this.labels.sucesshead[this.idiomaPadrao],
+      message: this.labels.sucessmsg[this.idiomaPadrao],
       buttons: [
         {
           text: "OK",
@@ -246,8 +276,8 @@ export class AulaPage implements OnInit {
 
   async msgerroconcluir() {
     const concluierro = await this.alertController.create({
-      header: "falhou",
-      message: "Registre antes de concluir",
+      header: this.labels.headererro[this.idiomaPadrao],
+      message: this.labels.headermsg[this.idiomaPadrao],
       buttons: [{ text: "OK" }]
     });
     await concluierro.present();
@@ -256,7 +286,7 @@ export class AulaPage implements OnInit {
   async presentLoading() {
     this.isloading = true;
     const loading = await this.load.create({
-      message: "Aguarde por favor",
+      message: this.labels.loading[this.idiomaPadrao],
       duration: 2500
     });
     await loading.present();
@@ -295,9 +325,11 @@ export class AulaPage implements OnInit {
         });
 
       this.instrutor.setDatatime(this.data_aula);
-      this.subscription = this.httpClient
+
+      
+       this.httpClient
         .post(
-          this.instrutor.getUrl() + "/aula.php",
+          this.instrutor.getUrl() + "/aula.php?idioma="+this.idiomaPadrao,
           { "": "" },
           { responseType: "json", headers: this.headers }
         )

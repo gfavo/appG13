@@ -18,7 +18,7 @@ export class PinPage implements OnInit {
   codigo: string = "";
 
   headers = new HttpHeaders({
-    "x-version": "1.0.9",
+    "x-version": "1.1.0",
     "x-auth": this.instrutor.getToken(),
     "Cache-Control":
       "no-cache, no-store, must-revalidate, post-check=0, pre-check=0",

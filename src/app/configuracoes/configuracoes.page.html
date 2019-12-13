@@ -6,13 +6,13 @@
     <ion-thumbnail slot="end">
       <img src="../assets/images/logobola.png" />
     </ion-thumbnail>
-    <ion-title text-center>Configuracoes</ion-title>
+    <ion-title text-center>{{labels.titulo[idiomaPadrao]}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
   <ion-item>
-    <ion-label>Idioma</ion-label>
+    <ion-label>{{labels.mudarlingua[idiomaPadrao]}}</ion-label>
     <ion-select [(ngModel)]="idioma" (ionChange)="mudouIdioma()">
       <ion-select-option value="en">English</ion-select-option>
       <ion-select-option value="ptbr">Português</ion-select-option>

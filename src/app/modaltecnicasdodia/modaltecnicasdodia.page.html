@@ -3,7 +3,7 @@
     <ion-thumbnail slot="start">
       <img src="../assets/images/logobola.png" />
     </ion-thumbnail>
-    <ion-title> Tecnicas feitas no dia {{ diames }} </ion-title>
+    <ion-title style="font-size: 15px;"> {{labels.titulo[idiomaPadrao]}} {{ diames }} </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -21,7 +21,7 @@
 <ion-footer no-shadow>
   <ion-toolbar position="bottom">
     <ion-button expand="full" (click)="dismiss()">
-      Fechar detalhes
+      {{labels.fechar[idiomaPadrao]}}
     </ion-button>
   </ion-toolbar>
 </ion-footer>

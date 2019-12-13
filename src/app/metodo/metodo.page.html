@@ -7,7 +7,7 @@
       <img src="../assets/images/logobola.png" />
     </ion-thumbnail>
     <ion-title style="font-size: medium" text-center
-      >Metodos de Presenca</ion-title
+      >{{labels.titulo[idiomaPadrao]}}</ion-title
     >
   </ion-toolbar>
 </ion-header>
@@ -31,7 +31,7 @@
       size="large"
       expand="block"
       [routerLink]="['/manutencao-aula']"
-      ><ion-icon slot="start" name="list"></ion-icon>Lista</ion-button
+      ><ion-icon slot="start" name="list"></ion-icon>{{labels.lista[idiomaPadrao]}}</ion-button
     >
 
     <ion-button
@@ -39,11 +39,11 @@
       size="large"
       expand="block"
       [routerLink]="['/pin']"
-      ><ion-icon slot="start" name="keypad"></ion-icon>PIN</ion-button
+      ><ion-icon slot="start" name="keypad"></ion-icon>{{labels.pin[idiomaPadrao]}}</ion-button
     >
 
     <ion-button class="botao" size="large" expand="block" [routerLink]="['/qr']"
-      ><ion-icon slot="start" name="qr-scanner"></ion-icon>Qr Code</ion-button
+      ><ion-icon slot="start" name="qr-scanner"></ion-icon>{{labels.qr[idiomaPadrao]}}</ion-button
     >
   </ion-grid>
 </ion-content>

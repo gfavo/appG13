@@ -26,6 +26,7 @@ import { ModaltecnicasdodiaPageModule } from './modaltecnicasdodia/modaltecnicas
 import { QRCodeModule } from 'angularx-qrcode';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { Globalization } from '@ionic-native/globalization/ngx';
+import { OneSignal } from '@ionic-native/onesignal/ngx';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { Globalization } from '@ionic-native/globalization/ngx';
   entryComponents: [],
   imports: [NgxQRCodeModule,QRCodeModule,NgxQRCodeModule,NgCalendarModule,FormsModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, ModaltecnicasPageModule,ModaldetalhesPageModule,ModalvideoPageModule,ModaltecnicasdodiaPageModule,IonicStorageModule.forRoot()],
   providers: [
+    OneSignal,
     Globalization,
     Network,
     QRScanner,

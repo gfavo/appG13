@@ -7,6 +7,9 @@ import {
 import { NomeInstrutorService } from "../nome-instrutor.service";
 import { ThrowStmt } from "@angular/compiler";
 import { AlertController, LoadingController } from "@ionic/angular";
+import { LabelsFrontdesk } from './labelsFrontdesk';
+import { Storage } from "@ionic/storage";
+import { Globalization } from '@ionic-native/globalization/ngx';
 
 class alunos {
   codigo: string;
@@ -44,7 +47,7 @@ class error {
 })
 export class FrontdeskPage implements OnInit {
   headers = new HttpHeaders({
-    "x-version": "1.0.9",
+    "x-version": "1.1.0",
     "x-auth": this.instrutor.getToken(),
     "Cache-Control":
       "no-cache, no-store, must-revalidate, post-check=0, pre-check=0",
@@ -57,12 +60,16 @@ export class FrontdeskPage implements OnInit {
   checklist: checklist[];
   conteudo: conteudo;
   isloading: boolean;
+  idiomaPadrao: string;
 
   constructor(
     private instrutor: NomeInstrutorService,
     private httpClient: HttpClient,
     private alertController: AlertController,
-    private load: LoadingController
+    private load: LoadingController,
+    private storage: Storage,
+    private globalization: Globalization,
+     public labels: LabelsFrontdesk
   ) {}
 
   async msg(head, msg) {
@@ -77,7 +84,7 @@ export class FrontdeskPage implements OnInit {
   async presentLoading() {
     this.isloading = true;
     const loading = await this.load.create({
-      message: "Aguarde por favor",
+      message: this.labels.aguarde[this.idiomaPadrao],
       duration: 5000
     });
     await loading.present();
@@ -92,11 +99,11 @@ export class FrontdeskPage implements OnInit {
 
   async msgcertezacheckin(nome: string, id) {
     const conclui = await this.alertController.create({
-      header: "Atenção",
-      message: "Fazer checkin para o aluno " + nome + "?",
+      header: this.labels.atencao[this.idiomaPadrao],
+      message: this.labels.checkinctz[this.idiomaPadrao] + nome + "?",
       buttons: [
         {
-          text: "SIM",
+          text: this.labels.sim[this.idiomaPadrao],
           handler: () => {
             this.httpClient
               .post(
@@ -111,16 +118,16 @@ export class FrontdeskPage implements OnInit {
               .subscribe(
                 data => {
                   console.log(data);
-                  this.msg("Sucesso", "Seu checkin foi efetuado com sucesso");
+                  this.msg(this.labels.sucesso[this.idiomaPadrao], this.labels.checkinsucesso[this.idiomaPadrao]);
                 },
                 error => {
-                  this.msg("Erro", (<erro>error).error.error);
+                  this.msg(this.labels.erro[this.idiomaPadrao], (<erro>error).error.error);
                 }
               );
             this.alunos = undefined;
           }
         },
-        { text: "NÃO" }
+        { text: this.labels.nao[this.idiomaPadrao] }
       ]
     });
     await conclui.present();
@@ -153,7 +160,33 @@ export class FrontdeskPage implements OnInit {
 
   ngOnInit() {}
 
-  ionViewWillEnter() {}
+  checkIdioma(){
+    this.storage.get("idioma").then(res => {
+        
+      this.idiomaPadrao = res;
+    if(res == "" || res == null)
+  {
+    this.globalization.getPreferredLanguage().then(res => {
+  if(res.value.includes("pt"))
+  {
+  this.storage.set("idioma","ptbr");
+  this.idiomaPadrao = "ptbr";
+  }
+  else if(res.value.includes("en"))
+  {
+  this.storage.set("idioma","en");
+  this.idiomaPadrao = "en";
+  }
+  
+    });
+  }
+  });
+  }
+
+
+  ionViewWillEnter() {
+    this.checkIdioma();
+  }
 
   pesquisa() {
     this.presentLoading();

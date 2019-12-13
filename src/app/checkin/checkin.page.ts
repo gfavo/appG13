@@ -7,6 +7,9 @@ import {
   HttpErrorResponse
 } from "@angular/common/http";
 import { AlertController } from "@ionic/angular";
+import { Globalization } from '@ionic-native/globalization/ngx';
+import { LabelsCheckin } from './labelsCheckin';
+import { Storage } from '@ionic/storage';
 
 class conteudoAulasAtivas {
   data: string;
@@ -29,13 +32,14 @@ export class CheckinPage implements OnInit {
   conteudo: conteudoAulasAtivas[];
   subscription;
   headers = new HttpHeaders({
-    "x-version": "1.0.9",
+    "x-version": "1.1.0",
     "x-auth": this.instrutor.getToken(),
     "Cache-Control":
       "no-cache, no-store, must-revalidate, post-check=0, pre-check=0",
     Pragma: "no-cache",
     Expires: "0"
   });
+  idiomaPadrao: any;
 
   async mostrarErro(erro) {
     const registra = await this.alertController.create({
@@ -50,7 +54,10 @@ export class CheckinPage implements OnInit {
     private instrutor: NomeInstrutorService,
     private httpClient: HttpClient,
     private router: Router,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private storage: Storage,
+    private globalization: Globalization,
+    public labels: LabelsCheckin
   ) {}
 
   ngOnInit() {}
@@ -58,9 +65,36 @@ export class CheckinPage implements OnInit {
 temaulainstrutor: boolean;
 mostraravulsas:boolean = false;
 
+checkIdioma(){
+  this.storage.get("idioma").then(res => {
+      
+    this.idiomaPadrao = res;
+  if(res == "" || res == null)
+{
+  this.globalization.getPreferredLanguage().then(res => {
+if(res.value.includes("pt"))
+{
+this.storage.set("idioma","ptbr");
+this.idiomaPadrao = "ptbr";
+}
+else if(res.value.includes("en"))
+{
+this.storage.set("idioma","en");
+this.idiomaPadrao = "en";
+}
+
+  });
+}
+});
+}
+
+
   ionViewWillEnter() {
+this.checkIdioma();
+
+
     this.subscription = this.httpClient
-      .get(this.instrutor.getUrl() + "/aulasativas.php", {
+      .get(this.instrutor.getUrl() + "/aulasativas.php?idioma="+this.instrutor.idiomaPadrao, {
         responseType: "json",
         headers: this.headers
       })
@@ -119,9 +153,9 @@ if(element.auladoinstrutor) this.temaulainstrutor = true;
       .subscribe(
         data => {
           console.log(JSON.stringify(data.body));
-          this.mostrarErro("Sucesso! Seu checkin foi efetuado.");
+          this.mostrarErro(this.labels.msgSucessoCheckin[this.idiomaPadrao]);
           this.subscription = this.httpClient
-            .get(this.instrutor.getUrl() + "/aulasativas.php", {
+            .get(this.instrutor.getUrl() + "/aulasativas.php?idioma="+this.instrutor.idiomaPadrao, {
               responseType: "json",
               headers: this.headers
             })
@@ -137,7 +171,7 @@ if(element.auladoinstrutor) this.temaulainstrutor = true;
         error => {
           this.mostrarErro(error.error.error);
           this.subscription = this.httpClient
-            .get(this.instrutor.getUrl() + "/aulasativas.php", {
+            .get(this.instrutor.getUrl() + "/aulasativas.php?idioma="+this.instrutor.idiomaPadrao, {
               responseType: "json",
               headers: this.headers
             })
@@ -162,9 +196,9 @@ if(element.auladoinstrutor) this.temaulainstrutor = true;
       .subscribe(
         data => {
           console.log(data);
-          this.mostrarErro("Checkin cancelado com sucesso!");
+          this.mostrarErro(this.labels.msgSucessoCheckinCancelado[this.idiomaPadrao]);
           this.subscription = this.httpClient
-            .get(this.instrutor.getUrl() + "/aulasativas.php", {
+            .get(this.instrutor.getUrl() + "/aulasativas.php?idioma="+this.instrutor.idiomaPadrao, {
               responseType: "json",
               headers: this.headers
             })
@@ -180,7 +214,7 @@ if(element.auladoinstrutor) this.temaulainstrutor = true;
         error => {
           console.log(error);
           this.subscription = this.httpClient
-            .get(this.instrutor.getUrl() + "/aulasativas.php", {
+            .get(this.instrutor.getUrl() + "/aulasativas.php?idioma="+this.instrutor.idiomaPadrao, {
               responseType: "json",
               headers: this.headers
             })

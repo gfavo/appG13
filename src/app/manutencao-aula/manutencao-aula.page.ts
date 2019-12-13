@@ -17,6 +17,11 @@ import {
 import { tecnicas } from "../aula/aula.page";
 import { tecnicasDir, conteudoGetDiretorio } from "../diretorio/diretorio.page";
 
+import { Storage } from "@ionic/storage";
+
+import { Globalization } from '@ionic-native/globalization/ngx';
+import { LabelsManutencaoAula } from './labelsManutencaoAula';
+
 export class Alunos {
   id: string;
   nome: string;
@@ -45,10 +50,13 @@ export class ManutencaoAulaPage implements OnInit {
     public instrutor: NomeInstrutorService,
     private router: Router,
     private alertController: AlertController,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private globalization: Globalization,
+    private storage: Storage,
+    public labels: LabelsManutencaoAula
   ) {}
   headers = new HttpHeaders({
-    "x-version": "1.0.9",
+    "x-version": "1.1.0",
     "x-auth": this.instrutor.getToken(),
     "Cache-Control":
       "no-cache, no-store, must-revalidate, post-check=0, pre-check=0",
@@ -82,10 +90,12 @@ export class ManutencaoAulaPage implements OnInit {
 
   mostrarBotoes: boolean = true;
 
+  idiomaPadrao: string;
+
   async registrado() {
     const registra = await this.alertController.create({
-      header: "sucesso",
-      message: "Registrado com Sucesso!",
+      header: this.labels.sucessoRegistradoHeader[this.idiomaPadrao],
+      message: this.labels.sucessoRegistradoMessage[this.idiomaPadrao],
       buttons: [
         {
           text: "OK",
@@ -101,7 +111,7 @@ export class ManutencaoAulaPage implements OnInit {
   async sucessoReload() {
     const registra = await this.alertController.create({
       header: "",
-      message: "Página recarregada com sucesso",
+      message: this.labels.sucessoReload[this.idiomaPadrao],
       buttons: [{ text: "OK" }]
     });
     await registra.present();
@@ -109,9 +119,9 @@ export class ManutencaoAulaPage implements OnInit {
 
   async reload() {
     const registra = await this.alertController.create({
-      header: "Cuidado",
+      header: this.labels.requestReloadHeader[this.idiomaPadrao],
       message:
-        "Tem certeza que deseja recarregar a página? Perderá tudo não registrado.",
+        this.labels.requestReloadMessage[this.idiomaPadrao],
       buttons: [
         {
           text: "OK",
@@ -119,7 +129,7 @@ export class ManutencaoAulaPage implements OnInit {
             this._ionview();
           }
         },
-        { text: "CANCELAR" }
+        { text: this.labels.requestReloadText[this.idiomaPadrao] }
       ]
     });
     await registra.present();
@@ -127,8 +137,8 @@ export class ManutencaoAulaPage implements OnInit {
 
   async msgconcluir() {
     const conclui = await this.alertController.create({
-      header: "sucesso",
-      message: "Concluido com Sucesso!",
+      header: this.labels.concluidoComSucessoHeader[this.idiomaPadrao],
+      message: this.labels.concluidoComSucessoMessage[this.idiomaPadrao],
       buttons: [
         {
           text: "OK",
@@ -143,8 +153,8 @@ export class ManutencaoAulaPage implements OnInit {
 
   async msgerroconcluir() {
     const concluierro = await this.alertController.create({
-      header: "falhou",
-      message: "Registre antes de concluir",
+      header: this.labels.erroAoConcluirHeader[this.idiomaPadrao],
+      message: this.labels.erroAoConcluirMessage[this.idiomaPadrao],
       buttons: [{ text: "OK" }]
     });
     await concluierro.present();
@@ -153,7 +163,7 @@ export class ManutencaoAulaPage implements OnInit {
   async presentLoading() {
     this.isloading = true;
     const loading = await this.load.create({
-      message: "Aguarde por favor",
+      message: this.labels.loading[this.idiomaPadrao],
       duration: 5000
     });
     await loading.present();
@@ -168,11 +178,11 @@ export class ManutencaoAulaPage implements OnInit {
 
   async alerta() {
     const alert = await this.alertController.create({
-      header: "Cuidado",
-      message: "Registrar antes de voltar?",
+      header: this.labels.alertaAoVoltarHeader[this.idiomaPadrao],
+      message: this.labels.alertaAoVoltarMessage[this.idiomaPadrao],
       buttons: [
         {
-          text: "SIM",
+          text: this.labels.alertaAoVoltarButtonSim[this.idiomaPadrao],
           handler: () => {
             if (this.aula.id != null) {
               this.http
@@ -209,7 +219,7 @@ export class ManutencaoAulaPage implements OnInit {
           }
         },
         {
-          text: "NAO",
+          text: this.labels.alertaAoVoltarButtonNao[this.idiomaPadrao],
           handler: () => {
             this.router.navigateByUrl("/aula");
           }
@@ -225,8 +235,33 @@ export class ManutencaoAulaPage implements OnInit {
   }
   //aluno.nome.toUpperCase().includes(search_aluno.value.toUpperCase())
 
+  
+checkIdioma(){
+  this.storage.get("idioma").then(res => {
+      
+    this.idiomaPadrao = res;
+  if(res == "" || res == null)
+{
+  this.globalization.getPreferredLanguage().then(res => {
+if(res.value.includes("pt"))
+{
+this.storage.set("idioma","ptbr");
+this.idiomaPadrao = "ptbr";
+}
+else if(res.value.includes("en"))
+{
+this.storage.set("idioma","en");
+this.idiomaPadrao = "en";
+}
+
+  });
+}
+});
+}
+
 
   ionViewWillEnter() {
+this.checkIdioma();
 
     window.addEventListener('keyboardWillShow', (event) => {
       this.mostrarBotoes = false;
@@ -247,7 +282,7 @@ export class ManutencaoAulaPage implements OnInit {
 
     this.http
       .post(
-        this.instrutor.getUrl() + "/aula.php",
+        this.instrutor.getUrl() + "/aula.php?idioma="+this.idiomaPadrao,
         { "": "" },
         { responseType: "json", headers: this.headers }
       )

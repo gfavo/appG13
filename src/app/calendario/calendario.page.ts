@@ -14,6 +14,9 @@ import { identifierModuleUrl } from "@angular/compiler";
 import { ModalvideoPage } from "../modalvideo/modalvideo.page";
 import { ModaltecnicasdodiaPage } from "../modaltecnicasdodia/modaltecnicasdodia.page";
 import { DOCUMENT } from '@angular/platform-browser';
+import { LabelsCalendario } from './labelsCalendario';
+import { Globalization } from '@ionic-native/globalization/ngx';
+import { Storage } from '@ionic/storage';
 
 class conteudo {
   aula_datas: aula_data[];
@@ -77,7 +80,7 @@ export class CalendarioPage implements OnInit {
 
   
   headers = new HttpHeaders({
-    "x-version": "1.0.9",
+    "x-version": "1.1.0",
     "x-auth": this.instrutor.getToken(),
     "Cache-Control":
       "no-cache, no-store, must-revalidate, post-check=0, pre-check=0",
@@ -103,6 +106,7 @@ export class CalendarioPage implements OnInit {
   tecnicasDia;
 
   @ViewChild(CalendarComponent) myCal: CalendarComponent;
+  idiomaPadrao: string;
 
   constructor(
     private modalController: ModalController,
@@ -112,7 +116,10 @@ export class CalendarioPage implements OnInit {
     public instrutor: NomeInstrutorService,
     private router: Router,
     private _activatedRoute: ActivatedRoute,
-    private alertController: AlertController
+    private alertController: AlertController,
+    public labelsCalendario: LabelsCalendario,
+    private globalization: Globalization,
+    private storage: Storage
   ) {}
 
   ngOnInit() {
@@ -129,15 +136,49 @@ export class CalendarioPage implements OnInit {
   async alertaNaoPago() {
     const alert = await this.alertController.create({
       header: "",
-      message: "Você deve ser um usuario premium para acessar esse conteúdo!",
+      message: this.labelsCalendario[this.idiomaPadrao],
       buttons: ["OK"]
     });
     await alert.present();
   }
 
+  async dismiss() {
+    return await this.load.dismiss().then(() => console.log("dismissed"));
+  }
+
+  checkIdioma(){
+    this.storage.get("idioma").then(res => {
+        
+      this.idiomaPadrao = res;
+    if(res == "" || res == null)
+  {
+    this.globalization.getPreferredLanguage().then(res => {
+  if(res.value.includes("pt"))
+  {
+  this.storage.set("idioma","ptbr");
+  this.idiomaPadrao = "ptbr";
+  }
+  else if(res.value.includes("en"))
+  {
+  this.storage.set("idioma","en");
+  this.idiomaPadrao = "en";
+  }
+  
+    });
+  }
+  });
+  }
+
+
+
+
   ionViewWillEnter() {
+    this.dismiss();
+this.checkIdioma();
+this.tecnicasExistem = false;
+
     this.subscription = this.httpClient
-      .get(this.instrutor.getUrl() + "/calendario.php", {
+      .get(this.instrutor.getUrl() + "/calendario.php"+"?idioma="+this.instrutor.idiomaPadrao, {
         responseType: "json",
         headers: this.headers
       })
@@ -165,12 +206,41 @@ export class CalendarioPage implements OnInit {
           this.router.navigate(["/error"]);
         }
       );
+
+this.eventSource = [];
+
+      this.subscription = this.httpClient
+      .get(
+        this.instrutor.getUrl() +
+          "/calendario.php" +
+          "?mes=" +
+          this.mes +
+          "&ano=" +
+          this.ano+"&idioma="+this.instrutor.idiomaPadrao,
+        { responseType: "json", headers: this.headers }
+      )
+      .subscribe(data => {
+        console.log(data);
+        this.aula_datas = (<conteudo>data).aula_datas;
+
+        this.aula_datas.forEach(element => {
+          this.data = new Date(element.data);
+          this.data.setDate(this.data.getDate() + 1);
+
+          this.addEvent(
+            element.nome,
+            this.data,
+            element.vimeoid,
+            element.senhavimeoid
+          );
+        });
+      });
   }
 
 
 
   onViewTitleChanged(title) {
- 
+ this.eventSource = [];
     this.viewTitle = title;
     var i = 0;
     for (i = 0; i < this.viewTitle.length; i++) {
@@ -228,7 +298,7 @@ export class CalendarioPage implements OnInit {
           "?mes=" +
           this.mes +
           "&ano=" +
-          this.ano,
+          this.ano+"&idioma="+this.instrutor.idiomaPadrao,
         { responseType: "json", headers: this.headers }
       )
       .subscribe(data => {
@@ -260,6 +330,8 @@ export class CalendarioPage implements OnInit {
   }
 
   onTimeSelected(data) {
+console.log("Data selecionada:"+JSON.stringify(data));
+
     this.currentDate = data.selectedTime;
     this.dia = (<Date>this.currentDate).getDate().toString();
 

@@ -6,6 +6,9 @@ import {
   tecnicas,
   aula_exemplo
 } from "../aula/aula.page";
+import { Storage } from "@ionic/storage";
+import { Globalization } from '@ionic-native/globalization/ngx';
+import { LabelsModaltecnicas } from './labelsModaltecnicas';
 
 export class tecnicaId {
   id: number;
@@ -22,7 +25,10 @@ export class tecnicaId {
 export class ModaltecnicasPage implements OnInit {
   constructor(
     private modalCtrl: ModalController,
-    private instrutor: NomeInstrutorService
+    private instrutor: NomeInstrutorService,
+    private storage: Storage,
+    private globalization: Globalization,
+    public labels: LabelsModaltecnicas
   ) {}
 
   aula: conjunto_aula_exemplo;
@@ -44,6 +50,8 @@ export class ModaltecnicasPage implements OnInit {
 
   searchTerm: string;
 
+  idiomaPadrao: string;
+
   ngOnInit() {}
 
   filterItems(items, searchTerm) {
@@ -56,7 +64,37 @@ export class ModaltecnicasPage implements OnInit {
     this.itemsFiltrados = this.filterItems(this.tecnicasBool, this.searchTerm);
   }
 
+
+  checkIdioma(){
+    this.storage.get("idioma").then(res => {
+        
+      this.idiomaPadrao = res;
+    if(res == "" || res == null)
+  {
+    this.globalization.getPreferredLanguage().then(res => {
+  if(res.value.includes("pt"))
+  {
+  this.storage.set("idioma","ptbr");
+  this.idiomaPadrao = "ptbr";
+  }
+  else if(res.value.includes("en"))
+  {
+  this.storage.set("idioma","en");
+  this.idiomaPadrao = "en";
+  }
+  
+    });
+  }
+  });
+  }
+
+
+
   ionViewWillEnter() {
+this.checkIdioma();
+
+
+
     this.search_tecnica = document.getElementById("search_tecnica");
     this.aula = this.instrutor.getAula();
     (<tecnicas[]>this.tecnicasBool) = this.aula.tecnicasAvulsas;

@@ -6,13 +6,13 @@
     <ion-thumbnail slot="end">
       <img src="../assets/images/logobola.png" />
     </ion-thumbnail>
-    <ion-title text-center>Registre uma nova aula!</ion-title>
+    <ion-title text-center>{{labels.labelTitulo[idiomaPadrao]}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
   <ion-chip
-    ><ion-label>Data da Aula: {{ aula.datetime }}</ion-label>
+    ><ion-label>{{labels.labelDataDaAula[idiomaPadrao]}}: {{ aula.datetime }}</ion-label>
   </ion-chip>
 
   <ion-fab vertical="bottom" horizontal="start" slot="fixed">
@@ -22,7 +22,7 @@
   </ion-fab>
 
   <br />
-  <b>Aulas Semanais: </b>
+  <b>{{labels.labelAulasSemanais[idiomaPadrao]}}: </b>
 
   <ion-item>
     <ion-select
@@ -46,7 +46,7 @@
 
   <ion-item>
     <ion-label position="stacked">
-      <h2>Descrição da aula</h2>
+      <h2>{{labels.labelDescricaoAula[idiomaPadrao]}}</h2>
     </ion-label>
     <ion-textarea
       value="{{ descricaoPadrao }}"
@@ -57,7 +57,7 @@
   </ion-item>
 
   <ion-button size="default" (click)="mostraModal()" expand="block">
-    Tecnicas Extra
+    {{labels.labelTecnicasExtra[idiomaPadrao]}}
   </ion-button>
 
   <br /><br /><br />
@@ -65,14 +65,14 @@
   <ion-footer vertical="bottom">
     <ion-card *ngIf="instrutor.getIdPrograma() != null" padding>
       <ion-label position="stacked">
-        <h2><b>Detalhes da Aula</b></h2>
+        <h2><b>{{labels.labelDetalhesAula[idiomaPadrao]}}</b></h2>
       </ion-label>
       <h2 id="tituloaula">
         <b> {{ aula_mostrada.titulo }} -></b>
       </h2>
       <ul id="tecnicaslista" *ngFor="let _tecnica of aula_mostrada.tecnicas">
         <li *ngIf="_tecnica.incluir == undefined" (click)="mostracom(_tecnica)">
-          {{ _tecnica.nome }} <ng-container *ngIf="_tecnica.avancada==1"> - <b>Avançada</b></ng-container>
+          {{ _tecnica.nome }} <ng-container *ngIf="_tecnica.avancada==1"> - <b>{{labels.labelAvancada[idiomaPadrao]}}</b></ng-container>
        
         </li>
       </ul>
@@ -81,7 +81,7 @@
       </h2>
       <ul id="tecnicaslista" *ngFor="let _tecnica of aula_mostrada.tecnicas">
         <li *ngIf="_tecnica.incluir != undefined" (click)="mostracom(_tecnica)">
-          {{ _tecnica.nome }}  <ng-container *ngIf="_tecnica.avancada==1"> - <b>Avançada</b></ng-container>
+          {{ _tecnica.nome }}  <ng-container *ngIf="_tecnica.avancada==1"> - <b>{{labels.labelAvancada[idiomaPadrao]}}</b></ng-container>
         </li>
       </ul>
     </ion-card>
@@ -96,13 +96,13 @@
           <ion-col size="6">
             <ion-button expand="block" color="dark" (click)="voltar()"
               ><ion-icon slot="start" name="arrow-back"></ion-icon>
-              Voltar
+              {{labels.buttonVoltar[idiomaPadrao]}}
             </ion-button>
           </ion-col>
           <ion-col size="6">
             <ion-button expand="block" color="dark" (click)="continuar()"
               ><ion-icon slot="start" name="arrow-forward"></ion-icon>
-              Criar aula
+              {{labels.buttonCriarAula[idiomaPadrao]}}
             </ion-button>
           </ion-col>
         </ion-row>

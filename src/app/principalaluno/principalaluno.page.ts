@@ -20,7 +20,7 @@ export class PrincipalalunoPage implements OnInit {
   async alertaNaoPago() {
     const alert = await this.alertController.create({
       header: "",
-      message: this.instrutor.getMensagem(),
+      message: this.instrutor.getMensagem("blabla"),
       buttons: [{text: "ACESSAR", handler: ()=>{window.open("https://www.g13bjj.com.br/ct/?adesao")}},"FECHAR"]
     });
     await alert.present();

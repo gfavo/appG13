@@ -1,5 +1,5 @@
 CALL cd C:\Users\Gabriel\Desktop\projetos\tozi\tozi_mobile
-CALL ionic cordova build android --prod --release --versionCode=10010
+CALL ionic cordova build android --prod --release --versionCode=10012
 CALL cd C:\Users\Gabriel\Desktop\projetos\tozi\tozi_mobile\platforms\android
 CALL gradlew.bat bundleRelease
 CALL cd C:\Users\Gabriel\Desktop\projetos\tozi\tozi_mobile\platforms\android\app\build\outputs\bundle\release

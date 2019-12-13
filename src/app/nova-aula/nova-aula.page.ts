@@ -20,6 +20,9 @@ import {
 } from "../modaltecnicas/modaltecnicas.page";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { aula } from "../manutencao-aula/manutencao-aula.page";
+import { Storage } from "@ionic/storage";
+import { Globalization } from '@ionic-native/globalization/ngx';
+import { LabelsNovaAula } from './labelsNovaAula';
 
 @Component({
   selector: "app-nova-aula",
@@ -44,8 +47,10 @@ export class NovaAulaPage implements OnInit {
 
   temAdicionais: boolean = false;
 
+  idiomaPadrao: string;
+
   headers = new HttpHeaders({
-    "x-version": "1.0.9",
+    "x-version": "1.1.0",
     "x-auth": this.instrutor.getToken(),
     "Cache-Control":
       "no-cache, no-store, must-revalidate, post-check=0, pre-check=0",
@@ -59,7 +64,10 @@ export class NovaAulaPage implements OnInit {
     private modalController: ModalController,
     public instrutor: NomeInstrutorService,
     private router: Router,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private storage: Storage,
+    private globalization: Globalization,
+    public labels: LabelsNovaAula
   ) {}
 
   async presentModal() {
@@ -80,8 +88,8 @@ export class NovaAulaPage implements OnInit {
 
   async aulacriada() {
     const registra = await this.alertController.create({
-      header: "sucesso",
-      message: "Aula criada com sucesso!",
+      header: this.labels.aulaCriadaHeader[this.idiomaPadrao],
+      message: this.labels.aulaCriadaMessage[this.idiomaPadrao],
       buttons: [
         {
           text: "OK",
@@ -96,8 +104,8 @@ export class NovaAulaPage implements OnInit {
 
   async alertaDeErro() {
     const alert = await this.alertController.create({
-      header: "Erro",
-      message: "Adicione uma aula e digite uma descrição para a mesma",
+      header: this.labels.alertaDeErroHeader[this.idiomaPadrao],
+      message: this.labels.alertaDeErroMessage[this.idiomaPadrao],
       buttons: ["OK"]
     });
     await alert.present();
@@ -105,11 +113,11 @@ export class NovaAulaPage implements OnInit {
 
   async certeza() {
     const alert = await this.alertController.create({
-      header: "ATENÇÃO",
-      message: "Tem certeza que deseja criar uma aula?",
+      header: this.labels.certezaHeader[this.idiomaPadrao],
+      message: this.labels.certezaMessage[this.idiomaPadrao],
       buttons: [
         {
-          text: "SIM",
+          text: this.labels.certezaButtonSim[this.idiomaPadrao],
           handler: () => {
             //-------------------------------------------------------------------------------
             this.presentLoading();
@@ -137,7 +145,7 @@ export class NovaAulaPage implements OnInit {
             //-------------------------------------------------------------------------------
           }
         },
-        { text: "NÃO" }
+        { text: this.labels.certezaButtonNao[this.idiomaPadrao] }
       ]
     });
     await alert.present();
@@ -145,7 +153,7 @@ export class NovaAulaPage implements OnInit {
 
   async presentLoading() {
     const loading = await this.load.create({
-      message: "Aguarde por favor",
+      message: this.labels.aguarde[this.idiomaPadrao],
       duration: 5000
     });
     await loading.present();
@@ -163,7 +171,35 @@ export class NovaAulaPage implements OnInit {
     this.instrutor.setDatatime(this.aula.datetime);
   }
 
+  checkIdioma(){
+    this.storage.get("idioma").then(res => {
+        
+      this.idiomaPadrao = res;
+    if(res == "" || res == null)
+  {
+    this.globalization.getPreferredLanguage().then(res => {
+  if(res.value.includes("pt"))
+  {
+  this.storage.set("idioma","ptbr");
+  this.idiomaPadrao = "ptbr";
+  }
+  else if(res.value.includes("en"))
+  {
+  this.storage.set("idioma","en");
+  this.idiomaPadrao = "en";
+  }
+  
+    });
+  }
+  });
+  }
+
+
+
   ionViewWillEnter() {
+this.checkIdioma();
+
+
     this.http
       .get(this.instrutor.getUrl() + "/alunos.php", { headers: this.headers })
       .subscribe(data => {
@@ -219,7 +255,7 @@ export class NovaAulaPage implements OnInit {
     if (this.aula_mostrada != null) {
       this.presentModal();
     } else {
-      alert("Escolha primeiro uma aula semanal!");
+      alert(this.labels.alertEscolha[this.idiomaPadrao]);
     }
   }
 }

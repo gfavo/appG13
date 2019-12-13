@@ -7,7 +7,7 @@
       <img src="../assets/images/logobola.png" />
     </ion-thumbnail>
     <ion-title style="font-size: small" text-center
-      >Complete sua Aula, {{ nomeinstrutor }}</ion-title
+      >{{labels.labelCompleteSuaAula[idiomaPadrao]}}, {{ nomeinstrutor }}</ion-title
     >
   </ion-toolbar>
 </ion-header>
@@ -26,7 +26,7 @@
   </ion-fab>
 
   <ion-label>
-    <h2>Tecnicas da aula:</h2>
+    <h2>{{labels.labelTecnicasDaAula[idiomaPadrao]}}:</h2>
   </ion-label>
   <br />
 
@@ -34,14 +34,14 @@
     <li *ngIf="_tecnica.tecnicaextra == 0">{{ _tecnica.nome }}</li>
   </ul>
 
-  <h2 *ngIf="temExtra">Tecnicas Extra:</h2>
+  <h2 *ngIf="temExtra">{{labels.labelTecnicasExtras[idiomaPadrao]}}:</h2>
 
   <ul *ngFor="let _tecnica of tecnicasMostrar">
     <li *ngIf="_tecnica.tecnicaextra == 1">{{ _tecnica.nome }}</li>
   </ul>
 
   <ion-chip
-    ><ion-label>Data da aula: {{ aula.datetime }}</ion-label></ion-chip
+    ><ion-label>{{labels.labelDataDaAula[idiomaPadrao]}}: {{ aula.datetime }}</ion-label></ion-chip
   >
 
   <ion-searchbar
@@ -49,7 +49,7 @@
     (ngModelChange)="teste()"
   ></ion-searchbar>
 <ion-button (click)="filtra()" expand="full" id="pesquisar">
-  Pesquisar alunos
+  {{labels.labelPesquisarAlunos[idiomaPadrao]}}
 </ion-button>
   <ng-container *ngIf="aula">
       <ion-card>
@@ -81,7 +81,7 @@
         size="large"
         disabled="true"
         (click)="registrar()"
-        ><ion-icon slot="end" name="clipboard"></ion-icon>Registrar</ion-button
+        ><ion-icon slot="end" name="clipboard"></ion-icon>{{labels.labelRegistrar[idiomaPadrao]}}</ion-button
       >
     </div>
   </ion-toolbar>

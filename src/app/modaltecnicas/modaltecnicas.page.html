@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Tecnicas Extra</ion-title>
+    <ion-title>{{labels.titulo[idiomaPadrao]}}</ion-title>
   </ion-toolbar>
 
   <ion-searchbar
@@ -23,11 +23,11 @@
 <ion-footer no-shadow>
   <ion-toolbar position="bottom">
     <ion-button expand="full" (click)="adicionar()" color="dark">
-      Adicionar Tecnicas
+      {{labels.adicionar[idiomaPadrao]}}
     </ion-button>
 
     <ion-button expand="full" (click)="dismiss()">
-      Fechar detalhes
+      {{labels.fechar[idiomaPadrao]}}
     </ion-button>
   </ion-toolbar>
 </ion-footer>

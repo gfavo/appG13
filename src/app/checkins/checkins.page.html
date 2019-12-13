@@ -6,7 +6,7 @@
     <ion-thumbnail slot="end">
       <img src="../assets/images/logobola.png" />
     </ion-thumbnail>
-    <ion-title text-center>Check-ins</ion-title>
+    <ion-title text-center>{{labels.titulo[idiomaPadrao]}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -15,7 +15,7 @@
     <ion-item>
       <ion-checkbox slot="end" [(ngModel)]="aluno.confirmado"></ion-checkbox>
       <ion-label class="ion-text-wrap">
-        <h2>Confirmar presença para {{ aluno.nome }}?</h2>
+        <h2>{{labels.confirmapresenca[idiomaPadrao]}} {{ aluno.nome }}?</h2>
       </ion-label>
     </ion-item>
   </ion-list>
@@ -28,17 +28,17 @@
         <ion-col size="4">
           <ion-button expand="block" (click)="voltar()"
             ><ion-icon slot="start" name="arrow-back"></ion-icon>
-            Voltar</ion-button
+            {{labels.voltar[idiomaPadrao]}}</ion-button
           >
         </ion-col>
         <ion-col size="4">
           <ion-button expand="block" (click)="checkall()" class="ion-text-wrap"
-            >Checkar todos!</ion-button
+            >{{labels.checktodos[idiomaPadrao]}}!</ion-button
           >
         </ion-col>
         <ion-col size="4">
           <ion-button expand="block" (click)="confirmar()"
-            >Confirmar!</ion-button
+            >{{labels.confirma[idiomaPadrao]}}!</ion-button
           >
         </ion-col>
       </ion-row>
