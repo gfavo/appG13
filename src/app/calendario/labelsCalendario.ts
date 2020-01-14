@@ -41,7 +41,7 @@ constructor(){
   this.aulasatendidas["ptbr"] = "Aulas atendidas";
   this.aulasatendidas["en"] = "Classes attended";
   this.totalaulas["ptbr"] = "Total aulas para mudar de faixa";
-  this.totalaulas["en"] = "Total classes necessary for a belt change";
+  this.totalaulas["en"] = "Total classes for a belt change";
   this.restando["ptbr"] = "Aulas restando";
   this.restando["en"] =  "Classes left";
 

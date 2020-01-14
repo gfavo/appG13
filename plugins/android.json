@@ -1,0 +1,54 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "cordova-android-support-gradle-release": {
+      "ANDROID_SUPPORT_VERSION": "27.+",
+      "PACKAGE_NAME": "io.ionic.g13bjj"
+    },
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "io.ionic.g13bjj"
+    },
+    "cordova-plugin-ionic-keyboard": {
+      "PACKAGE_NAME": "io.ionic.g13bjj"
+    },
+    "cordova-plugin-ionic-webview": {
+      "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+",
+      "PACKAGE_NAME": "io.ionic.g13bjj"
+    },
+    "cordova-plugin-nativestorage": {
+      "PACKAGE_NAME": "io.ionic.g13bjj"
+    },
+    "cordova-plugin-network-information": {
+      "PACKAGE_NAME": "io.ionic.g13bjj"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "io.ionic.g13bjj"
+    },
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "io.ionic.g13bjj"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "io.ionic.g13bjj"
+    },
+    "cordova-sqlite-storage": {
+      "PACKAGE_NAME": "io.ionic.g13bjj"
+    },
+    "phonegap-plugin-barcodescanner": {
+      "ANDROID_SUPPORT_V4_VERSION": "27.+",
+      "PACKAGE_NAME": "io.ionic.g13bjj"
+    },
+    "cordova-plugin-globalization": {
+      "PACKAGE_NAME": "io.ionic.g13bjj"
+    },
+    "onesignal-cordova-plugin": {
+      "PACKAGE_NAME": "io.ionic.g13bjj"
+    }
+  },
+  "dependent_plugins": {}
+}

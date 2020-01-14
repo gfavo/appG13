@@ -74,7 +74,8 @@ ionViewWillEnter(){
   this.status = 0;
 
   if (this.instrutor.getUrl() == null) {
-    this.instrutor.setUrl("https://www.g13bjj.com.br/ct/mobile");
+     // this.instrutor.setUrl("https://www.g13bjj.com.br/ct/mobile");
+     this.instrutor.setUrl("http://192.168.25.201/mobile");
   }
 
   this.storage.get("login").then(val => {
