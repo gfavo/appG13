@@ -4,6 +4,9 @@ import { tecnicas,aula_nova,conjunto_aula_exemplo,aula_exemplo } from './aula/au
 import { aula } from './manutencao-aula/manutencao-aula.page';
 import { AbstractEmitterVisitor } from '@angular/compiler/src/output/abstract_emitter';
 import { HttpHeaders } from '@angular/common/http';
+import { Categorias, Aula } from './nova-aula/nova-aula.page';
+
+
 
 export class error{
   error: string;
@@ -16,7 +19,7 @@ export class NomeInstrutorService {
 
 error: string;
 
-  headers = new HttpHeaders({'x-version':'1.1.0' , "x-auth": this.getToken() , 'Cache-Control':  'no-cache, no-store, must-revalidate, post-check=0, pre-check=0','Pragma': 'no-cache','Expires': '0'});
+  headers = new HttpHeaders({'x-version':'1.1.1' , "x-auth": this.getToken() , 'Cache-Control':  'no-cache, no-store, must-revalidate, post-check=0, pre-check=0','Pragma': 'no-cache','Expires': '0'});
 
 nome_instrutor: string;
 
@@ -43,6 +46,17 @@ idvimeo: number;
 senhavimeo: string;
 
 idiomaPadrao: string;
+
+tecnicasCriar: Categorias[] = [];
+
+aulaCriar: Aula;
+
+atualCategoria: string;
+
+tecnicasFdp: Categorias[] = [];
+tecnicasFs: Categorias[] = [];
+tecnicasAp: Categorias[] = [];
+tecnicasAs: Categorias[] = [];
 
 role: string;
   tecnicasdia;
@@ -223,6 +237,26 @@ else if(idioma == "en")
 
 return texto;
 }
+
+settecnicasCriar(tecnicas: Categorias[])
+{
+this.tecnicasCriar = tecnicas;
+}
+gettecnicasCriar(): Categorias[]
+{
+  return this.tecnicasCriar;
+}
+
+setAulaCriar(aulaCriar: Aula)
+{
+this.aulaCriar = aulaCriar;
+}
+getAulaCriar(): Aula
+{
+  return this.aulaCriar;
+}
+
+
 
 
 }

@@ -144,6 +144,7 @@ var LoadLoginPage = /** @class */ (function () {
         this.status = 0;
         if (this.instrutor.getUrl() == null) {
             this.instrutor.setUrl("https://www.g13bjj.com.br/ct/mobile");
+            // this.instrutor.setUrl("https://192.168.15.34/mobile");
         }
         this.storage.get("login").then(function (val) {
             _this.storage.get("login").then(function (val) {
@@ -156,7 +157,7 @@ var LoadLoginPage = /** @class */ (function () {
                     responseType: "text",
                     observe: "response",
                     withCredentials: true,
-                    headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpHeaders"]({ "x-version": "1.1.0" })
+                    headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpHeaders"]({ "x-version": "1.1.1" })
                 })
                     .subscribe(function (response) {
                     _this.status = response.status;

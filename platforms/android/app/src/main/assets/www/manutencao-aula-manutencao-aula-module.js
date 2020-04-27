@@ -233,7 +233,7 @@ var ManutencaoAulaPage = /** @class */ (function () {
         this.storage = storage;
         this.labels = labels;
         this.headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
-            "x-version": "1.1.0",
+            "x-version": "1.1.1",
             "x-auth": this.instrutor.getToken(),
             "Cache-Control": "no-cache, no-store, must-revalidate, post-check=0, pre-check=0",
             Pragma: "no-cache",

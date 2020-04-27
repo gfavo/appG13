@@ -3,31 +3,27 @@
     <ion-title>{{labels.titulo[idiomaPadrao]}}</ion-title>
   </ion-toolbar>
 
-  <ion-searchbar
-    [(ngModel)]="searchTerm"
-    (ionChange)="setFilteredItems()"
-  ></ion-searchbar>
 </ion-header>
 
 <ion-content padding>
-  <ion-list *ngFor="let tecnica of itemsFiltrados">
-    <ion-item>
-      <ion-checkbox slot="end" [(ngModel)]="tecnica.incluir"></ion-checkbox>
-      <ion-label class="ion-text-wrap">
-        <h2>{{ tecnica.nome }}</h2>
-      </ion-label>
-    </ion-item>
+ 
+  <ion-list *ngFor="let categoria of tecnicas">
+      
+    
+        <h1 text-center><b>{{ categoria.nome }}</b></h1>
+        <ion-list *ngFor="let tecnica of categoria.tecnicas">
+          <ion-item>
+            {{tecnica.nome}}
+            <ion-checkbox slot="end" [(ngModel)]="tecnica.incluir" (ionChange)="insereTecnicas()"></ion-checkbox>
+         </ion-item>
+         </ion-list>
   </ion-list>
 </ion-content>
 
 <ion-footer no-shadow>
   <ion-toolbar position="bottom">
-    <ion-button expand="full" (click)="adicionar()" color="dark">
-      {{labels.adicionar[idiomaPadrao]}}
-    </ion-button>
-
     <ion-button expand="full" (click)="dismiss()">
-      {{labels.fechar[idiomaPadrao]}}
+      Fechar
     </ion-button>
   </ion-toolbar>
 </ion-footer>

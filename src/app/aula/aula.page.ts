@@ -65,7 +65,8 @@ export class Aula_aberta {
 export class tecnicas {
   id: number;
   nome: string;
-  avancada: boolean;
+  descricao: string;
+  
 }
 
 export class aula_nova {
@@ -102,7 +103,7 @@ export class AulaPage implements OnInit {
   data: Date;
 
   headers = new HttpHeaders({
-    "x-version": "1.1.0",
+    "x-version": "1.1.1",
     "x-auth": this.instrutor.getToken(),
     "Cache-Control":
       "no-cache, no-store, must-revalidate, post-check=0, pre-check=0",
@@ -120,7 +121,7 @@ export class AulaPage implements OnInit {
 
   isloading: boolean = false;
 
-  tecnicas: tecnicas[];
+  
 
   aulaConcluir: aula;
 
@@ -213,25 +214,14 @@ export class AulaPage implements OnInit {
           this.aula_aberta = (<Aula_aberta>data).aberto;
           this.aulaVimeo = (<conteudoGetDiretorio>data);
    
-          this.tecnicasVimeo = [];
-          this.tecnicasVimeoAvancadas = [];
-
-     if(this.aulaVimeo.tecnicas!=undefined){   this.aulaVimeo.tecnicas.forEach(e =>{
-            if(e.avancada==true)
-            {
-              this.tecnicasVimeoAvancadas.push(e);
-            }else
-            {
-              this.tecnicasVimeo.push(e);
-            }
-          })
-        }        
+          this.tecnicasVimeo = this.aulaVimeo.tecnicas;
+              
 
           this.instrutor.setAulaAberta(this.aula_aberta);
 
           this.dismiss();
 
-          this.tecnicas = (<Aula_aberta>data).tecnicas;
+         
 
           if ((<Aula_aberta>data).aberto == false) {
             this.aula_nova = <conjunto_aula_exemplo>data;
@@ -242,12 +232,12 @@ export class AulaPage implements OnInit {
                 JSON.stringify((<Aula_aberta>data).tecnicas)
               );
           }
-        },
+        }/* ,
         error => {
           this.instrutor.error = (<erro>error).error.error;
           this.dismiss();
           this.router.navigate(["/error"]);
-        }
+        }*/
       );
   }
 
@@ -294,10 +284,12 @@ export class AulaPage implements OnInit {
     const { role, data } = await loading.onDidDismiss();
   }
 
-  async dismiss() {
-    this.isloading = false;
-    return await this.load.dismiss().then(() => console.log("dismissed"));
+   dismiss() {
+this.load.dismiss(null, undefined);
   }
+
+
+
 
   ngOnInit() {}
 
@@ -373,18 +365,7 @@ export class AulaPage implements OnInit {
   }
 
   novaAula() {
-    this.presentLoading();
-    this.data = new Date();
-    this.aula_nova.datetime =
-      this.formatDate(this.data.toDateString()) +
-      " " +
-      this.data.getHours().toString() +
-      ":" +
-      this.formatZero(this.data.getMinutes().toString()) +
-      ":" +
-      this.formatZero(this.data.getSeconds().toString());
-    this.instrutor.setAula(this.aula_nova);
-    this.dismiss();
+    this.presentLoading(); 
     this.router.navigate(["/nova-aula"]);
     
   }
@@ -409,16 +390,6 @@ export class AulaPage implements OnInit {
     this.router.navigateByUrl("/checkins");
   }
 
-  checkAvancada(tecnicas: tecnicasDir[]): boolean
-{
-var temAvancada = false;
-tecnicas.forEach(element =>{
-  if(element.avancada)
-  {
-    temAvancada = true;
-  }
-})
-return temAvancada;
-}
+  
 
 }

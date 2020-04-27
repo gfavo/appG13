@@ -80,7 +80,7 @@ export class CalendarioPage implements OnInit {
 
   
   headers = new HttpHeaders({
-    "x-version": "1.1.0",
+    "x-version": "1.1.1",
     "x-auth": this.instrutor.getToken(),
     "Cache-Control":
       "no-cache, no-store, must-revalidate, post-check=0, pre-check=0",

@@ -78,7 +78,7 @@ int compareVersionList(Collection aParts, Collection bParts) {
     pairs.findResult(aParts.size()-bParts.size()) {it[0] - it[1] != 0 ? it[0] - it[1] : null}
 }
 
-// Compare two version strings, such as "19.0.0" and "18.1.1.0". If all matched
+// Compare two version strings, such as "19.0.0" and "18.1.1.1". If all matched
 // elements are identical, the longer version is the largest by this method.
 // Examples:
 //   "19.0.0" > "19"

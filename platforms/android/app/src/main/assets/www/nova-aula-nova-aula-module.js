@@ -140,9 +140,9 @@ var NovaAulaPageModule = /** @class */ (function () {
                 _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
                 _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["IonicModule"],
-                _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterModule"].forChild(routes)
+                _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterModule"].forChild(routes),
             ],
-            declarations: [_nova_aula_page__WEBPACK_IMPORTED_MODULE_6__["NovaAulaPage"]]
+            declarations: [_nova_aula_page__WEBPACK_IMPORTED_MODULE_6__["NovaAulaPage"]],
         })
     ], NovaAulaPageModule);
     return NovaAulaPageModule;
@@ -159,7 +159,7 @@ var NovaAulaPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <ion-toolbar color=\"dark\">\n    <ion-buttons slot=\"start\">\n      <ion-menu-button autoHide=\"false\"></ion-menu-button>\n    </ion-buttons>\n    <ion-thumbnail slot=\"end\">\n      <img src=\"../assets/images/logobola.png\" />\n    </ion-thumbnail>\n    <ion-title text-center>{{labels.labelTitulo[idiomaPadrao]}}</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-chip\n    ><ion-label>{{labels.labelDataDaAula[idiomaPadrao]}}: {{ aula.datetime }}</ion-label>\n  </ion-chip>\n\n  <ion-fab vertical=\"bottom\" horizontal=\"start\" slot=\"fixed\">\n    <ion-fab-button (click)=\"backPage()\">\n      <ion-icon name=\"arrow-back\"></ion-icon>\n    </ion-fab-button>\n  </ion-fab>\n\n  <br />\n  <b>{{labels.labelAulasSemanais[idiomaPadrao]}}: </b>\n\n  <ion-item>\n    <ion-select\n      class=\"my-select\"\n      width=\"100%\"\n      placeholder=\"Selecione uma aula\"\n      id=\"_aulaProgramada\"\n      (ionChange)=\"action()\"\n    >\n      <ul *ngFor=\"let aula of aula.aulasProgramadas\">\n        <li>\n          <ion-select-option value=\"{{ aula.titulo }}\">{{\n            aula.titulo\n          }}</ion-select-option>\n        </li>\n      </ul>\n    </ion-select>\n  </ion-item>\n\n  <br />\n\n  <ion-item>\n    <ion-label position=\"stacked\">\n      <h2>{{labels.labelDescricaoAula[idiomaPadrao]}}</h2>\n    </ion-label>\n    <ion-textarea\n      value=\"{{ descricaoPadrao }}\"\n      row=\"2\"\n      id=\"descricao\"\n      required\n    ></ion-textarea>\n  </ion-item>\n\n  <ion-button size=\"default\" (click)=\"mostraModal()\" expand=\"block\">\n    {{labels.labelTecnicasExtra[idiomaPadrao]}}\n  </ion-button>\n\n  <br /><br /><br />\n\n  <ion-footer vertical=\"bottom\">\n    <ion-card *ngIf=\"instrutor.getIdPrograma() != null\" padding>\n      <ion-label position=\"stacked\">\n        <h2><b>{{labels.labelDetalhesAula[idiomaPadrao]}}</b></h2>\n      </ion-label>\n      <h2 id=\"tituloaula\">\n        <b> {{ aula_mostrada.titulo }} -></b>\n      </h2>\n      <ul id=\"tecnicaslista\" *ngFor=\"let _tecnica of aula_mostrada.tecnicas\">\n        <li *ngIf=\"_tecnica.incluir == undefined\" (click)=\"mostracom(_tecnica)\">\n          {{ _tecnica.nome }} <ng-container *ngIf=\"_tecnica.avancada==1\"> - <b>{{labels.labelAvancada[idiomaPadrao]}}</b></ng-container>\n       \n        </li>\n      </ul>\n      <h2 *ngIf=\"this.instrutor.getIdTecnicas().length > 0\">\n        <b> Tecnicas Extra -></b>\n      </h2>\n      <ul id=\"tecnicaslista\" *ngFor=\"let _tecnica of aula_mostrada.tecnicas\">\n        <li *ngIf=\"_tecnica.incluir != undefined\" (click)=\"mostracom(_tecnica)\">\n          {{ _tecnica.nome }}  <ng-container *ngIf=\"_tecnica.avancada==1\"> - <b>{{labels.labelAvancada[idiomaPadrao]}}</b></ng-container>\n        </li>\n      </ul>\n    </ion-card>\n  </ion-footer>\n</ion-content>\n\n<ion-footer>\n  <ion-toolbar>\n    <ion-toolbar>\n      <ion-grid fixed>\n        <ion-row>\n          <ion-col size=\"6\">\n            <ion-button expand=\"block\" color=\"dark\" (click)=\"voltar()\"\n              ><ion-icon slot=\"start\" name=\"arrow-back\"></ion-icon>\n              {{labels.buttonVoltar[idiomaPadrao]}}\n            </ion-button>\n          </ion-col>\n          <ion-col size=\"6\">\n            <ion-button expand=\"block\" color=\"dark\" (click)=\"continuar()\"\n              ><ion-icon slot=\"start\" name=\"arrow-forward\"></ion-icon>\n              {{labels.buttonCriarAula[idiomaPadrao]}}\n            </ion-button>\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n    </ion-toolbar>\n  </ion-toolbar>\n</ion-footer>\n"
+module.exports = "<ion-header>\n  <ion-toolbar color=\"dark\">\n    <ion-buttons slot=\"start\">\n      <ion-menu-button autoHide=\"false\"></ion-menu-button>\n    </ion-buttons>\n    <ion-thumbnail slot=\"end\">\n      <img src=\"../assets/images/logobola.png\" />\n    </ion-thumbnail>\n    <ion-title text-center>{{labels.labelTitulo[idiomaPadrao]}}</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-chip\n    ><ion-label>{{labels.labelDataDaAula[idiomaPadrao]}} : {{ _data }} </ion-label>\n  </ion-chip>\n\n\n  <br />\n\n<ion-item>\n  <ion-label   position=\"floating\" text-center>Digite uma descrição para a aula</ion-label>\n  <ion-textarea  type=\"text\" [(ngModel)]=\"descricao_aula\"></ion-textarea>\n</ion-item>\n\n  <h1 text-center><b>Fundamentals</b></h1>\n\n  <ion-card style=\"background-color: rgb(223, 223, 223)\">\n    <ion-card-header>\n\n      <ion-card-title class=\"ion-text-center\" style=\"color: #981b1e\"><b>Técnicas de defesa pessoal</b></ion-card-title>\n    </ion-card-header>\n  \n    <ion-card-content>\n      <ng-container *ngIf=\"temAlgumaCategoria(instrutor.tecnicasFdp)\">\n      \n      <ion-list  style=\"background-color: rgb(223, 223, 223)\" *ngFor=\"let categoria of instrutor.tecnicasFdp\">\n        <ng-container *ngIf=\"categoriaTem(categoria.tecnicas)\">\n        \n      <h1 text-center style=\"color: black;\">  {{categoria.nome}}   </h1>\n        <ion-list *ngFor=\"let tecnica of categoria.tecnicas\" style=\"background-color: rgb(223, 223, 223); color: black;\">\n \n         <span> {{tecnica.nome}} </span>\n  \n        </ion-list>\n      </ng-container>\n      </ion-list>\n    </ng-container>\n \n      <ion-button size=\"default\" (click)=\"mostraModal(FDP,'FDP')\" expand=\"block\">\n        Adicionar Técnicas\n      </ion-button>\n    </ion-card-content>\n    <ion-card-header>\n\n      <ion-card-title class=\"ion-text-center\" style=\"color: #981b1e\"><b>Técnicas de solo</b></ion-card-title>\n    </ion-card-header>\n  \n    <ion-card-content>\n        <ng-container *ngIf=\"temAlgumaCategoria(instrutor.tecnicasFs)\">\n      \n            <ion-list  style=\"background-color: rgb(223, 223, 223)\" *ngFor=\"let categoria of instrutor.tecnicasFs\">\n              <ng-container *ngIf=\"categoriaTem(categoria.tecnicas)\">\n              \n            <h1 text-center style=\"color: black;\">  {{categoria.nome}}   </h1>\n              <ion-list *ngFor=\"let tecnica of categoria.tecnicas\" style=\"background-color: rgb(223, 223, 223); color: black;\">\n       \n               <span> {{tecnica.nome}} </span>\n        \n              </ion-list>\n            </ng-container>\n            </ion-list>\n          </ng-container>\n      <ion-button size=\"default\" (click)=\"mostraModal(FS,'FS')\" expand=\"block\">\n        Adicionar Técnicas\n      </ion-button>\n    </ion-card-content>\n  </ion-card>\n\n  <h1 text-center><b>Avançadas</b></h1>\n\n  <ion-card style=\"background-color: rgb(223, 223, 223)\">\n    <ion-card-header>\n\n      <ion-card-title class=\"ion-text-center\" style=\"color: #981b1e\"><b>Técnicas de projeção</b></ion-card-title>\n    </ion-card-header>\n  \n    <ion-card-content>\n        <ng-container *ngIf=\"temAlgumaCategoria(instrutor.tecnicasAp)\">\n      \n            <ion-list  style=\"background-color: rgb(223, 223, 223)\" *ngFor=\"let categoria of instrutor.tecnicasAp\">\n              <ng-container *ngIf=\"categoriaTem(categoria.tecnicas)\">\n              \n            <h1 text-center style=\"color: black;\">  {{categoria.nome}}   </h1>\n              <ion-list *ngFor=\"let tecnica of categoria.tecnicas\" style=\"background-color: rgb(223, 223, 223); color: black;\">\n       \n               <span> {{tecnica.nome}} </span>\n        \n              </ion-list>\n            </ng-container>\n            </ion-list>\n          </ng-container>\n            <ion-button size=\"default\" (click)=\"mostraModal(AP,'AP')\" expand=\"block\">\n        Adicionar Técnicas\n      </ion-button>\n    </ion-card-content>\n    <ion-card-header>\n\n      <ion-card-title class=\"ion-text-center\" style=\"color: #981b1e\"><b>Técnicas de solo</b></ion-card-title>\n    </ion-card-header>\n  \n    <ion-card-content>\n        <ng-container *ngIf=\"temAlgumaCategoria(instrutor.tecnicasAs)\">\n      \n            <ion-list  style=\"background-color: rgb(223, 223, 223)\" *ngFor=\"let categoria of instrutor.tecnicasAs\">\n              <ng-container *ngIf=\"categoriaTem(categoria.tecnicas)\">\n              \n            <h1 text-center style=\"color: black;\">  {{categoria.nome}}   </h1>\n              <ion-list *ngFor=\"let tecnica of categoria.tecnicas\" style=\"background-color: rgb(223, 223, 223); color: black;\">\n       \n               <span> {{tecnica.nome}} </span>\n        \n              </ion-list>\n            </ng-container>\n            </ion-list>\n          </ng-container>\n      <ion-button size=\"default\" (click)=\"mostraModal(AS,'AS')\" expand=\"block\">\n        Adicionar Técnicas\n      </ion-button>\n    </ion-card-content>\n  </ion-card>\n\n  \n\n  <br /><br /><br />\n\n  <ion-footer vertical=\"bottom\">\n    <ion-card *ngIf=\"instrutor.getIdPrograma() != null\" padding>\n      <ion-label position=\"stacked\">\n        <h2><b>{{labels.labelDetalhesAula[idiomaPadrao]}}</b></h2>\n      </ion-label>\n      <h2 id=\"tituloaula\">\n        <b> {{ aula_mostrada.titulo }} -></b>\n      </h2>\n      <ul id=\"tecnicaslista\" *ngFor=\"let _tecnica of aula_mostrada.tecnicas\">\n        <li *ngIf=\"_tecnica.incluir == undefined\" (click)=\"mostracom(_tecnica)\">\n          {{ _tecnica.nome }} <ng-container *ngIf=\"_tecnica.avancada==1\"> - <b>{{labels.labelAvancada[idiomaPadrao]}}</b></ng-container>\n       \n        </li>\n      </ul>\n      <h2 *ngIf=\"this.instrutor.getIdTecnicas().length > 0\">\n        <b> Tecnicas Extra -></b>\n      </h2>\n      <ul id=\"tecnicaslista\" *ngFor=\"let _tecnica of aula_mostrada.tecnicas\">\n        <li *ngIf=\"_tecnica.incluir != undefined\" (click)=\"mostracom(_tecnica)\">\n          {{ _tecnica.nome }}  <ng-container *ngIf=\"_tecnica.avancada==1\"> - <b>{{labels.labelAvancada[idiomaPadrao]}}</b></ng-container>\n        </li>\n      </ul>\n    </ion-card>\n  </ion-footer>\n</ion-content>\n\n<ion-footer>\n  <ion-toolbar>\n    <ion-toolbar>\n      <ion-grid fixed>\n        <ion-row>\n          <ion-col size=\"6\">\n            <ion-button expand=\"block\" color=\"dark\" (click)=\"voltar()\"\n              ><ion-icon slot=\"start\" name=\"arrow-back\"></ion-icon>\n              {{labels.buttonVoltar[idiomaPadrao]}}\n            </ion-button>\n          </ion-col>\n          <ion-col size=\"6\">\n            <ion-button expand=\"block\" color=\"dark\" (click)=\"certeza()\"\n              ><ion-icon slot=\"start\" name=\"arrow-forward\"></ion-icon>\n              {{labels.buttonCriarAula[idiomaPadrao]}}\n            </ion-button>\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n    </ion-toolbar>\n  </ion-toolbar>\n</ion-footer>\n"
 
 /***/ }),
 
@@ -170,7 +170,7 @@ module.exports = "<ion-header>\n  <ion-toolbar color=\"dark\">\n    <ion-buttons
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".my-select {\n  min-width: 70%; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbm92YS1hdWxhL0M6XFxVc2Vyc1xcR2FicmllbFxcRGVza3RvcFxccHJvamV0b3NcXHRvemlcXHRvemlfbW9iaWxlL3NyY1xcYXBwXFxub3ZhLWF1bGFcXG5vdmEtYXVsYS5wYWdlLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSxjQUFjLEVBQUEiLCJmaWxlIjoic3JjL2FwcC9ub3ZhLWF1bGEvbm92YS1hdWxhLnBhZ2Uuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5teS1zZWxlY3Qge1xuICAgIG1pbi13aWR0aDogNzAlO1xuICAgIH0iXX0= */"
+module.exports = ".my-select {\n  min-width: 70%; }\n\nh1 {\n  margin-bottom: 10px; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbm92YS1hdWxhL0M6XFxVc2Vyc1xcR2FicmllbFxcRGVza3RvcFxccHJvamV0b3NcXHRvemlcXHRvemlfbW9iaWxlL3NyY1xcYXBwXFxub3ZhLWF1bGFcXG5vdmEtYXVsYS5wYWdlLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSxjQUFjLEVBQUE7O0FBR2xCO0VBQ0EsbUJBQW1CLEVBQUEiLCJmaWxlIjoic3JjL2FwcC9ub3ZhLWF1bGEvbm92YS1hdWxhLnBhZ2Uuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5teS1zZWxlY3Qge1xuICAgIG1pbi13aWR0aDogNzAlO1xuICAgIH1cblxuaDF7XG5tYXJnaW4tYm90dG9tOiAxMHB4O1xufSJdfQ== */"
 
 /***/ }),
 
@@ -178,11 +178,14 @@ module.exports = ".my-select {\n  min-width: 70%; }\n\n/*# sourceMappingURL=data
 /*!*********************************************!*\
   !*** ./src/app/nova-aula/nova-aula.page.ts ***!
   \*********************************************/
-/*! exports provided: NovaAulaPage */
+/*! exports provided: Tecnicas, Aula, Categorias, NovaAulaPage */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Tecnicas", function() { return Tecnicas; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Aula", function() { return Aula; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Categorias", function() { return Categorias; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NovaAulaPage", function() { return NovaAulaPage; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
@@ -194,6 +197,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ionic_storage__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic/storage */ "./node_modules/@ionic/storage/fesm5/ionic-storage.js");
 /* harmony import */ var _ionic_native_globalization_ngx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ionic-native/globalization/ngx */ "./node_modules/@ionic-native/globalization/ngx/index.js");
 /* harmony import */ var _labelsNovaAula__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./labelsNovaAula */ "./src/app/nova-aula/labelsNovaAula.ts");
+/* harmony import */ var rxjs_operators___WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs/operators/ */ "./node_modules/rxjs/_esm5/operators/index.js");
 
 
 
@@ -203,6 +207,25 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+var Tecnicas = /** @class */ (function () {
+    function Tecnicas() {
+    }
+    return Tecnicas;
+}());
+
+var Aula = /** @class */ (function () {
+    function Aula() {
+    }
+    return Aula;
+}());
+
+var Categorias = /** @class */ (function () {
+    function Categorias() {
+    }
+    return Categorias;
+}());
 
 var NovaAulaPage = /** @class */ (function () {
     function NovaAulaPage(load, http, modalController, instrutor, router, alertController, storage, globalization, labels) {
@@ -215,26 +238,52 @@ var NovaAulaPage = /** @class */ (function () {
         this.storage = storage;
         this.globalization = globalization;
         this.labels = labels;
+        this.FDP = "FUNDAMENTAIS_DEFESA_PESSOAL";
+        this.FS = "FUNDAMENTAIS_SOLO";
+        this.AP = "AVANCADAS_PROJECAO";
+        this.AS = "AVANCADAS_SOLO";
         this.data = new Date();
         this.temAdicionais = false;
-        this.headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_6__["HttpHeaders"]({
-            "x-version": "1.1.0",
-            "x-auth": this.instrutor.getToken(),
-            "Cache-Control": "no-cache, no-store, must-revalidate, post-check=0, pre-check=0",
-            Pragma: "no-cache",
-            Expires: "0"
-        });
+        this.idTecnicas = [];
     }
     NovaAulaPage.prototype.presentModal = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
             var modal;
+            var _this = this;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.modalController.create({
-                            component: _modaltecnicas_modaltecnicas_page__WEBPACK_IMPORTED_MODULE_5__["ModaltecnicasPage"]
+                            component: _modaltecnicas_modaltecnicas_page__WEBPACK_IMPORTED_MODULE_5__["ModaltecnicasPage"],
                         })];
                     case 1:
                         modal = _a.sent();
+                        modal.onDidDismiss().then(function (x) {
+                            _this.instrutor.tecnicasFdp.forEach(function (categoria) {
+                                categoria.tecnicas.forEach(function (tecnica) {
+                                    if (_this.idTecnicas.find(function (x) { return x === tecnica.id; }) == undefined)
+                                        _this.idTecnicas.push(tecnica.id);
+                                });
+                            });
+                            _this.instrutor.tecnicasFs.forEach(function (categoria) {
+                                categoria.tecnicas.forEach(function (tecnica) {
+                                    if (_this.idTecnicas.find(function (x) { return x === tecnica.id; }) == undefined)
+                                        _this.idTecnicas.push(tecnica.id);
+                                });
+                            });
+                            _this.instrutor.tecnicasAp.forEach(function (categoria) {
+                                categoria.tecnicas.forEach(function (tecnica) {
+                                    if (_this.idTecnicas.find(function (x) { return x === tecnica.id; }) == undefined)
+                                        _this.idTecnicas.push(tecnica.id);
+                                });
+                            });
+                            _this.instrutor.tecnicasAs.forEach(function (categoria) {
+                                categoria.tecnicas.forEach(function (tecnica) {
+                                    if (_this.idTecnicas.find(function (x) { return x === tecnica.id; }) == undefined)
+                                        _this.idTecnicas.push(tecnica.id);
+                                });
+                                console.log("O array que contém as tecnicas é:" + _this.idTecnicas);
+                            });
+                        });
                         return [4 /*yield*/, modal.present()];
                     case 2: return [2 /*return*/, _a.sent()];
                 }
@@ -249,7 +298,7 @@ var NovaAulaPage = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this.alertController.create({
                             header: header,
                             message: texto,
-                            buttons: ["OK"]
+                            buttons: ["OK"],
                         })];
                     case 1:
                         alert = _a.sent();
@@ -264,7 +313,6 @@ var NovaAulaPage = /** @class */ (function () {
     NovaAulaPage.prototype.aulacriada = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
             var registra;
-            var _this = this;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.alertController.create({
@@ -273,11 +321,9 @@ var NovaAulaPage = /** @class */ (function () {
                             buttons: [
                                 {
                                     text: "OK",
-                                    handler: function () {
-                                        _this.router.navigateByUrl("/aula");
-                                    }
-                                }
-                            ]
+                                    handler: function () { },
+                                },
+                            ],
                         })];
                     case 1:
                         registra = _a.sent();
@@ -297,7 +343,7 @@ var NovaAulaPage = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this.alertController.create({
                             header: this.labels.alertaDeErroHeader[this.idiomaPadrao],
                             message: this.labels.alertaDeErroMessage[this.idiomaPadrao],
-                            buttons: ["OK"]
+                            buttons: ["OK"],
                         })];
                     case 1:
                         alert = _a.sent();
@@ -322,30 +368,71 @@ var NovaAulaPage = /** @class */ (function () {
                                 {
                                     text: this.labels.certezaButtonSim[this.idiomaPadrao],
                                     handler: function () {
+                                        var podeCriar = false;
+                                        var mensagem = "";
+                                        if (_this.temAlgumaCategoria(_this.instrutor.tecnicasFdp))
+                                            podeCriar = true;
+                                        else if (_this.temAlgumaCategoria(_this.instrutor.tecnicasFs))
+                                            podeCriar = true;
+                                        else if (_this.temAlgumaCategoria(_this.instrutor.tecnicasAp))
+                                            podeCriar = true;
+                                        else if (_this.temAlgumaCategoria(_this.instrutor.tecnicasAs))
+                                            podeCriar = true;
+                                        else
+                                            mensagem = "Você deve selecionar alguma tecnica antes de criar a aula!";
+                                        if ((_this.temAlgumaCategoria(_this.instrutor.tecnicasFdp) &&
+                                            !_this.temAlgumaCategoria(_this.instrutor.tecnicasFs)) ||
+                                            (!_this.temAlgumaCategoria(_this.instrutor.tecnicasFdp) &&
+                                                _this.temAlgumaCategoria(_this.instrutor.tecnicasFs))) {
+                                            mensagem = "Pelo menos 1 técnica Fundamental Defesa Pessoal e 1 técnica Fundamental de Solo devem ser selecionadas.";
+                                            podeCriar = false;
+                                        }
+                                        if ((_this.temAlgumaCategoria(_this.instrutor.tecnicasAp) &&
+                                            !_this.temAlgumaCategoria(_this.instrutor.tecnicasAs)) ||
+                                            (!_this.temAlgumaCategoria(_this.instrutor.tecnicasAp) &&
+                                                _this.temAlgumaCategoria(_this.instrutor.tecnicasAs))) {
+                                            mensagem += "Pelo menos 1 técnica Avançada de Projeção e 1 técnica Avançada de Solo devem ser selecionadas.";
+                                            podeCriar = false;
+                                        }
+                                        if (podeCriar) {
+                                            _this.instrutor.tecnicasFdp = [];
+                                            _this.instrutor.tecnicasFs = [];
+                                            _this.instrutor.tecnicasAp = [];
+                                            _this.instrutor.tecnicasAs = [];
+                                            _this.descricao_aula = "";
+                                            //-------------------------------------------------------------------------------
+                                            _this.presentLoading();
+                                            _this.instrutor.setAulaAberta(true);
+                                            _this.http
+                                                .post(_this.instrutor.getUrl() + "/registrar.php", {
+                                                id: "",
+                                                datetime: _this._data,
+                                                alunos: [],
+                                                idtecnicas: _this.idTecnicas,
+                                                descricao: _this.descricao_aula,
+                                            }, {
+                                                headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_6__["HttpHeaders"]({
+                                                    "x-version": "1.1.1",
+                                                    "x-auth": _this.instrutor.getToken(),
+                                                    "Cache-Control": "no-cache, no-store, must-revalidate, post-check=0, pre-check=0",
+                                                    Pragma: "no-cache",
+                                                    Expires: "0",
+                                                }),
+                                            })
+                                                .subscribe(function (data) {
+                                                console.log(data);
+                                                _this.aulacriada();
+                                                _this.router.navigate(["/aula"]);
+                                            });
+                                        }
+                                        else {
+                                            _this.mensagem("Aviso", mensagem);
+                                        }
                                         //-------------------------------------------------------------------------------
-                                        _this.presentLoading();
-                                        _this.instrutor.setAulaAberta(true);
-                                        _this.http
-                                            .post(_this.instrutor.getUrl() + "/registrar.php", {
-                                            id: "",
-                                            descricao: _this.instrutor.getDescricao(),
-                                            datetime: _this.instrutor.getAula().datetime,
-                                            idaulaprogramada: _this.instrutor.getIdPrograma(),
-                                            alunos: _this.aulaRegistro.alunos,
-                                            idtecnicasavulsas: _this.instrutor.getIdTecnicas()
-                                        }, { headers: _this.headers })
-                                            .subscribe(function (data) {
-                                            console.log(data);
-                                            _this.dismiss();
-                                            _this.aulaRegistro.id = data.id;
-                                            _this.aulacriada();
-                                            _this.dismiss();
-                                        });
-                                        //-------------------------------------------------------------------------------
-                                    }
+                                    },
                                 },
-                                { text: this.labels.certezaButtonNao[this.idiomaPadrao] }
-                            ]
+                                { text: this.labels.certezaButtonNao[this.idiomaPadrao] },
+                            ],
                         })];
                     case 1:
                         alert = _a.sent();
@@ -364,7 +451,7 @@ var NovaAulaPage = /** @class */ (function () {
                 switch (_b.label) {
                     case 0: return [4 /*yield*/, this.load.create({
                             message: this.labels.aguarde[this.idiomaPadrao],
-                            duration: 5000
+                            duration: 1000,
                         })];
                     case 1:
                         loading = _b.sent();
@@ -381,17 +468,18 @@ var NovaAulaPage = /** @class */ (function () {
     };
     NovaAulaPage.prototype.dismiss = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var _this = this;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.load.dismiss().then(function () { return console.log("dismissed"); })];
-                    case 1: return [2 /*return*/, _a.sent()];
-                }
+                setTimeout(function () {
+                    _this.load.dismiss(null, undefined);
+                }, 200);
+                return [2 /*return*/];
             });
         });
     };
     NovaAulaPage.prototype.ngOnInit = function () {
-        this.aula = this.instrutor.getAula();
-        this.instrutor.setDatatime(this.aula.datetime);
+        //this.aula = this.instrutor.getAula();
+        // this.instrutor.setDatatime(this.aula.datetime);
     };
     NovaAulaPage.prototype.checkIdioma = function () {
         var _this = this;
@@ -411,41 +499,44 @@ var NovaAulaPage = /** @class */ (function () {
             }
         });
     };
+    NovaAulaPage.prototype.formatDate = function (date) {
+        var d = new Date(date), month = "" + (d.getMonth() + 1), day = "" + d.getDate(), year = d.getFullYear();
+        if (month.length < 2)
+            month = "0" + month;
+        if (day.length < 2)
+            day = "0" + day;
+        return [year, month, day].join("-");
+    };
+    NovaAulaPage.prototype.formatZero = function (numero) {
+        if (parseInt(numero) < 10) {
+            return "0" + numero;
+        }
+        return numero;
+    };
     NovaAulaPage.prototype.ionViewWillEnter = function () {
-        var _this = this;
+        this.data = new Date();
+        this._data =
+            this.formatDate(this.data.toDateString()) +
+                " " +
+                this.data.getHours().toString() +
+                ":" +
+                this.formatZero(this.data.getMinutes().toString()) +
+                ":" +
+                this.formatZero(this.data.getSeconds().toString());
         this.checkIdioma();
-        this.http
-            .get(this.instrutor.getUrl() + "/alunos.php", { headers: this.headers })
-            .subscribe(function (data) {
-            _this.dismiss();
-            console.log(data);
-            _this.aulaRegistro = data;
-        });
     };
-    NovaAulaPage.prototype.action = function () {
-        var _this = this;
-        this.aula_escolhida = (document.getElementById("_aulaProgramada")).value;
-        this.instrutor.setIdPrograma(this.aula.aulasProgramadas.find(function (x) { return x.titulo === _this.aula_escolhida; }).id);
-        this.aula_mostrada = this.aula.aulasProgramadas.find(function (x) { return x.titulo === _this.aula_escolhida; });
-        this.instrutor.setAulaSelecionada(this.aula_mostrada);
-        this.descricaoPadrao =
-            this.aula_escolhida +
-                " - " +
-                this.instrutor.getNome() +
-                " - " +
-                this.aula.datetime;
-    };
-    NovaAulaPage.prototype.continuar = function () {
-        this.descricao_aula = (document.getElementById("descricao")).value;
-        this.instrutor.setDescricao(this.descricao_aula);
-        if (this.instrutor.getIdPrograma() != null && this.descricao_aula != "") {
-            this.certeza();
-            this.instrutor.setConteudoConcluir(this.aulaRegistro);
-        }
-        else {
-            this.alertaDeErro();
-        }
-    };
+    /* continuar() {
+      this.descricao_aula = (<HTMLIonTextareaElement>(
+        document.getElementById("descricao")
+      )).value;
+      this.instrutor.setDescricao(this.descricao_aula);
+      if (this.instrutor.getIdPrograma() != null && this.descricao_aula != "") {
+        this.certeza();
+        this.instrutor.setConteudoConcluir(this.aulaRegistro);
+      } else {
+        this.alertaDeErro();
+      }
+    }*/
     NovaAulaPage.prototype.voltar = function () {
         this.instrutor.setIdPrograma(null);
         this.router.navigate(["/aula"]);
@@ -453,13 +544,42 @@ var NovaAulaPage = /** @class */ (function () {
     NovaAulaPage.prototype.backPage = function () {
         this.router.navigateByUrl("/aula");
     };
-    NovaAulaPage.prototype.mostraModal = function () {
-        if (this.aula_mostrada != null) {
-            this.presentModal();
+    NovaAulaPage.prototype.mostraModal = function (categoria, categoriaSigla) {
+        var _this = this;
+        this.presentLoading();
+        this.http
+            .post(this.instrutor.getUrl() + "/get_tecnicas.php", { categoria: categoria }, {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_6__["HttpHeaders"]({
+                "x-version": "1.1.1",
+                "x-auth": this.instrutor.getToken(),
+                "Cache-Control": "no-cache, no-store, must-revalidate, post-check=0, pre-check=0",
+                Pragma: "no-cache",
+                Expires: "0",
+            }),
+        })
+            .pipe(Object(rxjs_operators___WEBPACK_IMPORTED_MODULE_10__["timeout"])(2000), Object(rxjs_operators___WEBPACK_IMPORTED_MODULE_10__["catchError"])(function (e) { return _this.mensagem("Erro", e); }))
+            .subscribe(function (data) {
+            _this.instrutor.settecnicasCriar(data);
+            _this.presentModal();
+        });
+        this.instrutor.atualCategoria = categoriaSigla;
+    };
+    NovaAulaPage.prototype.categoriaTem = function (tecnicas) {
+        var retorno = false;
+        if (tecnicas.length > 0) {
+            retorno = true;
         }
-        else {
-            alert(this.labels.alertEscolha[this.idiomaPadrao]);
-        }
+        return retorno;
+    };
+    NovaAulaPage.prototype.temAlgumaCategoria = function (tecnicas) {
+        var _this = this;
+        var retorno = false;
+        tecnicas.forEach(function (categoria) {
+            if (_this.categoriaTem(categoria.tecnicas)) {
+                retorno = true;
+            }
+        });
+        return retorno;
     };
     NovaAulaPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({

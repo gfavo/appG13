@@ -3,18 +3,19 @@
     <ion-thumbnail slot="start">
       <img src="../assets/images/logobola.png" />
     </ion-thumbnail>
-    <ion-title >
-    {{  labels.titulo[idiomaPadrao] }}
+    <ion-title>
+    Login
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content >
+<body>
+  
   <form #Form="ngForm" (ngSubmit)="onSubmit()" class="form">
     <!-- {{pessoa.user}} . {{pessoa.pass}} -->
 
-    <ion-item class="form-item">
-      <ion-label class="form-label" position="stacked">{{labels.usuario[idiomaPadrao]}}</ion-label>
+    <ion-item-divider> 
+    </ion-item-divider>
       <ion-input
         type="text"
         class="form-control"
@@ -22,27 +23,36 @@
         required
         [(ngModel)]="pessoa.user"
         name="user"
+        placeholder="Login"
       ></ion-input>
-    </ion-item>
+    
 
-    <ion-item class="form-item">
-      <ion-label class="form-label" position="stacked" for="pass"
-        >{{labels.senha[idiomaPadrao]}}</ion-label
-      >
+ 
+    
       <ion-input
         type="password"
-        class="form-control"
         id="pass"
         required
         [(ngModel)]="pessoa.pass"
         [ngModelOptions]="{ standalone: true }"
         name="pass"
-      ></ion-input>
-    </ion-item>
+        placeholder="Senha"
+      >
+      
+    </ion-input>
+    
+    <ion-button
+    type="submit"
+    class="btn"
+    >{{labels.login[idiomaPadrao]}}</ion-button
+  >
+
+
+
     <br />
     <br />
-    <ion-item slot="start"
-      ><b (click)="lembrarTrue()">{{labels.lembrar[idiomaPadrao]}}</b>
+    <ion-item slot="start" 
+      ><span (click)="lembrarTrue()" >{{labels.lembrar[idiomaPadrao]}}</span>
       <ion-checkbox
         slot="end"
         name="lembrar"
@@ -51,13 +61,6 @@
       ></ion-checkbox
     ></ion-item>
 
-    <ion-button
-      color="dark"
-      id="login-button"
-      expand="full"
-      type="submit"
-      class="btn btn-success"
-      ><ion-icon slot="start" name="log-in"></ion-icon>{{labels.login[idiomaPadrao]}}</ion-button
-    >
+   
   </form>
-</ion-content>
+</body>

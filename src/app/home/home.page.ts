@@ -20,11 +20,10 @@ import { Storage } from "@ionic/storage";
 
 import { LoadingController } from "@ionic/angular";
 
-import { Globalization } from '@ionic-native/globalization/ngx';
-import { LabelsHome } from './labelsHome';
-import { Alert } from 'selenium-webdriver';
-import { OneSignal } from '@ionic-native/onesignal/ngx';
-
+import { Globalization } from "@ionic-native/globalization/ngx";
+import { LabelsHome } from "./labelsHome";
+import { Alert } from "selenium-webdriver";
+import { OneSignal } from "@ionic-native/onesignal/ngx";
 
 const headers = new HttpHeaders({ teste: "123" });
 
@@ -53,7 +52,7 @@ export class HomePage {
   lembrar: boolean = false;
 
   isloading: boolean = false;
-  
+
   idiomaPadrao: string;
 
   constructor(
@@ -97,32 +96,25 @@ export class HomePage {
 
   ngOnInit() {}
 
-checkIdioma(){
-  this.storage.get("idioma").then(res => {
-      
-    this.idiomaPadrao = res;
-  if(res == "" || res == null)
-{
-  this.globalization.getPreferredLanguage().then(res => {
-if(res.value.includes("pt"))
-{
-this.storage.set("idioma","ptbr");
-this.idiomaPadrao = "ptbr";
-}
-else if(res.value.includes("en"))
-{
-this.storage.set("idioma","en");
-this.idiomaPadrao = "en";
-}
-
-  });
-}
-});
-}
+  checkIdioma() {
+    this.storage.get("idioma").then(res => {
+      this.idiomaPadrao = res;
+      if (res == "" || res == null) {
+        this.globalization.getPreferredLanguage().then(res => {
+          if (res.value.includes("pt")) {
+            this.storage.set("idioma", "ptbr");
+            this.idiomaPadrao = "ptbr";
+          } else if (res.value.includes("en")) {
+            this.storage.set("idioma", "en");
+            this.idiomaPadrao = "en";
+          }
+        });
+      }
+    });
+  }
 
   ionViewWillEnter() {
-   
-this.checkIdioma();
+    this.checkIdioma();
 
     this.pessoa.pass = "";
     this.pessoa.user = "";
@@ -130,9 +122,9 @@ this.checkIdioma();
 
     this.status = 0;
 
-    if (this.instrutor.getUrl() == null) {
-     // this.instrutor.setUrl("https://www.g13bjj.com.br/ct/mobile");
-      this.instrutor.setUrl("http://192.168.25.201/mobile");
+  if (this.instrutor.getUrl() == null) {
+       this.instrutor.setUrl("https://www.g13bjj.com.br/ct/mobile");
+      //this.instrutor.setUrl("https://192.168.15.34/mobile");
     }
 
     this.storage.get("login").then(val => {
@@ -144,10 +136,8 @@ this.checkIdioma();
           this.pessoa.pass = val;
           this.onSubmit();
         });
-      }
-      else
-      {
-this.mostrarTela = true;
+      } else {
+        this.mostrarTela = true;
       }
     });
   }
@@ -184,113 +174,98 @@ this.mostrarTela = true;
   }
 
   onSubmit() {
-
     this.instrutor.idiomaPadrao = this.idiomaPadrao;
     if (this.pessoa.user == "painel" && this.pessoa.pass == "painelmaster123") {
       this.router.navigate(["/painel"]);
     } else {
       this.presentLoading();
 
-if(this.platform.is("cordova"))
-{
+      if (this.platform.is("cordova")) {
+        this.setupPush();
+        this.onesignal.getIds().then(res => {
+          this.pessoa.playerid = res.userId;
 
- this.setupPush();
- this.onesignal.getIds().then(res => {
+          this.httpClient
+            .post(
+              this.instrutor.getUrl() + "/login.php",
+              JSON.stringify(this.pessoa),
+              {
+                responseType: "text",
+                observe: "response",
+                withCredentials: true,
+                headers: new HttpHeaders({ "x-version": "1.1.1" })
+              }
+            )
 
-this.pessoa.playerid = res.userId;
+            .subscribe(
+              response => {
+                this.status = response.status;
 
-      this.httpClient
-        .post(
-          this.instrutor.getUrl() + "/login.php",
-          JSON.stringify(this.pessoa),
-          {
-            responseType: "text",
-            observe: "response",
-            withCredentials: true,
-            headers: new HttpHeaders({ "x-version": "1.1.0"})
-          }
-        )
+                if (this.lembrar == true) {
+                  this.storage.set("login", this.pessoa.user);
+                  this.storage.set("senha", this.pessoa.pass);
+                }
 
-        .subscribe(
-          response => {
-           
-            this.status = response.status;
+                this.instrutor.setRole(response.headers.get("x-role"));
+                if (response.headers.get("x-role") == "INSTRUTOR") {
+                  this.router.navigate(["/aula"]);
+                } else {
+                  this.router.navigate(["/calendario"]);
+                }
+                this.instrutor.setNome(this.pessoa.user);
 
-            if (this.lembrar == true) {
-              this.storage.set("login", this.pessoa.user);
-              this.storage.set("senha", this.pessoa.pass);
+                this.instrutor.setToken(response.headers.get("x-auth"));
+              },
+              error => {
+                this.dismiss();
+                // alert("Login ou senha errados, por favor , tente novamente");
+                this.alertaDeErro();
+                this.status = error.status;
+              }
+            );
+        });
+      } else {
+        this.httpClient
+          .post(
+            this.instrutor.getUrl() + "/login.php",
+            JSON.stringify(this.pessoa),
+            {
+              responseType: "text",
+              observe: "response",
+              withCredentials: true,
+              headers: new HttpHeaders({ "x-version": "1.1.1" })
             }
+          )
 
-            this.instrutor.setRole(response.headers.get("x-role"));
-            if (response.headers.get("x-role") == "INSTRUTOR") {
-              this.router.navigate(["/aula"]);
-            } else {
-              this.router.navigate(["/calendario"]);
+          .subscribe(
+            response => {
+              this.dismiss();
+              this.status = response.status;
+
+              if (this.lembrar == true) {
+                this.storage.set("login", this.pessoa.user);
+                this.storage.set("senha", this.pessoa.pass);
+              }
+
+              this.instrutor.setRole(response.headers.get("x-role"));
+              if (response.headers.get("x-role") == "INSTRUTOR") {
+                this.router.navigate(["/aula"]);
+              } else {
+                this.router.navigate(["/calendario"]);
+              }
+              this.instrutor.setNome(this.pessoa.user);
+
+              this.instrutor.setToken(response.headers.get("x-auth"));
+            },
+            error => {
+              this.dismiss();
+              // alert("Login ou senha errados, por favor , tente novamente");
+              this.alertaDeErro();
+              this.status = error.status;
             }
-            this.instrutor.setNome(this.pessoa.user);
-
-            this.instrutor.setToken(response.headers.get("x-auth"));
-          },
-          error => {
-            
-            this.dismiss();
-            // alert("Login ou senha errados, por favor , tente novamente");
-            this.alertaDeErro();
-            this.status = error.status;
-          
-          }
-        );
-      });
-    
-    
-    }else
-    {
-      this.httpClient
-      .post(
-        this.instrutor.getUrl() + "/login.php",
-        JSON.stringify(this.pessoa),
-        {
-          responseType: "text",
-          observe: "response",
-          withCredentials: true,
-          headers: new HttpHeaders({ "x-version": "1.1.0" })
-        }
-      )
-
-      .subscribe(
-        response => {
-          this.dismiss();
-          this.status = response.status;
-
-          if (this.lembrar == true) {
-            this.storage.set("login", this.pessoa.user);
-            this.storage.set("senha", this.pessoa.pass);
-          }
-
-          this.instrutor.setRole(response.headers.get("x-role"));
-          if (response.headers.get("x-role") == "INSTRUTOR") {
-            this.router.navigate(["/aula"]);
-          } else {
-            this.router.navigate(["/calendario"]);
-          }
-          this.instrutor.setNome(this.pessoa.user);
-
-          this.instrutor.setToken(response.headers.get("x-auth"));
-        },
-        error => {
-          
-          this.dismiss();
-          // alert("Login ou senha errados, por favor , tente novamente");
-          this.alertaDeErro();
-          this.status = error.status;
-        
-        }
-      );
+          );
+      }
     }
-  }
-
- 
-  
   }
 
   esquece() {
@@ -306,16 +281,16 @@ this.pessoa.playerid = res.userId;
     }
   }
 
-  setupPush(){
+  setupPush() {
+    this.onesignal.startInit(
+      "263822b5-7136-41c1-bf15-1f6656905a42",
+      "39062838804"
+    );
 
-    this.onesignal.startInit('263822b5-7136-41c1-bf15-1f6656905a42','39062838804');
-  
     this.onesignal.handleNotificationReceived().subscribe(res => {});
-    
+
     this.onesignal.handleNotificationOpened().subscribe(res => {});
 
     this.onesignal.endInit();
-
-    }
-
+  }
 }

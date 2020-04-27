@@ -1,14 +1,13 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
 
-#login-button{
-    margin-top: 40px;
-    height: 60px;
+*{
+    font-family: 'Montserrat',sans-serif;
 }
 
-.btn
-{
-    font-family: "Montserrat",sans-serif;
-}
+
+
+
 
 .form-label
 {
@@ -25,3 +24,111 @@
     --padding-top: 15px;
 }
 
+body{
+  
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.form {
+
+    
+
+    display: flex;
+    flex-direction: column;
+    
+    
+    height: auto;
+    width: 281px;
+
+    justify-content: center;
+    align-items: center;
+}
+
+ion-item-divider{
+    align-self: flex-start;
+    margin-bottom: 25px;
+    width: 40px;
+    border-color: #E82525;
+    
+}
+
+ion-icon {
+    color: #979797;
+    position: relative;
+    left: 250px;
+    
+}
+
+ion-toolbar{
+    display: flex;
+    height: 71px;
+    position: relative;
+    justify-content: space-around;
+    border: 1px black solid;
+}
+
+ion-toolbar ion-title {
+    
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 0 90px 1px;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        font-size: 29px;
+        font-family: 'Raleway',sans-serif;
+      
+
+
+}
+
+ion-toolbar ion-thumbnail {
+    width: 60px;
+    height: 60px;
+    margin-left: 10px;
+}
+
+ion-input{
+   
+    margin-bottom: 20px;
+border: 1px #707070 solid;
+border-radius: 5px;
+width: 281px;
+height: 43px;
+box-shadow: 0 3px 6px rgba(0,0,0,0.12), 0 1px 3px rgba(0,0,0,0.24);
+--placeholder-color: #979797;
+
+font-family: 'Montserrat',sans-serif;
+font-size: 25px;
+font-weight: 300;
+}
+
+
+ion-item {
+    text-align: center;
+    font-family: 'Montserrat',sans-serif;
+    font-weight: 300;
+    font-size: 25px;
+}
+
+
+ion-button {
+    
+    margin-bottom: 20px;
+text-transform: capitalize;
+    font-family: 'Montserrat',sans-serif;
+    font-weight: 300;
+    height: 52px;
+    width: 281px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.12), 0 1px 3px rgba(0,0,0,0.24);
+    background-color: #AF1717;
+    border-radius: 5px;
+    border: 1px #707070 solid;
+    color: white;
+    font-size: 25px;
+}

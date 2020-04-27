@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+
+
 
 .fonte{
     font-family: 'Montserrat', sans-serif;
@@ -19,3 +22,64 @@
 .centertext{
     text-align: center;
 }
+
+ion-item-divider {
+    margin-left: auto;
+    margin-right: auto;
+    width: 75vw;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
+    border-top: 1px #979797 solid;
+    border-bottom: none;
+    
+}
+
+ion-title {
+    font-size: 21px;
+    font-family: 'Raleway',sans-serif;
+}
+
+
+ion-toolbar{
+    
+    height: 58px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.12), 0 1px 3px rgba(0,0,0,0.24);
+    border: 1px black solid;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+   
+    align-items: center;
+    justify-content: space-around;
+}
+
+.botao {
+    text-transform: capitalize;
+    font-family: 'Montserrat',sans-serif;
+    font-weight: 300;
+    height: 52px;
+    width: 281px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.12), 0 1px 3px rgba(0,0,0,0.24);
+    border-radius: 5px;
+    border: 1px #707070 solid;
+    color: white;
+    font-size: 23px;
+}
+
+.novaclasse{
+    --background: #2D2D2D;
+}
+
+.vercheckin{
+    --background: #17AF26;
+}
+
+.botoes{
+text-align: center;
+justify-self: flex-end;
+margin-top: 20px;
+}
+

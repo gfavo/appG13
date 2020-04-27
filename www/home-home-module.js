@@ -215,6 +215,7 @@ var HomePage = /** @class */ (function () {
         this.status = 0;
         if (this.instrutor.getUrl() == null) {
             this.instrutor.setUrl("https://www.g13bjj.com.br/ct/mobile");
+            //this.instrutor.setUrl("https://192.168.15.34/mobile");
         }
         this.storage.get("login").then(function (val) {
             if (val != "" && val != null) {
@@ -277,7 +278,7 @@ var HomePage = /** @class */ (function () {
                         responseType: "text",
                         observe: "response",
                         withCredentials: true,
-                        headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ "x-version": "1.1.0" })
+                        headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ "x-version": "1.1.1" })
                     })
                         .subscribe(function (response) {
                         _this.status = response.status;
@@ -308,7 +309,7 @@ var HomePage = /** @class */ (function () {
                     responseType: "text",
                     observe: "response",
                     withCredentials: true,
-                    headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ "x-version": "1.1.0" })
+                    headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ "x-version": "1.1.1" })
                 })
                     .subscribe(function (response) {
                     _this.dismiss();
@@ -348,7 +349,7 @@ var HomePage = /** @class */ (function () {
         }
     };
     HomePage.prototype.setupPush = function () {
-        this.onesignal.startInit('263822b5-7136-41c1-bf15-1f6656905a42', '39062838804');
+        this.onesignal.startInit("263822b5-7136-41c1-bf15-1f6656905a42", "39062838804");
         this.onesignal.handleNotificationReceived().subscribe(function (res) { });
         this.onesignal.handleNotificationOpened().subscribe(function (res) { });
         this.onesignal.endInit();

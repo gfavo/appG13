@@ -74,8 +74,8 @@ ionViewWillEnter(){
   this.status = 0;
 
   if (this.instrutor.getUrl() == null) {
-     // this.instrutor.setUrl("https://www.g13bjj.com.br/ct/mobile");
-     this.instrutor.setUrl("http://192.168.25.201/mobile");
+      this.instrutor.setUrl("https://www.g13bjj.com.br/ct/mobile");
+    // this.instrutor.setUrl("https://192.168.15.34/mobile");
   }
 
   this.storage.get("login").then(val => {
@@ -93,7 +93,7 @@ ionViewWillEnter(){
             responseType: "text",
             observe: "response",
             withCredentials: true,
-            headers: new HttpHeaders({ "x-version": "1.1.0" })
+            headers: new HttpHeaders({ "x-version": "1.1.1" })
           }
         )
 

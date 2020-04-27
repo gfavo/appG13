@@ -14,7 +14,7 @@ export class tecnicasDir {
   senhavimeo: string;
   tecnicaextra: number;
   descricao: string;
-  avancada: boolean;
+  pai: string;
 }
 
 export class conteudoGetDiretorio {
@@ -30,7 +30,7 @@ export class conteudoGetDiretorio {
 })
 export class DiretorioPage implements OnInit {
   headers = new HttpHeaders({
-    "x-version": "1.1.0",
+    "x-version": "1.1.1",
     "x-auth": this.instrutor.getToken(),
     "Cache-Control":
       "no-cache, no-store, must-revalidate, post-check=0, pre-check=0",

@@ -1296,7 +1296,7 @@ var ModaltecnicasPageModule = /** @class */ (function () {
                 _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["IonicModule"],
                 _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterModule"].forChild(routes)
             ],
-            declarations: [_modaltecnicas_page__WEBPACK_IMPORTED_MODULE_6__["ModaltecnicasPage"]]
+            declarations: [_modaltecnicas_page__WEBPACK_IMPORTED_MODULE_6__["ModaltecnicasPage"]],
         })
     ], ModaltecnicasPageModule);
     return ModaltecnicasPageModule;
@@ -1313,7 +1313,7 @@ var ModaltecnicasPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-title>{{labels.titulo[idiomaPadrao]}}</ion-title>\n  </ion-toolbar>\n\n  <ion-searchbar\n    [(ngModel)]=\"searchTerm\"\n    (ionChange)=\"setFilteredItems()\"\n  ></ion-searchbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-list *ngFor=\"let tecnica of itemsFiltrados\">\n    <ion-item>\n      <ion-checkbox slot=\"end\" [(ngModel)]=\"tecnica.incluir\"></ion-checkbox>\n      <ion-label class=\"ion-text-wrap\">\n        <h2>{{ tecnica.nome }}</h2>\n      </ion-label>\n    </ion-item>\n  </ion-list>\n</ion-content>\n\n<ion-footer no-shadow>\n  <ion-toolbar position=\"bottom\">\n    <ion-button expand=\"full\" (click)=\"adicionar()\" color=\"dark\">\n      {{labels.adicionar[idiomaPadrao]}}\n    </ion-button>\n\n    <ion-button expand=\"full\" (click)=\"dismiss()\">\n      {{labels.fechar[idiomaPadrao]}}\n    </ion-button>\n  </ion-toolbar>\n</ion-footer>\n"
+module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-title>{{labels.titulo[idiomaPadrao]}}</ion-title>\n  </ion-toolbar>\n\n</ion-header>\n\n<ion-content padding>\n \n  <ion-list *ngFor=\"let categoria of tecnicas\">\n      \n    \n        <h1 text-center><b>{{ categoria.nome }}</b></h1>\n        <ion-list *ngFor=\"let tecnica of categoria.tecnicas\">\n          <ion-item>\n            {{tecnica.nome}}\n            <ion-checkbox slot=\"end\" [(ngModel)]=\"tecnica.incluir\" (ionChange)=\"insereTecnicas()\"></ion-checkbox>\n         </ion-item>\n         </ion-list>\n  </ion-list>\n</ion-content>\n\n<ion-footer no-shadow>\n  <ion-toolbar position=\"bottom\">\n    <ion-button expand=\"full\" (click)=\"dismiss()\">\n      Fechar\n    </ion-button>\n  </ion-toolbar>\n</ion-footer>\n"
 
 /***/ }),
 
@@ -1332,12 +1332,11 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*!*****************************************************!*\
   !*** ./src/app/modaltecnicas/modaltecnicas.page.ts ***!
   \*****************************************************/
-/*! exports provided: tecnicaId, ModaltecnicasPage */
+/*! exports provided: ModaltecnicasPage */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "tecnicaId", function() { return tecnicaId; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ModaltecnicasPage", function() { return ModaltecnicasPage; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
@@ -1353,62 +1352,194 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var tecnicaId = /** @class */ (function () {
-    function tecnicaId() {
-    }
-    return tecnicaId;
-}());
-
 var ModaltecnicasPage = /** @class */ (function () {
-    function ModaltecnicasPage(modalCtrl, instrutor, storage, globalization, labels) {
+    function ModaltecnicasPage(modalCtrl, instrutor, storage, globalization, labels, loadingController, alertController) {
         this.modalCtrl = modalCtrl;
         this.instrutor = instrutor;
         this.storage = storage;
         this.globalization = globalization;
         this.labels = labels;
-        this.nomesTecnicasAdicionais = [];
-        this.numeroTecnicaAtual = 0;
+        this.loadingController = loadingController;
+        this.alertController = alertController;
+        this.tecnicas = [];
+        this.teste = "aa";
     }
+    ModaltecnicasPage.prototype.mensagem = function (mensagem) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var alert;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.alertController.create({
+                            message: mensagem,
+                            buttons: ["OK"]
+                        })];
+                    case 1:
+                        alert = _a.sent();
+                        return [4 /*yield*/, alert.present()];
+                    case 2:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ModaltecnicasPage.prototype.presentLoading = function () {
+        this.loadingController.create({
+            message: 'Please wait...',
+            duration: 5000
+        }).then(function (loading) {
+            loading.present();
+            loading.onDidDismiss().then(function () { return console.log('Loading dismissed!'); });
+        });
+    };
     ModaltecnicasPage.prototype.ngOnInit = function () { };
-    ModaltecnicasPage.prototype.filterItems = function (items, searchTerm) {
-        return items.filter(function (item) {
-            return item.nome.toUpperCase().indexOf(searchTerm.toUpperCase()) > -1;
+    ModaltecnicasPage.prototype.sortArray = function () {
+        this.tecnicas.forEach(function (categoria) {
+            categoria.tecnicas.sort(function (x, y) { return Number(y.incluir) - Number(x.incluir); });
         });
+        console.log(this.tecnicas);
     };
-    //tecnica.nome.toUpperCase().includes(search_tecnica.value.toUpperCase())
-    ModaltecnicasPage.prototype.setFilteredItems = function () {
-        this.itemsFiltrados = this.filterItems(this.tecnicasBool, this.searchTerm);
-    };
-    ModaltecnicasPage.prototype.checkIdioma = function () {
+    ModaltecnicasPage.prototype.insereTecnicas = function () {
         var _this = this;
-        this.storage.get("idioma").then(function (res) {
-            _this.idiomaPadrao = res;
-            if (res == "" || res == null) {
-                _this.globalization.getPreferredLanguage().then(function (res) {
-                    if (res.value.includes("pt")) {
-                        _this.storage.set("idioma", "ptbr");
-                        _this.idiomaPadrao = "ptbr";
-                    }
-                    else if (res.value.includes("en")) {
-                        _this.storage.set("idioma", "en");
-                        _this.idiomaPadrao = "en";
-                    }
+        switch (this.instrutor.atualCategoria) {
+            case "FDP":
+                this.instrutor.tecnicasFdp.forEach(function (categoria) {
+                    categoria.tecnicas = [];
+                    _this.tecnicas
+                        .find(function (x) { return x.nome === categoria.nome; })
+                        .tecnicas.forEach(function (tecnicaLocal) {
+                        if (tecnicaLocal.incluir)
+                            _this.instrutor.tecnicasFdp
+                                .find(function (x) { return x.nome === categoria.nome; })
+                                .tecnicas.push(tecnicaLocal);
+                    });
                 });
-            }
-        });
+                break;
+            case "FS":
+                this.instrutor.tecnicasFs.forEach(function (categoria) {
+                    categoria.tecnicas = [];
+                    _this.tecnicas
+                        .find(function (x) { return x.nome === categoria.nome; })
+                        .tecnicas.forEach(function (tecnicaLocal) {
+                        if (tecnicaLocal.incluir)
+                            _this.instrutor.tecnicasFs
+                                .find(function (x) { return x.nome === categoria.nome; })
+                                .tecnicas.push(tecnicaLocal);
+                    });
+                });
+                break;
+            case "AP":
+                this.instrutor.tecnicasAp.forEach(function (categoria) {
+                    categoria.tecnicas = [];
+                    _this.tecnicas
+                        .find(function (x) { return x.nome === categoria.nome; })
+                        .tecnicas.forEach(function (tecnicaLocal) {
+                        if (tecnicaLocal.incluir)
+                            _this.instrutor.tecnicasAp
+                                .find(function (x) { return x.nome === categoria.nome; })
+                                .tecnicas.push(tecnicaLocal);
+                    });
+                });
+                break;
+            case "AS":
+                this.instrutor.tecnicasAs.forEach(function (categoria) {
+                    categoria.tecnicas = [];
+                    _this.tecnicas
+                        .find(function (x) { return x.nome === categoria.nome; })
+                        .tecnicas.forEach(function (tecnicaLocal) {
+                        if (tecnicaLocal.incluir)
+                            _this.instrutor.tecnicasAs
+                                .find(function (x) { return x.nome === categoria.nome; })
+                                .tecnicas.push(tecnicaLocal);
+                    });
+                });
+                break;
+        }
     };
     ModaltecnicasPage.prototype.ionViewWillEnter = function () {
-        this.checkIdioma();
-        this.search_tecnica = document.getElementById("search_tecnica");
-        this.aula = this.instrutor.getAula();
-        this.tecnicasBool = this.aula.tecnicasAvulsas;
-        this.tecnicasBool.forEach(function (element) {
-            element.incluir = false;
+        var _this = this;
+        this.tecnicas = this.instrutor.gettecnicasCriar();
+        this.tecnicas.forEach(function (categoria) {
+            return categoria.tecnicas.forEach(function (x) { return (x.incluir = false); });
         });
-        this.itemsFiltrados = this.tecnicasBool;
+        switch (this.instrutor.atualCategoria) {
+            case "FDP":
+                if (this.instrutor.tecnicasFdp.length == 0) {
+                    this.tecnicas.forEach(function (categoria) {
+                        _this.instrutor.tecnicasFdp.push({
+                            nome: categoria.nome,
+                            tecnicas: []
+                        });
+                        console.log(_this.instrutor.tecnicasFdp);
+                    });
+                }
+                this.tecnicas.forEach(function (categoria) {
+                    _this.instrutor.tecnicasFdp
+                        .find(function (x) { return x.nome === categoria.nome; })
+                        .tecnicas.forEach(function (tecnicaRemota) {
+                        categoria.tecnicas.find(function (x) { return x.nome === tecnicaRemota.nome; }).incluir = true;
+                    });
+                });
+                break;
+            case "FS":
+                if (this.instrutor.tecnicasFs.length == 0) {
+                    this.tecnicas.forEach(function (categoria) {
+                        _this.instrutor.tecnicasFs.push({
+                            nome: categoria.nome,
+                            tecnicas: []
+                        });
+                        console.log(_this.instrutor.tecnicasFs);
+                    });
+                }
+                this.tecnicas.forEach(function (categoria) {
+                    _this.instrutor.tecnicasFs
+                        .find(function (x) { return x.nome === categoria.nome; })
+                        .tecnicas.forEach(function (tecnicaRemota) {
+                        categoria.tecnicas.find(function (x) { return x.nome === tecnicaRemota.nome; }).incluir = true;
+                    });
+                });
+                break;
+            case "AP":
+                if (this.instrutor.tecnicasAp.length == 0) {
+                    this.tecnicas.forEach(function (categoria) {
+                        _this.instrutor.tecnicasAp.push({
+                            nome: categoria.nome,
+                            tecnicas: []
+                        });
+                        console.log(_this.instrutor.tecnicasAp);
+                    });
+                }
+                this.tecnicas.forEach(function (categoria) {
+                    _this.instrutor.tecnicasAp
+                        .find(function (x) { return x.nome === categoria.nome; })
+                        .tecnicas.forEach(function (tecnicaRemota) {
+                        categoria.tecnicas.find(function (x) { return x.nome === tecnicaRemota.nome; }).incluir = true;
+                    });
+                });
+                break;
+            case "AS":
+                if (this.instrutor.tecnicasAs.length == 0) {
+                    this.tecnicas.forEach(function (categoria) {
+                        _this.instrutor.tecnicasAs.push({
+                            nome: categoria.nome,
+                            tecnicas: []
+                        });
+                        console.log(_this.instrutor.tecnicasAs);
+                    });
+                }
+                this.tecnicas.forEach(function (categoria) {
+                    _this.instrutor.tecnicasAs
+                        .find(function (x) { return x.nome === categoria.nome; })
+                        .tecnicas.forEach(function (tecnicaRemota) {
+                        categoria.tecnicas.find(function (x) { return x.nome === tecnicaRemota.nome; }).incluir = true;
+                    });
+                });
+                break;
+        }
+        this.sortArray();
     };
     ModaltecnicasPage.prototype.dismiss = function () {
-        this.modalCtrl.dismiss();
+        this.modalCtrl.dismiss(null, undefined);
     };
     ModaltecnicasPage.prototype.temTecnicas = function (tecnicaAvulsa, tecnicas) {
         var _this = this;
@@ -1424,22 +1555,6 @@ var ModaltecnicasPage = /** @class */ (function () {
             return false;
         }
     };
-    ModaltecnicasPage.prototype.adicionar = function () {
-        var _this = this;
-        this.aulaComTecnicasAdicionais = this.instrutor.getAulaSelecionada();
-        this.tecnicasBool.forEach(function (tecnica) {
-            _this.tem = false;
-            if (tecnica.incluir == true &&
-                _this.temTecnicas(tecnica, _this.aulaComTecnicasAdicionais.tecnicas) ==
-                    false) {
-                _this.aulaComTecnicasAdicionais.tecnicas.push(tecnica);
-                _this.instrutor.setIdTecnicas(tecnica.id);
-            }
-        });
-        console.log(JSON.stringify(this.instrutor.getIdTecnicas()));
-        this.instrutor.setAulaSelecionada(this.aulaComTecnicasAdicionais);
-        this.modalCtrl.dismiss();
-    };
     ModaltecnicasPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: "app-modaltecnicas",
@@ -1450,7 +1565,9 @@ var ModaltecnicasPage = /** @class */ (function () {
             _nome_instrutor_service__WEBPACK_IMPORTED_MODULE_3__["NomeInstrutorService"],
             _ionic_storage__WEBPACK_IMPORTED_MODULE_4__["Storage"],
             _ionic_native_globalization_ngx__WEBPACK_IMPORTED_MODULE_5__["Globalization"],
-            _labelsModaltecnicas__WEBPACK_IMPORTED_MODULE_6__["LabelsModaltecnicas"]])
+            _labelsModaltecnicas__WEBPACK_IMPORTED_MODULE_6__["LabelsModaltecnicas"],
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["LoadingController"],
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["AlertController"]])
     ], ModaltecnicasPage);
     return ModaltecnicasPage;
 }());
@@ -1930,7 +2047,12 @@ var error = /** @class */ (function () {
 
 var NomeInstrutorService = /** @class */ (function () {
     function NomeInstrutorService() {
-        this.headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'x-version': '1.1.0', "x-auth": this.getToken(), 'Cache-Control': 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0', 'Pragma': 'no-cache', 'Expires': '0' });
+        this.headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'x-version': '1.1.1', "x-auth": this.getToken(), 'Cache-Control': 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0', 'Pragma': 'no-cache', 'Expires': '0' });
+        this.tecnicasCriar = [];
+        this.tecnicasFdp = [];
+        this.tecnicasFs = [];
+        this.tecnicasAp = [];
+        this.tecnicasAs = [];
         this.tecnicas = [];
     }
     NomeInstrutorService.prototype.setNome = function (nome) {
@@ -2042,6 +2164,18 @@ var NomeInstrutorService = /** @class */ (function () {
             texto = "Subscribe to the PRO plan to have access.<br>Insert your login and password and select your preferred plan";
         }
         return texto;
+    };
+    NomeInstrutorService.prototype.settecnicasCriar = function (tecnicas) {
+        this.tecnicasCriar = tecnicas;
+    };
+    NomeInstrutorService.prototype.gettecnicasCriar = function () {
+        return this.tecnicasCriar;
+    };
+    NomeInstrutorService.prototype.setAulaCriar = function (aulaCriar) {
+        this.aulaCriar = aulaCriar;
+    };
+    NomeInstrutorService.prototype.getAulaCriar = function () {
+        return this.aulaCriar;
     };
     NomeInstrutorService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({

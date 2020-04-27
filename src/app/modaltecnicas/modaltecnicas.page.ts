@@ -1,5 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { ModalController } from "@ionic/angular";
+import {
+  ModalController,
+  LoadingController,
+  AlertController
+} from "@ionic/angular";
 import { NomeInstrutorService } from "../nome-instrutor.service";
 import {
   conjunto_aula_exemplo,
@@ -7,17 +11,13 @@ import {
   aula_exemplo
 } from "../aula/aula.page";
 import { Storage } from "@ionic/storage";
-import { Globalization } from '@ionic-native/globalization/ngx';
-import { LabelsModaltecnicas } from './labelsModaltecnicas';
+import { Globalization } from "@ionic-native/globalization/ngx";
+import { LabelsModaltecnicas } from "./labelsModaltecnicas";
+import { Categorias, Tecnicas } from "../nova-aula/nova-aula.page";
+import { forEach } from "@angular/router/src/utils/collection";
+import { runInThisContext } from "vm";
 
-export class tecnicaId {
-  id: number;
-  nome: string;
-  incluir: boolean;
-  avancada: boolean;
-}
-
-@Component({
+ @Component({
   selector: "app-modaltecnicas",
   templateUrl: "./modaltecnicas.page.html",
   styleUrls: ["./modaltecnicas.page.scss"]
@@ -28,86 +28,216 @@ export class ModaltecnicasPage implements OnInit {
     private instrutor: NomeInstrutorService,
     private storage: Storage,
     private globalization: Globalization,
-    public labels: LabelsModaltecnicas
+    public labels: LabelsModaltecnicas,
+    public loadingController: LoadingController,
+    public alertController: AlertController
   ) {}
 
-  aula: conjunto_aula_exemplo;
+  isLoading: boolean;
 
-  search_tecnica: any;
-
-  tecnicasBool: tecnicaId[];
-
-  idtecnicas: number[];
-
-  itemsFiltrados: tecnicaId[];
-
-  aulaComTecnicasAdicionais: aula_exemplo;
-
-  nomesTecnicasAdicionais: string[] = [];
-  numeroTecnicaAtual: number = 0;
-
-  tem: boolean;
-
-  searchTerm: string;
-
-  idiomaPadrao: string;
-
-  ngOnInit() {}
-
-  filterItems(items, searchTerm) {
-    return items.filter(item => {
-      return item.nome.toUpperCase().indexOf(searchTerm.toUpperCase()) > -1;
+  async mensagem(mensagem) {
+    const alert = await this.alertController.create({
+      message: mensagem,
+      buttons: ["OK"]
     });
-  }
-  //tecnica.nome.toUpperCase().includes(search_tecnica.value.toUpperCase())
-  setFilteredItems() {
-    this.itemsFiltrados = this.filterItems(this.tecnicasBool, this.searchTerm);
+    await alert.present();
   }
 
-
-  checkIdioma(){
-    this.storage.get("idioma").then(res => {
-        
-      this.idiomaPadrao = res;
-    if(res == "" || res == null)
-  {
-    this.globalization.getPreferredLanguage().then(res => {
-  if(res.value.includes("pt"))
-  {
-  this.storage.set("idioma","ptbr");
-  this.idiomaPadrao = "ptbr";
-  }
-  else if(res.value.includes("en"))
-  {
-  this.storage.set("idioma","en");
-  this.idiomaPadrao = "en";
-  }
   
-    });
-  }
+  
+   presentLoading() {
+     this.loadingController.create({
+      message: 'Please wait...',
+      duration: 5000
+    }).then(loading => {loading.present()
+
+    loading.onDidDismiss().then(() => console.log('Loading dismissed!'));
+    
   });
   }
 
 
+  tecnicas: Categorias[] = [];
+
+  idiomaPadrao: string;
+
+  teste: string = "aa";
+
+  tem: boolean;
+
+  ngOnInit() {}
+
+  sortArray() {
+    this.tecnicas.forEach(categoria => {
+      categoria.tecnicas.sort((x, y) => Number(y.incluir) - Number(x.incluir));
+    });
+    console.log(this.tecnicas);
+  }
+
+  insereTecnicas(){
+    switch (this.instrutor.atualCategoria) {
+      case "FDP":
+        this.instrutor.tecnicasFdp.forEach(categoria => {
+          categoria.tecnicas = [];
+
+          this.tecnicas
+            .find(x => x.nome === categoria.nome)
+            .tecnicas.forEach(tecnicaLocal => {
+              if (tecnicaLocal.incluir)
+                this.instrutor.tecnicasFdp
+                  .find(x => x.nome === categoria.nome)
+                  .tecnicas.push(tecnicaLocal);
+            });
+        });
+      
+        break;
+      case "FS":
+          this.instrutor.tecnicasFs.forEach(categoria => {
+            categoria.tecnicas = [];
+  
+            this.tecnicas
+              .find(x => x.nome === categoria.nome)
+              .tecnicas.forEach(tecnicaLocal => {
+                if (tecnicaLocal.incluir)
+                  this.instrutor.tecnicasFs
+                    .find(x => x.nome === categoria.nome)
+                    .tecnicas.push(tecnicaLocal);
+              });
+          });
+        break;
+      case "AP":
+          this.instrutor.tecnicasAp.forEach(categoria => {
+            categoria.tecnicas = [];
+  
+            this.tecnicas
+              .find(x => x.nome === categoria.nome)
+              .tecnicas.forEach(tecnicaLocal => {
+                if (tecnicaLocal.incluir)
+                  this.instrutor.tecnicasAp
+                    .find(x => x.nome === categoria.nome)
+                    .tecnicas.push(tecnicaLocal);
+              });
+          });
+        break;
+      case "AS":
+          this.instrutor.tecnicasAs.forEach(categoria => {
+            categoria.tecnicas = [];
+  
+            this.tecnicas
+              .find(x => x.nome === categoria.nome)
+              .tecnicas.forEach(tecnicaLocal => {
+                if (tecnicaLocal.incluir)
+                  this.instrutor.tecnicasAs
+                    .find(x => x.nome === categoria.nome)
+                    .tecnicas.push(tecnicaLocal);
+              });
+          });
+        break;
+    }
+  }
 
   ionViewWillEnter() {
-this.checkIdioma();
+   
 
+   
 
+    (<Categorias[]>this.tecnicas) = this.instrutor.gettecnicasCriar();
 
-    this.search_tecnica = document.getElementById("search_tecnica");
-    this.aula = this.instrutor.getAula();
-    (<tecnicas[]>this.tecnicasBool) = this.aula.tecnicasAvulsas;
+    this.tecnicas.forEach(categoria =>
+      categoria.tecnicas.forEach(x => (x.incluir = false))
+    );
 
-    this.tecnicasBool.forEach(element => {
-      element.incluir = false;
-    });
+   
 
-    this.itemsFiltrados = this.tecnicasBool;
+    switch (this.instrutor.atualCategoria) {
+      case "FDP":
+        if (this.instrutor.tecnicasFdp.length == 0) {
+          this.tecnicas.forEach(categoria => {
+            this.instrutor.tecnicasFdp.push({
+              nome: categoria.nome,
+              tecnicas: []
+            });
+            console.log(this.instrutor.tecnicasFdp);
+          });
+        }
+        this.tecnicas.forEach(categoria => {
+          this.instrutor.tecnicasFdp
+            .find(x => x.nome === categoria.nome)
+            .tecnicas.forEach(tecnicaRemota => {
+              categoria.tecnicas.find(
+                x => x.nome === tecnicaRemota.nome
+              ).incluir = true;
+            });
+        });
+
+        break;
+      case "FS":
+        if (this.instrutor.tecnicasFs.length == 0) {
+          this.tecnicas.forEach(categoria => {
+            this.instrutor.tecnicasFs.push({
+              nome: categoria.nome,
+              tecnicas: []
+            });
+            console.log(this.instrutor.tecnicasFs);
+          });
+        }
+        this.tecnicas.forEach(categoria => {
+          this.instrutor.tecnicasFs
+            .find(x => x.nome === categoria.nome)
+            .tecnicas.forEach(tecnicaRemota => {
+              categoria.tecnicas.find(
+                x => x.nome === tecnicaRemota.nome
+              ).incluir = true;
+            });
+        });
+        break;
+      case "AP":
+        if (this.instrutor.tecnicasAp.length == 0) {
+          this.tecnicas.forEach(categoria => {
+            this.instrutor.tecnicasAp.push({
+              nome: categoria.nome,
+              tecnicas: []
+            });
+            console.log(this.instrutor.tecnicasAp);
+          });
+        }
+        this.tecnicas.forEach(categoria => {
+          this.instrutor.tecnicasAp
+            .find(x => x.nome === categoria.nome)
+            .tecnicas.forEach(tecnicaRemota => {
+              categoria.tecnicas.find(
+                x => x.nome === tecnicaRemota.nome
+              ).incluir = true;
+            });
+        });
+        break;
+      case "AS":
+        if (this.instrutor.tecnicasAs.length == 0) {
+          this.tecnicas.forEach(categoria => {
+            this.instrutor.tecnicasAs.push({
+              nome: categoria.nome,
+              tecnicas: []
+            });
+            console.log(this.instrutor.tecnicasAs);
+          });
+        }
+        this.tecnicas.forEach(categoria => {
+          this.instrutor.tecnicasAs
+            .find(x => x.nome === categoria.nome)
+            .tecnicas.forEach(tecnicaRemota => {
+              categoria.tecnicas.find(
+                x => x.nome === tecnicaRemota.nome
+              ).incluir = true;
+            });
+        });
+        break;
+    }
+
+    this.sortArray();
   }
 
   dismiss() {
-    this.modalCtrl.dismiss();
+    this.modalCtrl.dismiss(null, undefined);
   }
 
   temTecnicas(tecnicaAvulsa: tecnicas, tecnicas: tecnicas[]): boolean {
@@ -122,25 +252,5 @@ this.checkIdioma();
     } else {
       return false;
     }
-  }
-
-  adicionar() {
-    this.aulaComTecnicasAdicionais = this.instrutor.getAulaSelecionada();
-
-    this.tecnicasBool.forEach(tecnica => {
-      this.tem = false;
-      if (
-        tecnica.incluir == true &&
-        this.temTecnicas(tecnica, this.aulaComTecnicasAdicionais.tecnicas) ==
-          false
-      ) {
-        this.aulaComTecnicasAdicionais.tecnicas.push(tecnica);
-        this.instrutor.setIdTecnicas(tecnica.id);
-      }
-    });
-
-    console.log(JSON.stringify(this.instrutor.getIdTecnicas()));
-    this.instrutor.setAulaSelecionada(this.aulaComTecnicasAdicionais);
-    this.modalCtrl.dismiss();
   }
 }

@@ -58,7 +58,7 @@ var AulaPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header class=\"fonte\">\n  <ion-toolbar color=\"primary\">\n    <ion-buttons slot=\"start\">\n      <ion-menu-button autoHide=\"false\"></ion-menu-button>\n    </ion-buttons>\n    <ion-thumbnail slot=\"end\">\n      <img src=\"../assets/images/logobola.png\" />\n    </ion-thumbnail>\n    <ion-title text-center>{{ labels.titulo[idiomaPadrao] }}</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content onload=\"evento()\" padding class=\"fonte\">\n  <ion-card padding>\n    <div *ngIf=\"instrutor.getAulaAberta() == true\">\n      <ion-label style=\"margin-top: 20px;\"\n        >{{ labels.data[idiomaPadrao] }}: {{ data_aula }}</ion-label\n      >\n\n      <ion-label>\n        <h2>{{ labels.tecnicas[idiomaPadrao] }}:</h2>\n      </ion-label>\n      <br />\n\n      <ion-content class=\"lista\">\n        <ion-list *ngFor=\"let _tecnica of tecnicasVimeo\">\n          <ion-item \n            (click)=\"abreVideo(_tecnica.idvimeo, _tecnica.senhavimeo)\"\n            class=\"item item-text-wrap ion-activatable\"\n          >\n            <ion-item class=\"ion-text-wrap\">{{ _tecnica.nome }}</ion-item>\n            <ion-ripple-effect type=\"unbounded\"></ion-ripple-effect>\n          </ion-item>\n        </ion-list>\n        <ng-container *ngIf=\"checkAvancada(tecnicasVimeoAvancadas)\" >\n        \n        <ion-item class=\"centertext\"><h4><b>{{ labels.advancadas[idiomaPadrao] }}</b></h4></ion-item>\n        <ion-list *ngFor=\"let _tecnica of tecnicasVimeoAvancadas\">\n          <ion-item \n            (click)=\"abreVideo(_tecnica.idvimeo, _tecnica.senhavimeo)\"\n            class=\"item item-text-wrap ion-activatable\"\n          >\n            <ion-item class=\"ion-text-wrap\">{{ _tecnica.nome }}</ion-item>\n            <ion-ripple-effect type=\"unbounded\"></ion-ripple-effect>\n          </ion-item>\n        </ion-list>\n      </ng-container>\n      </ion-content>\n\n\n    </div>\n    <div *ngIf=\"instrutor.getAulaAberta() == false\">\n      <ion-card-header text-center>\n        <ion-card-title style=\"font-size:20px\" text-wrap\n          >{{labels.semaulashead[idiomaPadrao]}}.</ion-card-title\n        >\n        <ion-card-subtitle>{{labels.semaulasmsg[idiomaPadrao]}}!</ion-card-subtitle>\n      </ion-card-header>\n    </div>\n  </ion-card>\n\n  <!-- <ion-button size=\"medium\" style=\"--background: #287a9d\" expand=\"block\" class=\"options\">\n   Biblioteca de vídeos\n    <ion-icon name=\"bookmarks\" slot=\"end\"></ion-icon>\n  </ion-button>\n  <ion-button size=\"medium\" style=\"--background: #287a9d\" expand=\"block\" class=\"options\">\n    Evolução dos Alunos\n    <ion-icon name=\"arrow-up\" slot=\"end\"></ion-icon>\n  </ion-button>\n-->\n</ion-content>\n\n<ion-footer>\n  <ion-toolbar>\n    <div *ngIf=\"instrutor.getAulaAberta() == true\">\n      <ion-button\n        size=\"default\"\n        color=\"dark\"\n        expand=\"block\"\n        (click)=\"completarAula()\"\n        >{{labels.lista[idiomaPadrao]}} <ion-icon name=\"list\"></ion-icon>\n      </ion-button>\n      <ion-button\n        color=\"dark\"\n        size=\"default\"\n        expand=\"block\"\n        [routerLink]=\"['/qr']\"\n        ><ion-icon slot=\"start\" name=\"qr-scanner\"></ion-icon>{{labels.qr[idiomaPadrao]}}</ion-button\n      >\n      <ion-button color=\"success\" expand=\"block\" (click)=\"checkins()\"\n        >{{labels.ver[idiomaPadrao]}}</ion-button\n      >\n      <ion-button expand=\"block\" size=\"default\" (click)=\"concluir()\"\n        ><ion-icon slot=\"end\" name=\"checkmark\"></ion-icon>{{labels.concluir[idiomaPadrao]}}</ion-button\n      >\n    </div>\n    <div *ngIf=\"instrutor.getAulaAberta() == false\">\n      <ion-button\n        size=\"large\"\n        style=\"--background: black;\"\n        expand=\"block\"\n        (click)=\"novaAula()\"\n        >{{labels.adicionar[idiomaPadrao]}}</ion-button\n      >\n      <ion-button\n        size=\"large\"\n        color=\"success\"\n        expand=\"block\"\n        (click)=\"checkins()\"\n        >{{labels.ver[idiomaPadrao]}}</ion-button\n      >\n    </div>\n  </ion-toolbar>\n</ion-footer>\n"
+module.exports = "<ion-header class=\"fonte\">\n  <ion-toolbar color=\"primary\">\n    <ion-buttons slot=\"start\">\n      <ion-menu-button autoHide=\"false\"></ion-menu-button>\n    </ion-buttons>\n    <ion-thumbnail slot=\"end\">\n      <img src=\"../assets/images/logobola.png\" />\n    </ion-thumbnail>\n    <ion-title text-center>{{ labels.titulo[idiomaPadrao] }}</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content onload=\"evento()\" padding class=\"fonte\">\n  <ion-card padding>\n    <div *ngIf=\"instrutor.getAulaAberta() == true\">\n      <ion-label style=\"margin-top: 20px;\"\n        >{{ labels.data[idiomaPadrao] }}: {{ data_aula }}</ion-label\n      >\n\n      <ion-label>\n        <h2>{{ labels.tecnicas[idiomaPadrao] }}:</h2>\n      </ion-label>\n      <br />\n\n      <ion-content class=\"lista\">\n        <ion-list *ngFor=\"let _tecnica of tecnicasVimeo\">\n          <ion-item \n            (click)=\"abreVideo(_tecnica.idvimeo, _tecnica.senhavimeo)\"\n            class=\"item item-text-wrap ion-activatable\"\n          >\n            <ion-item class=\"ion-text-wrap\">{{ _tecnica.nome }}</ion-item>\n            <ion-ripple-effect type=\"unbounded\"></ion-ripple-effect>\n          </ion-item>\n        </ion-list>\n      \n      </ion-content>\n\n\n    </div>\n    <div *ngIf=\"instrutor.getAulaAberta() == false\">\n      <ion-card-header text-center>\n        <ion-card-title style=\"font-size:20px\" text-wrap\n          >{{labels.semaulashead[idiomaPadrao]}}.</ion-card-title\n        >\n        <ion-card-subtitle>{{labels.semaulasmsg[idiomaPadrao]}}!</ion-card-subtitle>\n      </ion-card-header>\n    </div>\n  </ion-card>\n\n  <!-- <ion-button size=\"medium\" style=\"--background: #287a9d\" expand=\"block\" class=\"options\">\n   Biblioteca de vídeos\n    <ion-icon name=\"bookmarks\" slot=\"end\"></ion-icon>\n  </ion-button>\n  <ion-button size=\"medium\" style=\"--background: #287a9d\" expand=\"block\" class=\"options\">\n    Evolução dos Alunos\n    <ion-icon name=\"arrow-up\" slot=\"end\"></ion-icon>\n  </ion-button>\n-->\n</ion-content>\n\n<ion-footer>\n  <ion-toolbar>\n    <div *ngIf=\"instrutor.getAulaAberta() == true\">\n      <ion-button\n        size=\"default\"\n        color=\"dark\"\n        expand=\"block\"\n        (click)=\"completarAula()\"\n        >{{labels.lista[idiomaPadrao]}} <ion-icon name=\"list\"></ion-icon>\n      </ion-button>\n      <ion-button\n        color=\"dark\"\n        size=\"default\"\n        expand=\"block\"\n        [routerLink]=\"['/qr']\"\n        ><ion-icon slot=\"start\" name=\"qr-scanner\"></ion-icon>{{labels.qr[idiomaPadrao]}}</ion-button\n      >\n      <ion-button color=\"success\" expand=\"block\" (click)=\"checkins()\"\n        >{{labels.ver[idiomaPadrao]}}</ion-button\n      >\n      <ion-button expand=\"block\" size=\"default\" (click)=\"concluir()\"\n        ><ion-icon slot=\"end\" name=\"checkmark\"></ion-icon>{{labels.concluir[idiomaPadrao]}}</ion-button\n      >\n    </div>\n    <div *ngIf=\"instrutor.getAulaAberta() == false\">\n      <ion-button\n        size=\"large\"\n        style=\"--background: black;\"\n        expand=\"block\"\n        (click)=\"novaAula()\"\n        >{{labels.adicionar[idiomaPadrao]}}</ion-button\n      >\n      <ion-button\n        size=\"large\"\n        color=\"success\"\n        expand=\"block\"\n        (click)=\"checkins()\"\n        >{{labels.ver[idiomaPadrao]}}</ion-button\n      >\n    </div>\n  </ion-toolbar>\n</ion-footer>\n"
 
 /***/ }),
 
@@ -184,7 +184,7 @@ var AulaPage = /** @class */ (function () {
         this.labels = labels;
         this.globalization = globalization;
         this.headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
-            "x-version": "1.1.0",
+            "x-version": "1.1.1",
             "x-auth": this.instrutor.getToken(),
             "Cache-Control": "no-cache, no-store, must-revalidate, post-check=0, pre-check=0",
             Pragma: "no-cache",
@@ -240,21 +240,9 @@ var AulaPage = /** @class */ (function () {
             _this.data_aula = data.datetime;
             _this.aula_aberta = data.aberto;
             _this.aulaVimeo = data;
-            _this.tecnicasVimeo = [];
-            _this.tecnicasVimeoAvancadas = [];
-            if (_this.aulaVimeo.tecnicas != undefined) {
-                _this.aulaVimeo.tecnicas.forEach(function (e) {
-                    if (e.avancada == true) {
-                        _this.tecnicasVimeoAvancadas.push(e);
-                    }
-                    else {
-                        _this.tecnicasVimeo.push(e);
-                    }
-                });
-            }
+            _this.tecnicasVimeo = _this.aulaVimeo.tecnicas;
             _this.instrutor.setAulaAberta(_this.aula_aberta);
             _this.dismiss();
-            _this.tecnicas = data.tecnicas;
             if (data.aberto == false) {
                 _this.aula_nova = data;
             }
@@ -358,16 +346,7 @@ var AulaPage = /** @class */ (function () {
         });
     };
     AulaPage.prototype.dismiss = function () {
-        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        this.isloading = false;
-                        return [4 /*yield*/, this.load.dismiss().then(function () { return console.log("dismissed"); })];
-                    case 1: return [2 /*return*/, _a.sent()];
-                }
-            });
-        });
+        this.load.dismiss(null, undefined);
     };
     AulaPage.prototype.ngOnInit = function () { };
     AulaPage.prototype.onClick = function () {
@@ -424,17 +403,6 @@ var AulaPage = /** @class */ (function () {
     };
     AulaPage.prototype.novaAula = function () {
         this.presentLoading();
-        this.data = new Date();
-        this.aula_nova.datetime =
-            this.formatDate(this.data.toDateString()) +
-                " " +
-                this.data.getHours().toString() +
-                ":" +
-                this.formatZero(this.data.getMinutes().toString()) +
-                ":" +
-                this.formatZero(this.data.getSeconds().toString());
-        this.instrutor.setAula(this.aula_nova);
-        this.dismiss();
         this.router.navigate(["/nova-aula"]);
     };
     AulaPage.prototype.openMenu = function () {
@@ -452,15 +420,6 @@ var AulaPage = /** @class */ (function () {
     };
     AulaPage.prototype.checkins = function () {
         this.router.navigateByUrl("/checkins");
-    };
-    AulaPage.prototype.checkAvancada = function (tecnicas) {
-        var temAvancada = false;
-        tecnicas.forEach(function (element) {
-            if (element.avancada) {
-                temAvancada = true;
-            }
-        });
-        return temAvancada;
     };
     AulaPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({

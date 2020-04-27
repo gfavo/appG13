@@ -167,7 +167,7 @@ task cdvPrintProps {
 
 android {
     defaultConfig {
-         versionCode 10012
+         versionCode 10013
 
 
         if (cdvMinSdkVersion != null) {
