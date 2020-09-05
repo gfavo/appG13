@@ -43,6 +43,14 @@ export class Categorias {
   tecnicas: Tecnicas[];
 }
 
+
+class NomesRecebidos{
+  FDP: string;
+  FS: string;
+  AP: string;
+  AS: string;
+}
+
 @Component({
   selector: "app-nova-aula",
   templateUrl: "./nova-aula.page.html",
@@ -70,6 +78,8 @@ export class NovaAulaPage implements OnInit {
   idiomaPadrao: string;
 
   idTecnicas: number[] = [];
+
+  nomesRecebidos: NomesRecebidos;
 
   constructor(
     private load: LoadingController,
@@ -309,6 +319,25 @@ export class NovaAulaPage implements OnInit {
   }
 
   ionViewWillEnter() {
+
+    this.http
+    .get(
+      this.instrutor.getUrl() + "/entregaTecnicas.php",
+      {
+        headers: new HttpHeaders({
+          "x-version": "1.1.1",
+          "x-auth": this.instrutor.getToken(),
+          "Cache-Control":
+            "no-cache, no-store, must-revalidate, post-check=0, pre-check=0",
+          Pragma: "no-cache",
+          Expires: "0",
+        }),
+      }
+    ).subscribe(data=> this.nomesRecebidos = (<NomesRecebidos>data));
+
+
+
+
     this.data = new Date();
     this._data =
       this.formatDate(this.data.toDateString()) +

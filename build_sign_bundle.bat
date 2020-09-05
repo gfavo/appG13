@@ -1,8 +1,8 @@
-CALL cd C:\Users\Gabriel\Desktop\projetos\tozi\tozi_mobile
+CALL cd C:\Users\Gabriel\Documents\Projetos\Tozi\tozi_mobile
 CALL ionic cordova build android --prod --release --versionCode=10013
-CALL cd C:\Users\Gabriel\Desktop\projetos\tozi\tozi_mobile\platforms\android
+CALL cd C:\Users\Gabriel\Documents\Projetos\Tozi\tozi_mobile\platforms\android
 CALL gradlew.bat bundleRelease
-CALL cd C:\Users\Gabriel\Desktop\projetos\tozi\tozi_mobile\platforms\android\app\build\outputs\bundle\release
+CALL cd C:\Users\Gabriel\Documents\Projetos\Tozi\tozi_mobile\platforms\android\app\build\outputs\bundle\release
 CALL copy app.aab C:\Users\Gabriel\Desktop\App_g13bjj_unsigned_release
 CALL cd C:\Users\Gabriel\Desktop\App_g13bjj_unsigned_release
 CALL jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore -storepass lps86723a app.aab alias_name

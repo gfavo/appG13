@@ -19,7 +19,7 @@
   <br />
 
 <ion-item>
-  <ion-label   position="floating" text-center>Digite uma descrição para a aula</ion-label>
+  <ion-label  style="font-family: 'Montserrat';"  position="floating" text-center>Digite uma descrição para a aula</ion-label>
   <ion-textarea  type="text" [(ngModel)]="descricao_aula"></ion-textarea>
 </ion-item>
 
@@ -48,7 +48,8 @@
     </ng-container>
  
       <ion-button size="default" (click)="mostraModal(FDP,'FDP')" expand="block">
-        Adicionar Técnicas
+       <!-- {{nomesRecebidos.FDP}} -->
+       Quedas
       </ion-button>
     </ion-card-content>
     <ion-card-header>
@@ -72,7 +73,7 @@
             </ion-list>
           </ng-container>
       <ion-button size="default" (click)="mostraModal(FS,'FS')" expand="block">
-        Adicionar Técnicas
+        {{nomesRecebidos.FS}}
       </ion-button>
     </ion-card-content>
   </ion-card>
@@ -101,7 +102,7 @@
             </ion-list>
           </ng-container>
             <ion-button size="default" (click)="mostraModal(AP,'AP')" expand="block">
-        Adicionar Técnicas
+              {{nomesRecebidos.AP}}
       </ion-button>
     </ion-card-content>
     <ion-card-header>
@@ -125,7 +126,7 @@
             </ion-list>
           </ng-container>
       <ion-button size="default" (click)="mostraModal(AS,'AS')" expand="block">
-        Adicionar Técnicas
+        {{nomesRecebidos.AS}}
       </ion-button>
     </ion-card-content>
   </ion-card>
