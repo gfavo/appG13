@@ -19,16 +19,16 @@
   <br />
 
 <ion-item>
-  <ion-label  style="font-family: 'Montserrat';"  position="floating" text-center>Digite uma descrição para a aula</ion-label>
+  <ion-label  style="font-family: 'Montserrat';"  position="floating" text-center>{{labels.labelDescricaoAula[idiomaPadrao]}}</ion-label>
   <ion-textarea  type="text" [(ngModel)]="descricao_aula"></ion-textarea>
 </ion-item>
 
-  <h1 text-center><b>Fundamentals</b></h1>
+  <h1 text-center><b>{{labels.tecfundamentals[idiomaPadrao]}}</b></h1>
 
   <ion-card style="background-color: rgb(223, 223, 223)">
     <ion-card-header>
 
-      <ion-card-title class="ion-text-center" style="color: #981b1e"><b>Técnicas de defesa pessoal</b></ion-card-title>
+      <ion-card-title class="ion-text-center" style="color: #981b1e"><b>{{labels.tecDefesaPessoal[idiomaPadrao]}}</b></ion-card-title>
     </ion-card-header>
   
     <ion-card-content>
@@ -48,13 +48,13 @@
     </ng-container>
  
       <ion-button size="default" (click)="mostraModal(FDP,'FDP')" expand="block">
-       <!-- {{nomesRecebidos.FDP}} -->
-       Quedas
+    {{nomesRecebidos.FDP[idiomaPadrao]}}
+       
       </ion-button>
     </ion-card-content>
     <ion-card-header>
 
-      <ion-card-title class="ion-text-center" style="color: #981b1e"><b>Técnicas de solo</b></ion-card-title>
+      <ion-card-title class="ion-text-center" style="color: #981b1e"><b>{{labels.tecSolo[idiomaPadrao]}}</b></ion-card-title>
     </ion-card-header>
   
     <ion-card-content>
@@ -73,17 +73,17 @@
             </ion-list>
           </ng-container>
       <ion-button size="default" (click)="mostraModal(FS,'FS')" expand="block">
-        {{nomesRecebidos.FS}}
+        {{nomesRecebidos.FS[idiomaPadrao]}}
       </ion-button>
     </ion-card-content>
   </ion-card>
 
-  <h1 text-center><b>Avançadas</b></h1>
+  <h1 text-center><b><ion-label>{{labels.tecavancadas[idiomaPadrao]}}</ion-label></b></h1>
 
   <ion-card style="background-color: rgb(223, 223, 223)">
     <ion-card-header>
 
-      <ion-card-title class="ion-text-center" style="color: #981b1e"><b>Técnicas de projeção</b></ion-card-title>
+      <ion-card-title class="ion-text-center" style="color: #981b1e"><b>{{labels.tecProj[idiomaPadrao]}}</b></ion-card-title>
     </ion-card-header>
   
     <ion-card-content>
@@ -102,12 +102,12 @@
             </ion-list>
           </ng-container>
             <ion-button size="default" (click)="mostraModal(AP,'AP')" expand="block">
-              {{nomesRecebidos.AP}}
+              {{nomesRecebidos.AP[idiomaPadrao]}}
       </ion-button>
     </ion-card-content>
     <ion-card-header>
 
-      <ion-card-title class="ion-text-center" style="color: #981b1e"><b>Técnicas de solo</b></ion-card-title>
+      <ion-card-title class="ion-text-center" style="color: #981b1e"><b>{{labels.tecSolo[idiomaPadrao]}}</b></ion-card-title>
     </ion-card-header>
   
     <ion-card-content>
@@ -126,7 +126,7 @@
             </ion-list>
           </ng-container>
       <ion-button size="default" (click)="mostraModal(AS,'AS')" expand="block">
-        {{nomesRecebidos.AS}}
+        {{nomesRecebidos.AS[idiomaPadrao]}}
       </ion-button>
     </ion-card-content>
   </ion-card>

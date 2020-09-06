@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ThrowStmt } from '@angular/compiler';
 
 
 export class Label{
@@ -32,10 +33,16 @@ export class LabelsNovaAula {
  labelDescricaoAula: Label = new Label();
  labelTecnicasExtra: Label = new Label();
  labelDetalhesAula: Label = new Label();
- labelAvancada: Label = new Label();
+ labelAvancadas: Label = new Label();
  buttonVoltar: Label = new Label();
  buttonCriarAula: Label = new Label();
  aguarde: Label = new Label();
+tecDefesaPessoal: Label = new Label();
+tecSolo: Label = new Label();
+tecProj: Label = new Label();
+tecfundamentals: Label = new Label();
+tecavancadas: Label = new Label();
+ 
 
 constructor(){
 
@@ -75,14 +82,22 @@ constructor(){
  this.labelTecnicasExtra["en"] = "Additional techniques";
  this.labelDetalhesAula["ptbr"] = "Detalhes da Aula";
  this.labelDetalhesAula["en"] = "Class Details";
- this.labelAvancada["ptbr"] = "Avançada";
- this.labelAvancada["en"] = "Advanced";
+ this.labelAvancadas["ptbr"] = "Avançadas";
+ this.labelAvancadas["en"] = "Advanced";
  this.buttonVoltar["ptbr"]= "Voltar"; 
  this.buttonVoltar["en"]= "Return"; 
  this.buttonCriarAula["ptbr"] = "Criar aula";
  this.buttonCriarAula["en"] = "Create class";
-
-
+this.tecDefesaPessoal["ptbr"] = "Defesa pessoal / projeção";
+this.tecDefesaPessoal["en"] = "Personal defense / projection";
+this.tecSolo["ptbr"] = "Solo";
+this.tecSolo["en"] = "Ground";
+this.tecProj["ptbr"] = "Projeção";
+this.tecProj["en"] = "Projection";
+this.tecfundamentals["ptbr"] = "Técnicas Fundamentals";
+this.tecfundamentals["en"] = "Fundamentals Techniques";
+this.tecavancadas["ptbr"] = "Técnicas Avançadas";
+this.tecavancadas["en"] = "Advanced Techniques";
  
 }
 
